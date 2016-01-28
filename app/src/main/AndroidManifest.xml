@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="app.com.example.ecs193.prostatecancercare" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,9 +18,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="azkUntfffFNC9v8D1SGxxb8X8vxLDx8OoDyJZRF8" />
+        <meta-data
+            android:name="com.parse.CLIENT_KEY"
+            android:value="l65iSg2v0a3t751TP4b76l07CJ0oEt6SzECZBwMd" />
+
+        <activity android:name=".ClientFirstTime" >
+        </activity>
+    </application>
 
 </manifest>

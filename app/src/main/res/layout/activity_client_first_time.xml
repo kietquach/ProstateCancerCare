@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/firstTimeLayout"
+        android:background="#FFFFFF">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Profile"
+            android:textAlignment="center"
+            android:textSize="50dp"
+            android:textColor="#00A1A1"
+            android:id="@+id/profileText"
+            />
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:textSize="16dp"
+            android:layout_below="@id/profileText"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="17dp"
+            android:text="First Name"
+            android:id="@+id/firstNameText" />
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@id/firstNameText"
+            android:layout_below="@id/profileText"
+            android:layout_marginTop="10dp"
+            android:textSize="14dp"
+            android:textColor="#000000"
+            android:inputType="textCapWords"
+            android:id="@+id/firstNameInput"/>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:textSize="16dp"
+            android:text="Last Name"
+            android:id="@+id/lastNameText"
+            android:layout_below="@id/firstNameText"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@id/lastNameText"
+            android:layout_below="@id/firstNameInput"
+            android:layout_marginTop="10dp"
+            android:textSize="14dp"
+            android:textColor="#000000"
+            android:inputType="textCapWords"
+            android:id="@+id/lastNameInput" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:textSize="16dp"
+            android:text="Last Name"
+            android:id="@+id/test2"
+            android:layout_below="@id/lastNameText"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@id/test2"
+            android:layout_below="@id/lastNameInput"
+            android:layout_marginTop="10dp"
+            android:textSize="14dp"
+            android:textColor="#000000"
+            android:inputType="textCapWords"
+            android:id="@+id/testInput2" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:textSize="16dp"
+            android:text="Last Name"
+            android:id="@+id/test3"
+            android:layout_below="@id/test2"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@id/test3"
+            android:layout_below="@id/testInput2"
+            android:layout_marginTop="10dp"
+            android:textSize="14dp"
+            android:textColor="#000000"
+            android:inputType="textCapWords"
+            android:id="@+id/testInput3" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:textSize="16dp"
+            android:text="Last Name"
+            android:id="@+id/test4"
+            android:layout_below="@id/test3"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@id/test4"
+            android:layout_below="@id/testInput3"
+            android:layout_marginTop="10dp"
+            android:textSize="14dp"
+            android:textColor="#000000"
+            android:inputType="textCapWords"
+            android:id="@+id/testInput4" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:textSize="16dp"
+            android:text="Last Name"
+            android:id="@+id/test5"
+            android:layout_below="@id/test4"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@id/test5"
+            android:layout_below="@id/testInput4"
+            android:layout_marginTop="10dp"
+            android:textSize="14dp"
+            android:textColor="#000000"
+            android:inputType="textCapWords"
+            android:id="@+id/testInput5" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:textSize="16dp"
+            android:text="Last Name"
+            android:id="@+id/test6"
+            android:layout_below="@id/test5"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@id/test6"
+            android:layout_below="@id/testInput5"
+            android:layout_marginTop="10dp"
+            android:textSize="14dp"
+            android:textColor="#000000"
+            android:inputType="textCapWords"
+            android:id="@+id/testInput6" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:textSize="16dp"
+            android:text="Last Name"
+            android:id="@+id/test7"
+            android:layout_below="@id/test6"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@id/test7"
+            android:layout_below="@id/testInput6"
+            android:layout_marginTop="10dp"
+            android:textSize="14dp"
+            android:textColor="#000000"
+            android:inputType="textCapWords"
+            android:id="@+id/testInput7" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:textSize="16dp"
+            android:text="Last Name"
+            android:id="@+id/test8"
+            android:layout_below="@id/test7"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@id/test8"
+            android:layout_below="@id/testInput7"
+            android:layout_marginTop="10dp"
+            android:textSize="14dp"
+            android:textColor="#000000"
+            android:inputType="textCapWords"
+            android:id="@+id/testInput8" />
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:text="Submit!"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/testInput8"
+            android:layout_marginTop="15dp"/>
+
+    </RelativeLayout>
+</ScrollView>
+

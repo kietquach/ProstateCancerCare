@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Prostate Cancer Care</string>
+    <string name="welcomeText">Welcome!</string>
+    <string name="emailText">Email:</string>
+    <string name="passwordText">Password:</string>
 </resources>
