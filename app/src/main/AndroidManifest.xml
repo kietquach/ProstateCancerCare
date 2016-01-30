@@ -19,13 +19,6 @@
             </intent-filter>
         </activity>
 
-        <meta-data
-            android:name="com.parse.APPLICATION_ID"
-            android:value="azkUntfffFNC9v8D1SGxxb8X8vxLDx8OoDyJZRF8" />
-        <meta-data
-            android:name="com.parse.CLIENT_KEY"
-            android:value="l65iSg2v0a3t751TP4b76l07CJ0oEt6SzECZBwMd" />
-
         <activity android:name=".ClientFirstTime" >
         </activity>
     </application>
