@@ -14,7 +14,8 @@ import static android.view.View.*;
  */
 public class MainActivity extends Activity{
 
-    Button loginButton;
+    private Button loginButton;
+    private Button newUserButton;
 
     public MainActivity() {
         super();
@@ -34,6 +35,17 @@ public class MainActivity extends Activity{
                         startActivity(intent);
                     }
 
+                }
+        );
+
+        newUserButton = (Button) findViewById(R.id.newUserButton);
+        newUserButton.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                        startActivity(intent);
+                    }
                 }
         );
     }
