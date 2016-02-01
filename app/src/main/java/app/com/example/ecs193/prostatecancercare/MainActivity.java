@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.firebase.client.Firebase;
+
 import static android.view.View.*;
 
 /**
@@ -25,6 +27,9 @@ public class MainActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Firebase.setAndroidContext(this);
+
         loginButton = (Button) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(
                 new View.OnClickListener(){

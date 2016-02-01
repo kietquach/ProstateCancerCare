@@ -8,6 +8,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+
+import java.util.Map;
 
 public class RegisterActivity extends Activity {
     private EditText newEmailInput;
@@ -27,11 +30,23 @@ public class RegisterActivity extends Activity {
                 new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
-                        if(newEmailInput.getText().equals("") || newPasswordInput.getText().equals("")){
+                        if(newEmailInput.getText().toString().equals("") || newPasswordInput.getText().toString().equals("")){
                             Toast.makeText(RegisterActivity.this, "Please fill out the email and password fields", Toast.LENGTH_SHORT).show();
                         }
                         else{
                             Firebase ref = new Firebase("https://crackling-heat-562.firebaseio.com");
+                            ref.createUser(newEmailInput.getText().toString(), newPasswordInput.getText().toString(), new Firebase.ValueResultHandler<Map<String, Object>>() {
+                                @Override
+                                public void onSuccess(Map<String, Object> result) {
+                                    System.out.println("Successfully created user account with uid: " + result.get("uid"));
+                                }
+                                @Override
+                                public void onError(FirebaseError firebaseError) {
+                                    Toast.makeText(RegisterActivity.this, "There was an error", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                            finish();
                         }
                     }
                 }
