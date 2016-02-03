@@ -18,6 +18,8 @@ public class RegisterActivity extends Activity {
     private Button registerButton;
 
     @Override
+
+    //TODO: VALIDATE REGISTRATION, NOT JUST CREATE ACCOUNT RIGHT AWAY
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
