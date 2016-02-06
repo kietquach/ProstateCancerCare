@@ -1,7 +1,12 @@
 package app.com.example.ecs193.prostatecancercare;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,8 +22,15 @@ public class RegisterActivity extends Activity {
     private EditText newPasswordInput;
     private Button registerButton;
 
-    @Override
+    public void scheduleNotification()
+    {
+        Intent alarmIntent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(),  3 * 60 * 1000, pendingIntent);
+    }
 
+    @Override
     //TODO: VALIDATE REGISTRATION, NOT JUST CREATE ACCOUNT RIGHT AWAY
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +46,7 @@ public class RegisterActivity extends Activity {
                     public void onClick(View v) {
                         if(newEmailInput.getText().toString().equals("") || newPasswordInput.getText().toString().equals("")){
                             Toast.makeText(RegisterActivity.this, "Please fill out the email and password fields", Toast.LENGTH_SHORT).show();
+                            scheduleNotification();
                         }
                         else{
                             Firebase ref = new Firebase("https://crackling-heat-562.firebaseio.com");
