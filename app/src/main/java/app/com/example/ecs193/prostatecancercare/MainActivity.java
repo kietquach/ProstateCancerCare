@@ -48,11 +48,14 @@ public class MainActivity extends Activity{
                         //Intent intent = new Intent(MainActivity.this, ClientFirstTime.class);
                         //startActivity(intent);
                         Firebase ref = new Firebase("https://crackling-heat-562.firebaseio.com");
-                        ref.authWithPassword(loginEmail.getText().toString(), loginPassword.getText().toString(), new Firebase.AuthResultHandler() {
+                        Intent intent = new Intent(MainActivity.this, HomePageActivity.class); //Used to debugging
+                        startActivity(intent);
+                        /*ref.authWithPassword(loginEmail.getText().toString(), loginPassword.getText().toString(), new Firebase.AuthResultHandler() {
                             @Override
                             public void onAuthenticated(AuthData authData) {
                                 //System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
-                                Intent intent = new Intent(MainActivity.this, ClientFirstTime.class);
+                                //Intent intent = new Intent(MainActivity.this, ClientFirstTime.class); //Change back
+                                Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
                                 startActivity(intent);
                             }
                             @Override
@@ -60,7 +63,7 @@ public class MainActivity extends Activity{
                                 // there was an error
                                 Toast.makeText(MainActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
                             }
-                        });
+                        });*/
                     }
 
                 }
