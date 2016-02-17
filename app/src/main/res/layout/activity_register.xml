@@ -26,24 +26,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="34dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Please create a password"
-        android:id="@+id/newPasswordText"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/newPasswordInput"
-        android:layout_below="@+id/newPasswordText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
