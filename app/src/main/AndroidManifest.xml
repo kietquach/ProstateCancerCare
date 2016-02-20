@@ -24,7 +24,8 @@
         <activity android:name=".InputData" />
         <activity android:name=".InputPsa" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".HomePageActivity"></activity>
+        <activity android:name=".HomePageActivity" />
+        <activity android:name=".TempPassword"></activity>
     </application>
 
 </manifest>

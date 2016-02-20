@@ -80,9 +80,20 @@ public class MainActivity extends Activity{
                             public void onAuthenticated(AuthData authData) {
                                 //System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
                                 //Intent intent = new Intent(MainActivity.this, ClientFirstTime.class); //Change back
-                                Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
-                                startActivity(intent);
-                                finish();
+
+                                if((boolean)authData.getProviderData().get("isTemporaryPassword")){
+                                    Intent intent = new Intent(MainActivity.this, TempPassword.class);
+                                    intent.putExtra("oldpassword", passwordEdit.getText().toString());
+                                    startActivity(intent);
+                                    finish();
+                                }
+
+                                else{
+                                    Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+
                             }
                             @Override
                             public void onAuthenticationError(FirebaseError firebaseError) {
