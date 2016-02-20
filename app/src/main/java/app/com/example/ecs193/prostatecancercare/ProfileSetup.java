@@ -30,21 +30,7 @@ public class ProfileSetup extends Activity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //TODO: make sure username hasn't been taken yet, must be unique
-
-                        final String email = ((EditText) findViewById(R.id.emailEdit)).getText().toString();
-                        final String password = ((EditText) findViewById(R.id.passwordEdit)).getText().toString();
-                        fbRef.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
-                            @Override
-                            public void onSuccess(Map<String, Object> result) {
-                                System.out.println("Successfully created user account with uid: " + result.get("uid"));
-
-
                                 Firebase.AuthResultHandler authResultHandler = new Firebase.AuthResultHandler() {
-                                    @Override
-                                    public void onAuthenticated(AuthData authData) {
-                                        // Authenticated successfully with payload authData
-                                        System.out.println("Successfully logged in user account with uid: " + authData.getUid());
 
                                         Firebase userRef = fbRef.child("users").child(authData.getUid());
                                         String dob = ((EditText) findViewById(R.id.dobEdit)).getText().toString();
@@ -62,22 +48,8 @@ public class ProfileSetup extends Activity {
 
                                         Intent intent = new Intent(ProfileSetup.this, Menu.class);
                                         startActivity(intent);
-                                    }
+                                }
 
-                                    @Override
-                                    public void onAuthenticationError(FirebaseError firebaseError) {
-                                        // Authenticated failed with error firebaseError
-                                    }
-                                };
-                                fbRef.authWithPassword(email, password, authResultHandler);
-
-                            }
-
-                            @Override
-                            public void onError(FirebaseError firebaseError) {
-                                // there was an error
-                            }
-                        });
                     }
                 }
         );

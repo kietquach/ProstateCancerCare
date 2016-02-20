@@ -50,7 +50,8 @@ public class MainActivity extends Activity{
                         //startActivity(intent);
                         final Firebase fbRef = new Firebase("https://boiling-heat-3817.firebaseio.com/");
 
-                        SharedPreferences prefs = MainActivity.this.getSharedPreferences("FirstTime", 0);
+                        //BUG: NOT WORKING, ALWAYS BRINGS UP PROFILE
+                        /*SharedPreferences prefs = MainActivity.this.getSharedPreferences("FirstTime", 0);
                         SharedPreferences.Editor editor = prefs.edit();
                         Intent intent;
                         if (prefs.getBoolean("isInitialLogin", false))
@@ -67,10 +68,14 @@ public class MainActivity extends Activity{
                             intent = new Intent(MainActivity.this, ProfileSetup.class);
                             startActivity(intent);
                             finish();
-                        }
+                        }*/
+
+                        /*Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
+                        startActivity(intent);
+                        finish();*/
 
                         //NOTE: Put uncomment below fo email authentication
-                        /*ref.authWithPassword(loginEmail.getText().toString(), loginPassword.getText().toString(), new Firebase.AuthResultHandler() {
+                        fbRef.authWithPassword(emailEdit.getText().toString(), passwordEdit.getText().toString(), new Firebase.AuthResultHandler() {
                             @Override
                             public void onAuthenticated(AuthData authData) {
                                 //System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
@@ -84,7 +89,7 @@ public class MainActivity extends Activity{
                                 // there was an error
                                 Toast.makeText(MainActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
                             }
-                        });*/
+                        });
                     }
 
                 }
