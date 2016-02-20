@@ -15,9 +15,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/lastname"
         android:id="@+id/lastnameText"
-        android:layout_above="@+id/emailEdit"
-        android:layout_alignRight="@+id/textView"
-        android:layout_alignEnd="@+id/textView" />
+        android:layout_below="@+id/firstnameEdit"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -25,8 +25,9 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/firstnameEdit"
-        android:layout_alignLeft="@+id/passwordEdit"
-        android:layout_alignStart="@+id/passwordEdit" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -37,42 +38,6 @@
         android:layout_below="@+id/firstnameEdit"
         android:layout_alignLeft="@+id/firstnameEdit"
         android:layout_alignStart="@+id/firstnameEdit" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/email"
-        android:id="@+id/emailText"
-        android:layout_alignBottom="@+id/emailEdit" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/password"
-        android:id="@+id/passwordText"
-        android:layout_alignBottom="@+id/passwordEdit" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/emailEdit"
-        android:layout_below="@+id/lastnameEdit"
-        android:layout_alignLeft="@+id/lastnameEdit"
-        android:layout_alignStart="@+id/lastnameEdit" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/passwordEdit"
-        android:layout_below="@+id/emailEdit"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -90,17 +55,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/dob"
         android:id="@+id/dobText"
-        android:layout_alignBottom="@+id/dobEdit" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/dobEdit"
-        android:layout_below="@+id/passwordEdit"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_above="@+id/ethnicityEdit"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -108,9 +65,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/firstname"
         android:id="@+id/textView"
-        android:layout_alignBottom="@+id/firstnameEdit"
-        android:layout_alignLeft="@+id/passwordText"
-        android:layout_alignStart="@+id/passwordText" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -118,9 +75,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/ethnicity"
         android:id="@+id/ethnicityText"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/lastnameEdit"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="60dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -131,5 +89,15 @@
         android:layout_alignBottom="@+id/ethnicityText"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/dobEdit"
+        android:layout_above="@+id/ethnicityEdit"
+        android:layout_alignLeft="@+id/lastnameEdit"
+        android:layout_alignStart="@+id/lastnameEdit" />
 
 </RelativeLayout>

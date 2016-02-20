@@ -30,9 +30,8 @@ public class ProfileSetup extends Activity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                                Firebase.AuthResultHandler authResultHandler = new Firebase.AuthResultHandler() {
-
-                                        Firebase userRef = fbRef.child("users").child(authData.getUid());
+                                        AuthData authData = fbRef.getAuth();
+                                                                Firebase userRef = fbRef.child("users").child(authData.getUid());
                                         String dob = ((EditText) findViewById(R.id.dobEdit)).getText().toString();
                                         String firstname = ((EditText) findViewById(R.id.firstnameEdit)).getText().toString();
                                         String lastname = ((EditText) findViewById(R.id.lastnameEdit)).getText().toString();
@@ -48,7 +47,9 @@ public class ProfileSetup extends Activity {
 
                                         Intent intent = new Intent(ProfileSetup.this, Menu.class);
                                         startActivity(intent);
-                                }
+
+
+
 
                     }
                 }
