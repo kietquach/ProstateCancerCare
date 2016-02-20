@@ -3,26 +3,29 @@ package app.com.example.ecs193.prostatecancercare;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.firebase.client.AuthData;
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
-
-import java.util.Map;
 
 import static android.view.View.*;
 
-
+/**
+ * Created by Kiet Quach on 1/26/2016.
+ */
 public class MainActivity extends Activity{
 
-    Firebase fbRef;
+    private Button loginButton;
+    private Button signUpButton;
+    private EditText emailEdit;
+    private EditText passwordEdit;
+
     public MainActivity() {
         super();
     }
@@ -31,53 +34,72 @@ public class MainActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        emailEdit = (EditText) findViewById(R.id.emailEdit);
+        passwordEdit = (EditText) findViewById(R.id.passwordEdit);
+
         Firebase.setAndroidContext(this);
 
-        fbRef = new Firebase("https://boiling-heat-3817.firebaseio.com/");
-
-        Button loginButton = (Button) findViewById(R.id.loginButton);
-
-
+        loginButton = (Button) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(
-            new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    EditText editText = (EditText) findViewById(R.id.emailEdit);
-                    final String email = editText.getText().toString();
-                    editText = (EditText) findViewById(R.id.passwordEdit);
-                    final String password = editText.getText().toString();
-                    // Create a handler to handle the result of the authentication
-                    Firebase.AuthResultHandler authResultHandler = new Firebase.AuthResultHandler() {
-                        @Override
-                        public void onAuthenticated(AuthData authData) {
-                            // Authenticated successfully with payload authData
-                            Intent intent = new Intent(MainActivity.this, Menu.class);
-                            startActivity(intent);
-                        }
-
-                        @Override
-                        public void onAuthenticationError(FirebaseError firebaseError) {
-                            // Authenticated failed with error firebaseError
-                        }
-                    };
-                    fbRef.authWithPassword(email, password, authResultHandler);
-                }
-
-            }
-        );
-
-        Button signupButton = (Button) findViewById(R.id.signupButton);
-        signupButton.setOnClickListener(
-                new View.OnClickListener() {
+                new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, ProfileSetup.class);
-                        startActivity(intent);
+                        //Go into next activity depending on Patient account or Physician Account
+                        //Intent intent = new Intent(MainActivity.this, ClientFirstTime.class);
+                        //startActivity(intent);
+                        final Firebase fbRef = new Firebase("https://boiling-heat-3817.firebaseio.com/");
+
+                        SharedPreferences prefs = MainActivity.this.getSharedPreferences("FirstTime", 0);
+                        SharedPreferences.Editor editor = prefs.edit();
+                        Intent intent;
+                        if (prefs.getBoolean("isInitialLogin", false))
+                        {
+                            intent = new Intent(MainActivity.this, HomePageActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else
+                        {
+                            //Log in for the first time ever
+                            editor.putBoolean("isInitialLogin", false);
+                            editor.commit();
+                            intent = new Intent(MainActivity.this, ProfileSetup.class);
+                            startActivity(intent);
+                            finish();
+                        }
+
+                        //NOTE: Put uncomment below fo email authentication
+                        /*ref.authWithPassword(loginEmail.getText().toString(), loginPassword.getText().toString(), new Firebase.AuthResultHandler() {
+                            @Override
+                            public void onAuthenticated(AuthData authData) {
+                                //System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
+                                //Intent intent = new Intent(MainActivity.this, ClientFirstTime.class); //Change back
+                                Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                            @Override
+                            public void onAuthenticationError(FirebaseError firebaseError) {
+                                // there was an error
+                                Toast.makeText(MainActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
+                            }
+                        });*/
                     }
 
                 }
         );
 
+        signUpButton = (Button) findViewById(R.id.signupButton);
+        signUpButton.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                        startActivity(intent);
+                    }
+                }
+        );
     }
 
     @Override

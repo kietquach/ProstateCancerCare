@@ -22,7 +22,9 @@
         <activity android:name=".ProfileSetup" />
         <activity android:name=".Menu" />
         <activity android:name=".InputData" />
-        <activity android:name=".InputPsa"></activity>
+        <activity android:name=".InputPsa" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".HomePageActivity"></activity>
     </application>
 
 </manifest>
