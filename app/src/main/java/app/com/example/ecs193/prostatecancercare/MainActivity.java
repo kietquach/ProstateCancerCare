@@ -14,6 +14,8 @@ import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
+import java.util.Map;
+
 import static android.view.View.*;
 
 /**
@@ -25,7 +27,7 @@ public class MainActivity extends Activity{
     private Button signUpButton;
     private EditText emailEdit;
     private EditText passwordEdit;
-
+    private SharedPreferences mSharedPreferences;
     public MainActivity() {
         super();
     }
@@ -33,89 +35,76 @@ public class MainActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        emailEdit = (EditText) findViewById(R.id.emailEdit);
-        passwordEdit = (EditText) findViewById(R.id.passwordEdit);
-
         Firebase.setAndroidContext(this);
+        final Firebase fbRef = new Firebase("https://boiling-heat-3817.firebaseio.com/");
 
-        loginButton = (Button) findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(
-                new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        //Go into next activity depending on Patient account or Physician Account
-                        //Intent intent = new Intent(MainActivity.this, ClientFirstTime.class);
-                        //startActivity(intent);
-                        final Firebase fbRef = new Firebase("https://boiling-heat-3817.firebaseio.com/");
+        //try logging in with saved email and password.
+        mSharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+        String email = mSharedPreferences.getString("email", "");
+        String password = mSharedPreferences.getString("password", "");
+        fbRef.authWithPassword(email, password, new Firebase.AuthResultHandler() {
+            public void onAuthenticated(AuthData authData) {
+                Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
+                startActivity(intent);
+                finish();
+            }
 
-                        //BUG: NOT WORKING, ALWAYS BRINGS UP PROFILE
-                        /*SharedPreferences prefs = MainActivity.this.getSharedPreferences("FirstTime", 0);
-                        SharedPreferences.Editor editor = prefs.edit();
-                        Intent intent;
-                        if (prefs.getBoolean("isInitialLogin", false))
-                        {
-                            intent = new Intent(MainActivity.this, HomePageActivity.class);
-                            startActivity(intent);
-                            finish();
+            public void onAuthenticationError(FirebaseError firebaseError) {
+                setContentView(R.layout.activity_main);
+
+                emailEdit = (EditText) findViewById(R.id.emailEdit);
+                passwordEdit = (EditText) findViewById(R.id.passwordEdit);
+
+                loginButton = (Button) findViewById(R.id.loginButton);
+                loginButton.setOnClickListener(
+                        new View.OnClickListener(){
+                            @Override
+                            public void onClick(View v) {
+                                //Go into next activity depending on Patient account or Physician Account
+                                //Intent intent = new Intent(MainActivity.this, ClientFirstTime.class);
+                                //startActivity(intent);
+
+                                //NOTE: Put uncomment below fo email authentication
+                                fbRef.authWithPassword(emailEdit.getText().toString(), passwordEdit.getText().toString(), new Firebase.AuthResultHandler() {
+                                    public void onAuthenticated(AuthData authData) {
+                                        if((boolean)authData.getProviderData().get("isTemporaryPassword")){
+                                            Intent intent = new Intent(MainActivity.this, TempPassword.class);
+                                            intent.putExtra("oldpassword", passwordEdit.getText().toString());
+                                            startActivity(intent);
+                                            finish();
+                                        } else{
+                                            SharedPreferences.Editor editor = mSharedPreferences.edit();
+                                            editor.putString("email", emailEdit.getText().toString());
+                                            editor.putString("password", passwordEdit.getText().toString());
+                                            editor.commit();
+                                            Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    }
+
+                                    public void onAuthenticationError(FirebaseError firebaseError) {
+                                        // there was an error
+                                        Toast.makeText(MainActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+
                         }
-                        else
-                        {
-                            //Log in for the first time ever
-                            editor.putBoolean("isInitialLogin", false);
-                            editor.commit();
-                            intent = new Intent(MainActivity.this, ProfileSetup.class);
-                            startActivity(intent);
-                            finish();
-                        }*/
+                );
 
-                        /*Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
-                        startActivity(intent);
-                        finish();*/
-
-                        //NOTE: Put uncomment below fo email authentication
-                        fbRef.authWithPassword(emailEdit.getText().toString(), passwordEdit.getText().toString(), new Firebase.AuthResultHandler() {
+                signUpButton = (Button) findViewById(R.id.signupButton);
+                signUpButton.setOnClickListener(
+                        new View.OnClickListener(){
                             @Override
-                            public void onAuthenticated(AuthData authData) {
-                                //System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
-                                //Intent intent = new Intent(MainActivity.this, ClientFirstTime.class); //Change back
-
-                                if((boolean)authData.getProviderData().get("isTemporaryPassword")){
-                                    Intent intent = new Intent(MainActivity.this, TempPassword.class);
-                                    intent.putExtra("oldpassword", passwordEdit.getText().toString());
-                                    startActivity(intent);
-                                    finish();
-                                }
-
-                                else{
-                                    Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-
+                            public void onClick(View v) {
+                                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                                startActivity(intent);
                             }
-                            @Override
-                            public void onAuthenticationError(FirebaseError firebaseError) {
-                                // there was an error
-                                Toast.makeText(MainActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-
-                }
-        );
-
-        signUpButton = (Button) findViewById(R.id.signupButton);
-        signUpButton.setOnClickListener(
-                new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-                        startActivity(intent);
-                    }
-                }
-        );
+                        }
+                );
+            }
+        });
     }
 
     @Override
