@@ -30,8 +30,8 @@ public class Menu extends Activity {
                     }
                 }
         );
-/*
-        Button visualizedataButton = (Button) findViewById(R.id.inputdataButton);
+
+        Button visualizedataButton = (Button) findViewById(R.id.visualizedataButton);
         visualizedataButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -42,7 +42,7 @@ public class Menu extends Activity {
                 }
         );
 
-        Button feedbackButton = (Button) findViewById(R.id.inputdataButton);
+ /*       Button feedbackButton = (Button) findViewById(R.id.inputdataButton);
         feedbackButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override

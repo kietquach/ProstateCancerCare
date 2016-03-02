@@ -25,7 +25,10 @@
         <activity android:name=".InputPsa" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".HomePageActivity" />
-        <activity android:name=".TempPassword"></activity>
+        <activity android:name=".TempPassword" />
+        <activity android:name=".VisualizeDataActivity" />
+        <activity android:name=".VisualizeData" />
+        <activity android:name=".PsaGraph"></activity>
     </application>
 
 </manifest>
