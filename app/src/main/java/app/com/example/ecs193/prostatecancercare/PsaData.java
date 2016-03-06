@@ -4,7 +4,7 @@ package app.com.example.ecs193.prostatecancercare;
 public class PsaData {
     private String density;
     private String prostatevolume;
-    private String psa;
+    private float psa;
 
     public String getDensity(){
         return density;
@@ -12,7 +12,7 @@ public class PsaData {
     public String getProstatevolume(){
         return prostatevolume;
     }
-    public String getPsa(){
+    public float getPsa(){
         return psa;
     }
 

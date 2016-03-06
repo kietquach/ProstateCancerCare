@@ -45,12 +45,12 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/dateEdit"
         android:layout_above="@+id/psalevelText"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:inputType="number" />
 
     <EditText
         android:layout_width="wrap_content"
