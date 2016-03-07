@@ -90,7 +90,7 @@ public class InputMri extends Activity {
     }
 
     private TableLayout addTable(int rows){
-        TableLayout tableLayout = (TableLayout)findViewById(R.id.mri);
+        TableLayout tableLayout = (TableLayout)findViewById(R.id.mritl1);
         tableLayout.setStretchAllColumns(true);
         TableRow tableRow = new TableRow(this);
         tableRow.setPadding(0, 10, 0, 0);
