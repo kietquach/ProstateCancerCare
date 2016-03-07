@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -56,11 +57,16 @@ public class InputMri extends Activity {
                             Firebase mri = fbRef.child("users").child(authData.getUid()).child("mri");
                             String date = ((EditText) findViewById(R.id.dateEdit)).getText().toString();
                             mriEntry = mri.child(date);
-                            String lesioncount = ((EditText) findViewById(R.id.lesioncountEdit)).getText().toString();
+                            String lesioncount = ((EditText) findViewById(R.id.lesionsEdit)).getText().toString();
                             rows = Integer.parseInt(lesioncount);
                             mriEntry.child("lesioncount").setValue(lesioncount);
-                            addTable(rows);
-                            addButton.setOnClickListener(null);
+
+                            //TODO: Catch if user tries to enter in nothing for this field for mri and biopsy
+                            if(!TextUtils.isEmpty(lesioncount)){
+                                addTable(rows);
+                                addButton.setOnClickListener(null);
+                            }
+
                         } else {
                             // no user authenticated
                         }
@@ -81,6 +87,9 @@ public class InputMri extends Activity {
                             mriLesion.child("gleason").setValue(editTextList.get(i * 6 + 4).getText().toString()+"+"+editTextList.get(i * 6 + 5).getText().toString());
 
                         }
+
+                        Intent intent = new Intent(InputMri.this, InputData.class);
+                        startActivity(intent);
                     }
 
                 }
@@ -89,8 +98,8 @@ public class InputMri extends Activity {
 
     }
 
-    private TableLayout addTable(int rows){
-        TableLayout tableLayout = (TableLayout)findViewById(R.id.mritl1);
+    private void addTable(int rows){
+        TableLayout tableLayout = (TableLayout)findViewById(R.id.mritl2);
         tableLayout.setStretchAllColumns(true);
         TableRow tableRow = new TableRow(this);
         tableRow.setPadding(0, 10, 0, 0);
@@ -121,7 +130,6 @@ public class InputMri extends Activity {
         for (int i = 0; i < rows; i++) {
             tableLayout.addView(createRow(i));
         }
-        return tableLayout;
     }
 
     private TableRow createRow(int row) {
@@ -132,6 +140,7 @@ public class InputMri extends Activity {
             if(col == 4){
                 TextView textView = new TextView(this);
                 textView.setText("+", TextView.BufferType.NORMAL);
+                textView.setGravity(Gravity.CENTER);
                 tableRow.addView(textView);
             }
         }
