@@ -26,9 +26,12 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".HomePageActivity" />
         <activity android:name=".TempPassword" />
-        <activity android:name=".VisualizeDataActivity" />
+        <activity android:name=".EditAppointmentsActivity" />
+        <activity android:name=".AddAppointmentActivity" />
         <activity android:name=".VisualizeData" />
-        <activity android:name=".PsaGraph"></activity>
+        <activity android:name=".PsaGraph"/>
+
+        <receiver android:name=".AlarmReceiver" />
     </application>
 
 </manifest>

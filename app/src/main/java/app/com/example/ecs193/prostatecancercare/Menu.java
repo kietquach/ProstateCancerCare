@@ -42,6 +42,17 @@ public class Menu extends Activity {
                 }
         );
 
+        Button editAppointmentsButton = (Button) findViewById(R.id.editAppointmentsButton);
+        editAppointmentsButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Menu.this, EditAppointmentsActivity.class);
+                        startActivity(intent);
+                    }
+                }
+        );
+
  /*       Button feedbackButton = (Button) findViewById(R.id.inputdataButton);
         feedbackButton.setOnClickListener(
                 new View.OnClickListener() {
