@@ -25,7 +25,9 @@
         <activity android:name=".InputPsa" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".HomePageActivity" />
-        <activity android:name=".TempPassword"></activity>
+        <activity android:name=".TempPassword" />
+        <activity android:name=".InputMri" />
+        <activity android:name=".InputBiopsy"></activity>
     </application>
 
 </manifest>
