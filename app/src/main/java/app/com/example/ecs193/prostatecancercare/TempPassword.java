@@ -2,6 +2,7 @@ package app.com.example.ecs193.prostatecancercare;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -42,6 +43,9 @@ public class TempPassword extends Activity {
                             fbRef.changePassword(authData.getProviderData().get("email").toString(), bundle.getString("oldpassword"), newPasswordEdit.getText().toString(), new Firebase.ResultHandler() {
                                 @Override
                                 public void onSuccess() {
+                                    SharedPreferences.Editor editor = getSharedPreferences("login", MODE_PRIVATE).edit();
+                                    editor.putString("email", authData.getProviderData().get("email").toString());
+                                    editor.putString("password", newPasswordEdit.getText().toString());
                                     Intent intent = new Intent(TempPassword.this, HomePageActivity.class);
                                     startActivity(intent);
                                     finish();
