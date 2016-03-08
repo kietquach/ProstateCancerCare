@@ -11,7 +11,7 @@ import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 
 public class InputData extends Activity {
-    Firebase fbRef;
+    private Firebase fbRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
