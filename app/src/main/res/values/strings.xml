@@ -27,6 +27,9 @@
     <string name="signup">Sign Up</string>
     <string name="login">Login</string>
     <string name="ethnicity">Ethnicity</string>
+    <string name="editAppointment">Edit Appointments</string>
+    <string name="add_appointment">Add Appointments</string>
+
 
     <!--
     <string name=""></string> 

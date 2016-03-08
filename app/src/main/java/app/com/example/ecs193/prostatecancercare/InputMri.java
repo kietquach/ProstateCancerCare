@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
@@ -58,13 +59,16 @@ public class InputMri extends Activity {
                             String date = ((EditText) findViewById(R.id.dateEdit)).getText().toString();
                             mriEntry = mri.child(date);
                             String lesioncount = ((EditText) findViewById(R.id.lesionsEdit)).getText().toString();
-                            rows = Integer.parseInt(lesioncount);
-                            mriEntry.child("lesioncount").setValue(lesioncount);
+
 
                             //TODO: Catch if user tries to enter in nothing for this field for mri and biopsy
-                            if(!TextUtils.isEmpty(lesioncount)){
+                            if(!lesioncount.isEmpty() && !date.isEmpty()){
+                                rows = Integer.parseInt(lesioncount);
+                                mriEntry.child("lesioncount").setValue(lesioncount);
                                 addTable(rows);
                                 addButton.setOnClickListener(null);
+                            } else{
+                                Toast.makeText(InputMri.this, "Please fill out all the fields", Toast.LENGTH_SHORT).show();
                             }
 
                         } else {

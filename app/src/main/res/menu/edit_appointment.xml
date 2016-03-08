@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- "Add new appointment", should appear as action button if possible -->
+    <item
+        android:id="@+id/add_appointment"
+        android:icon="@drawable/ic_add_black_24dp"
+        android:title="@string/add_appointment"
+        app:showAsAction="always|withText"/>
+</menu>

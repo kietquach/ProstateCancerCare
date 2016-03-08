@@ -27,12 +27,23 @@
         android:layout_below="@+id/inputdataButton"
         android:layout_centerHorizontal="true" />
 
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/editAppointment"
+        android:id="@+id/editAppointmentsButton"
+        android:layout_marginTop="25dp"
+        android:layout_below="@id/visualizedataButton"
+        android:layout_centerHorizontal="true" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/feedback"
         android:id="@+id/feedbackButton"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="25dp"
+        android:layout_below="@id/editAppointmentsButton"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -40,7 +51,7 @@
         android:layout_height="wrap_content"
         android:text="@string/faq"
         android:id="@+id/faqButton"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="25dp"
         android:layout_below="@+id/feedbackButton"
         android:layout_alignRight="@+id/feedbackButton"
         android:layout_alignEnd="@+id/feedbackButton" />

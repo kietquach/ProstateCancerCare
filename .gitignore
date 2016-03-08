@@ -32,3 +32,4 @@ local.properties
 *~
 *.swp
 build/intermediates/dex-cache/cache.xml
+/build/

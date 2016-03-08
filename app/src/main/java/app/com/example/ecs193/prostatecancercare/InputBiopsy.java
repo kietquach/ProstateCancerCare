@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
@@ -46,12 +47,25 @@ public class InputBiopsy extends Activity {
                             mriEntry = biopsy.child(date);
 
                             String coresPositive = ((EditText) findViewById(R.id.coresPositiveEdit)).getText().toString();
-                            rows = Integer.parseInt(coresPositive);
-                            mriEntry.child("corespositive").setValue(coresPositive);
-                            mriEntry.child("corestaken").setValue(((EditText) findViewById(R.id.coresTakenEdit)).getText().toString());
+                            String coresTaken = ((EditText) findViewById(R.id.coresTakenEdit)).getText().toString();
 
-                            addTable(rows);
-                            addButton.setOnClickListener(null);
+                            if(!date.isEmpty() && !coresPositive.isEmpty() && !coresTaken.isEmpty() &&
+                                    Integer.parseInt(coresPositive) <= Integer.parseInt(coresTaken)){
+                                rows = Integer.parseInt(coresPositive);
+                                mriEntry.child("corespositive").setValue(coresPositive);
+                                mriEntry.child("corestaken").setValue(coresTaken);
+                                addTable(rows);
+                                addButton.setOnClickListener(null);
+                            }else{
+                                if(date.isEmpty() || coresPositive.isEmpty() || coresTaken.isEmpty()) {
+                                    Toast.makeText(InputBiopsy.this, "Please fill out all the fields", Toast.LENGTH_SHORT).show();
+                                }
+                                if(!coresPositive.isEmpty() && !coresTaken.isEmpty() && Integer.parseInt(coresPositive) > Integer.parseInt(coresTaken)){
+                                    Toast.makeText(InputBiopsy.this, "Cores Positive should be less than or equal to Cores Taken", Toast.LENGTH_LONG).show();
+                                }
+
+                            }
+
                         } else {
                             // no user authenticated
                         }

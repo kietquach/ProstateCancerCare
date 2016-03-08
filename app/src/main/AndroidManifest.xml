@@ -31,6 +31,9 @@
         <activity android:name=".ViewDataActivity"></activity>
         <activity android:name=".InputMri" />
         <activity android:name=".InputBiopsy"></activity>
+        <activity android:name=".EditAppointmentsActivity" />
+        <activity android:name=".AddAppointmentActivity" />
+        <receiver android:name=".AlarmReceiver" />
     </application>
 
 </manifest>
