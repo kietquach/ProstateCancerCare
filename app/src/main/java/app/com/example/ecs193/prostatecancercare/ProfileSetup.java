@@ -45,8 +45,9 @@ public class ProfileSetup extends Activity {
                                         profile.child("dob").setValue(dob);
                                         profile.child("ethnicity").setValue(ethnicity);
 
-                                        Intent intent = new Intent(ProfileSetup.this, Menu.class);
-                                        startActivity(intent);
+                                        finish();
+                                        //Intent intent = new Intent(ProfileSetup.this, Menu.class);
+                                        //startActivity(intent);
 
 
 

@@ -28,6 +28,7 @@ public class HomePageActivity extends AppCompatActivity {
     private String user;
     private TextView daysLeft;
     private Button viewDataButton;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class HomePageActivity extends AppCompatActivity {
         fbRef = new Firebase("https://boiling-heat-3817.firebaseio.com/");
 
         sideList = (ListView) findViewById(R.id.sideList);
-        String[] menuList = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
+        String[] menuList = {"Profile", "Input Data", "Visualization", "Appointments", "Settings"};
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, menuList);
         sideList.setAdapter(adapter);
 
@@ -47,15 +48,25 @@ public class HomePageActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         switch (position) {
                             case 0:
-                                Intent intent = new Intent(HomePageActivity.this, ProfileSetup.class);
+                                intent = new Intent(HomePageActivity.this, ProfileSetup.class);
                                 startActivity(intent);
+                                break;
                             case 1:
-
+                                intent = new Intent(HomePageActivity.this, InputData.class);
+                                startActivity(intent);
+                                break;
                             case 2:
-
+                                intent = new Intent(HomePageActivity.this, VisualizeData.class);
+                                startActivity(intent);
+                                break;
                             case 3:
-
+                                intent = new Intent(HomePageActivity.this, EditAppointmentsActivity.class);
+                                startActivity(intent);
+                                break;
                             case 4:
+                                intent = new Intent(HomePageActivity.this, TempPassword.class);
+                                startActivity(intent);
+                                break;
                         }
 
                     }
