@@ -7,10 +7,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
@@ -42,6 +40,7 @@ public class HomePageActivity extends AppCompatActivity {
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, menuList);
         sideList.setAdapter(adapter);
 
+        //Might want to change to fragments later on - more efficient
         sideList.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
@@ -105,7 +104,7 @@ public class HomePageActivity extends AppCompatActivity {
         viewDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomePageActivity.this, ViewDataActivity.class);
+                Intent intent = new Intent(HomePageActivity.this, LogOutActivity.class);
                 startActivity(intent);
             }
         });
