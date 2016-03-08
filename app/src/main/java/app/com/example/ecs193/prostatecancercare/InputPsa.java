@@ -11,7 +11,6 @@ import android.widget.EditText;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
-
 public class InputPsa extends Activity {
     Firebase fbRef;
 

@@ -26,10 +26,11 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".HomePageActivity" />
         <activity android:name=".TempPassword" />
-        <activity android:name=".VisualizeDataActivity" />
         <activity android:name=".VisualizeData" />
         <activity android:name=".PsaGraph" />
         <activity android:name=".ViewDataActivity"></activity>
+        <activity android:name=".InputMri" />
+        <activity android:name=".InputBiopsy"></activity>
     </application>
 
 </manifest>

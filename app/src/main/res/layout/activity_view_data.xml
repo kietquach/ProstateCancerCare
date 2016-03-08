@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:style="@style/Widget.AppCompat.Spinner.Underlined"/>
+        style="@style/Widget.AppCompat.Spinner.Underlined"/>
 
     <ListView
         android:layout_width="wrap_content"
