@@ -31,15 +31,13 @@ public class EditAppointmentsActivity extends AppCompatActivity {
     private final Firebase fbRef = new Firebase("https://boiling-heat-3817.firebaseio.com/");
 
     public static class AppointmentViewHolder extends RecyclerView.ViewHolder {
-        ImageButton editButton;
         ImageButton deleteButton;
         TextView dateTextView;
         TextView typeTextView;
 
         public AppointmentViewHolder(View v) {
             super(v);
-            editButton = (ImageButton) v.findViewById(R.id.imageButton1);
-            deleteButton = (ImageButton) v.findViewById(R.id.imageButton2);
+            deleteButton = (ImageButton) v.findViewById(R.id.imageButton1);
             dateTextView = (TextView) v.findViewById(R.id.dateTextView);
             typeTextView = (TextView) v.findViewById(R.id.typeTextView);
         }
@@ -52,12 +50,17 @@ public class EditAppointmentsActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
         AuthData authData = fbRef.getAuth();
         appointmentsRef = fbRef.child("users").child(authData.getUid()).child("Appointments");
+        appointmentsRef.orderByChild("date");
 
         mTextView = (TextView) findViewById(R.id.numAppointmentsText);
         appointmentsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mTextView.setText("You have " + dataSnapshot.getChildrenCount() + " scheduled appointments.");
+                if(dataSnapshot.getChildrenCount() == 0) {
+                    mTextView.setText("You do not have any scheduled appointment.");
+                } else {
+                    mTextView.setText("You have " + dataSnapshot.getChildrenCount() + " scheduled appointments.");
+                }
             }
 
             @Override
@@ -81,7 +84,7 @@ public class EditAppointmentsActivity extends AppCompatActivity {
                         Appointment.class,
                         R.layout.appointment_entry,
                         AppointmentViewHolder.class,
-                        appointmentsRef
+                        appointmentsRef.orderByChild("date")
                 ) {
             @Override
             protected void populateViewHolder(AppointmentViewHolder appointmentViewHolder, Appointment appointment, int i) {

@@ -50,7 +50,6 @@ public class AddAppointmentActivity extends Activity implements View.OnClickList
             Firebase appointments = fbRef.child("users").child(authData.getUid()).child("Appointments").push();
             appointments.child("date").setValue(yearStr + monthStr + dayStr);
             appointments.child("type").setValue(appointmentType);
-            Intent intent = new Intent(AddAppointmentActivity.this, EditAppointmentsActivity.class);
 
             //create an alarm to show an notification 2 weeks before appointment
             Intent alarmIntent = new Intent(this, AlarmReceiver.class);
@@ -65,7 +64,6 @@ public class AddAppointmentActivity extends Activity implements View.OnClickList
             alarmManager.set(AlarmManager.RTC_WAKEUP, appointmentDate.getTimeInMillis(), pendingIntent);
 
             //go back to EditAppointment activity.
-            startActivity(intent);
             finish();
         } else {
             Toast.makeText(AddAppointmentActivity.this, "Account unauthenticated", Toast.LENGTH_SHORT).show();
