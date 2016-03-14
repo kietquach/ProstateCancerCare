@@ -1,6 +1,37 @@
 <resources>
     <string name="app_name">Prostate Cancer Care</string>
-    <string name="welcomeText">Welcome!</string>
-    <string name="emailText">Email:</string>
-    <string name="passwordText">Password:</string>
+    <string name="welcome">Welcome!</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="firstname">First Name</string>
+    <string name="lastname">Last Name</string>
+    <string name="title_activity_profile_setup">ProfileSetup</string>
+    <string name="dob">DOB</string>
+    <string name="create">Create</string>
+    <string name="inputdata">Input Data</string>
+    <string name="visualizedata">Visualize Data</string>
+    <string name="faq">FAQ</string>
+    <string name="feedback">Feedback</string>
+    <string name="psa">PSA</string>
+    <string name="biopsy">Biopsy</string>
+    <string name="mri">MRI</string>
+    <string name="gene">Gene</string>
+    <string name="genomics">Genomics</string>
+    <string name="qql">QQL</string>
+    <string name="psalevel">PSA level</string>
+    <string name="date">Date</string>
+    <string name="notes">Notes</string>
+    <string name="done">Done</string>
+    <string name="prostatevolume">Prostate Volume</string>
+    <string name="psadensity">PSA Density</string>
+    <string name="signup">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="ethnicity">Ethnicity</string>
+    <string name="editAppointment">Edit Appointments</string>
+    <string name="add_appointment">Add Appointments</string>
+
+
+    <!--
+    <string name=""></string> 
+    -->
 </resources>

@@ -10,58 +10,57 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/welcomeText"
-        android:id="@+id/welcomeText"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/emailText"
+        android:text="@string/email"
         android:id="@+id/emailText"
         android:layout_marginTop="53dp"
-        android:layout_below="@+id/welcomeText"
         android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/passwordText"
+        android:text="@string/password"
         android:id="@+id/passwordText"
-        android:layout_marginTop="44dp"
-        android:layout_below="@+id/loginEmail"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/emailEdit"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/loginEmail"
-        android:layout_below="@+id/welcomeText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="87dp" />
+        android:id="@+id/emailEdit"
+        android:layout_below="@+id/emailText"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/loginPassword"
-        android:layout_below="@+id/loginEmail"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="85dp" />
+        android:id="@+id/passwordEdit"
+        android:layout_below="@+id/passwordText"
+        android:layout_alignLeft="@+id/emailEdit"
+        android:layout_alignStart="@+id/emailEdit" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login!"
+        android:text="@string/login"
         android:id="@+id/loginButton"
-        android:layout_below="@+id/loginPassword"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp" />
+        android:layout_marginBottom="58dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/passwordEdit"
+        android:layout_alignEnd="@+id/passwordEdit" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/signup"
+        android:id="@+id/signupButton"
+        android:layout_alignTop="@+id/loginButton"
+        android:layout_alignLeft="@+id/passwordEdit"
+        android:layout_alignStart="@+id/passwordEdit" />
+
 </RelativeLayout>
