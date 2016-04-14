@@ -34,12 +34,14 @@ public class EditAppointmentsActivity extends AppCompatActivity {
         ImageButton deleteButton;
         TextView dateTextView;
         TextView typeTextView;
+        TextView noteTextView;
 
         public AppointmentViewHolder(View v) {
             super(v);
             deleteButton = (ImageButton) v.findViewById(R.id.imageButton1);
             dateTextView = (TextView) v.findViewById(R.id.dateTextView);
             typeTextView = (TextView) v.findViewById(R.id.typeTextView);
+            noteTextView = (TextView) v.findViewById(R.id.noteTextView);
         }
     }
 
@@ -92,6 +94,7 @@ public class EditAppointmentsActivity extends AppCompatActivity {
                 String newDateString = dateString.substring(4,6) + "/" + dateString.substring(6,8) + "/" + dateString.substring(0,4);
                 appointmentViewHolder.dateTextView.setText(newDateString);
                 appointmentViewHolder.typeTextView.setText(appointment.getType());
+                appointmentViewHolder.noteTextView.setText(appointment.getNote());
             }
         };
 

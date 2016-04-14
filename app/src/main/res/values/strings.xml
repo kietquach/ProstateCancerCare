@@ -31,7 +31,10 @@
     <string name="add_appointment">Add Appointments</string>
 
 
-    <!--
-    <string name=""></string> 
-    -->
+    <string-array name="appointment_types">
+        <item>PSA</item>
+        <item>Biopsy</item>
+        <item>Genomics</item>
+        <item>MRI</item>
+    </string-array>
 </resources>

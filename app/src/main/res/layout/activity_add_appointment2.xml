@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Add a scheduled appointment"
+        android:id="@+id/add_appointment_text"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ADD APPOINTMENT"
+        android:id="@+id/submit_appointment_button"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_alignParentBottom="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Appointment Type"
+        android:id="@+id/aptTypeTextView"
+        android:layout_marginTop="24dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/add_appointment_text"
+        android:layout_alignLeft="@+id/add_appointment_text"
+        android:layout_alignStart="@+id/add_appointment_text" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="15dp"
+        android:id="@+id/spinner"
+        android:spinnerMode="dropdown"
+        android:layout_toRightOf="@+id/aptTypeTextView"
+        android:layout_toEndOf="@+id/aptTypeTextView"
+        android:layout_below="@id/add_appointment_text"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Appointment Date"
+        android:id="@+id/aptDateTextView"
+        android:layout_below="@+id/aptTypeTextView"
+        android:layout_alignLeft="@+id/aptTypeTextView"
+        android:layout_alignStart="@+id/aptTypeTextView" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/aptDateButton"
+        android:onClick="showDatePickerDialog"
+        android:layout_toRightOf="@+id/aptDateTextView"
+        android:layout_toEndOf="@+id/aptDateTextView"
+        android:layout_below="@+id/spinner"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Get a reminder"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/aptDateButton"
+        android:layout_alignLeft="@+id/aptDateTextView"
+        android:layout_alignStart="@+id/aptDateTextView"
+        android:layout_marginTop="15dp"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="4"
+        android:maxLength="2"
+        android:gravity="center_horizontal"
+        android:id="@+id/reminderEditText"
+        android:layout_below="@+id/textView4"
+        android:layout_toLeftOf="@+id/textView5"
+        android:layout_toStartOf="@+id/textView5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="days before the test"
+        android:id="@+id/textView5"
+        android:layout_alignBottom="@+id/reminderEditText"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Write yourself some notes for the appointment"
+        android:id="@+id/selfNoteTextView"
+        android:layout_marginTop="47dp"
+        android:layout_below="@+id/textView5"
+        android:layout_alignLeft="@+id/aptDateTextView"
+        android:layout_alignStart="@+id/aptDateTextView" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/noteEditText"
+        android:layout_below="@+id/selfNoteTextView"
+        android:layout_alignLeft="@+id/submit_appointment_button"
+        android:layout_alignStart="@+id/submit_appointment_button"
+        android:layout_alignRight="@+id/submit_appointment_button"
+        android:layout_alignEnd="@+id/submit_appointment_button"
+        android:layout_above="@+id/submit_appointment_button" />
+
+</RelativeLayout>
