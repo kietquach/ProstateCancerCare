@@ -84,7 +84,7 @@ public class HomePageActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     // do some stuff once
-                    welcomeText.setText(snapshot.child("profile").child("firstname").getValue().toString());
+                    welcomeText.setText("Hi, " + snapshot.child("profile").child("firstname").getValue().toString());
                     ////////////////////////////////////////////////////////
                     //Do days left code here - use simple date format
                     ////////////////////////////////////////////////////////
