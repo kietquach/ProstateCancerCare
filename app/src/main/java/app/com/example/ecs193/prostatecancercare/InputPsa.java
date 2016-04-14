@@ -31,13 +31,23 @@ public class InputPsa extends Activity {
                         if (authData != null) {
                             // user authenticated
                             Firebase psa = fbRef.child("users").child(authData.getUid()).child("psa");
+
                             String date = ((EditText) findViewById(R.id.dateEdit)).getText().toString();
-                            Firebase psaEntry = psa.child(date);
+                            //does not  save empty data
+                            if(!date.isEmpty()) {
+                                Firebase psaEntry = psa.child(date);
+                                //does not save empty data
+                                if (((EditText) findViewById(R.id.psaEdit)).getText().toString() != "") {
+                                    psaEntry.child("psa").setValue(((EditText) findViewById(R.id.psaEdit)).getText().toString());
+                                }
+                                if (((EditText) findViewById(R.id.densityEdit)).getText().toString() != "") {
+                                    psaEntry.child("density").setValue(((EditText) findViewById(R.id.densityEdit)).getText().toString());
+                                }
+                                if (((EditText) findViewById(R.id.prostatevolumeEdit)).getText().toString() != "") {
+                                    psaEntry.child("prostatevolume").setValue(((EditText) findViewById(R.id.prostatevolumeEdit)).getText().toString());
+                                }
 
-                            psaEntry.child("psa").setValue(((EditText) findViewById(R.id.psaEdit)).getText().toString());
-                            psaEntry.child("density").setValue(((EditText) findViewById(R.id.densityEdit)).getText().toString());
-                            psaEntry.child("prostatevolume").setValue(((EditText) findViewById(R.id.prostatevolumeEdit)).getText().toString());
-
+                            }
                             Intent intent = new Intent(InputPsa.this, InputData.class);
                             startActivity(intent);
                         } else {
