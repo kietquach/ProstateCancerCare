@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -90,16 +91,19 @@ public class AddAppointmentActivity extends FragmentActivity implements View.OnC
             appointments.child("date").setValue(yearStr + monthStr + dayStr);
             appointments.child("type").setValue(appointmentType);
             appointments.child("note").setValue(mNoteEditText.getText().toString());
+            appointments.child("key").setValue(appointments.getKey());
 
             //create an alarm to show an notification 2 weeks before appointment
-            Intent alarmIntent = new Intent(this, AlarmReceiver.class);
+            Intent alarmIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
             alarmIntent.putExtra("year", year);
             alarmIntent.putExtra("month", month);
             alarmIntent.putExtra("day", day);
             alarmIntent.putExtra("type", appointmentType);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmIntent.setData(Uri.parse("custom://" + appointments.getKey()));
+            alarmIntent.setAction(appointments.getKey());
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            GregorianCalendar appointmentDate = new GregorianCalendar(year, month, day, 14, 14, 0);
+            GregorianCalendar appointmentDate = new GregorianCalendar(year, month, day, 16, 13, 0);
             appointmentDate.add(Calendar.DAY_OF_MONTH, -1 * Integer.parseInt(mReminderEditText.getText().toString()));
             alarmManager.set(AlarmManager.RTC_WAKEUP, appointmentDate.getTimeInMillis(), pendingIntent);
 

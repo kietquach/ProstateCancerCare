@@ -11,7 +11,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:contentDescription="Delete"/>
+        android:src="@drawable/ic_delete_forever_black_48dp"
+        android:contentDescription="Delete"
+        android:background="?android:selectableItemBackground"/>
 
     <TextView
         android:layout_width="wrap_content"

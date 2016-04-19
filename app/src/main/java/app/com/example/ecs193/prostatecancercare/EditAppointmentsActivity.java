@@ -1,6 +1,10 @@
 package app.com.example.ecs193.prostatecancercare;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,9 +18,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 
@@ -27,6 +33,7 @@ public class EditAppointmentsActivity extends AppCompatActivity {
     private Firebase appointmentsRef;
     private RecyclerView mRecyclerView;
     private TextView mTextView;
+    private FirebaseRecyclerAdapter<Appointment, AppointmentViewHolder> adapter;
 
     private final Firebase fbRef = new Firebase("https://boiling-heat-3817.firebaseio.com/");
 
@@ -81,7 +88,7 @@ public class EditAppointmentsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        FirebaseRecyclerAdapter<Appointment, AppointmentViewHolder> adapter =
+        adapter =
                 new FirebaseRecyclerAdapter<Appointment, AppointmentViewHolder>(
                         Appointment.class,
                         R.layout.appointment_entry,
@@ -89,12 +96,25 @@ public class EditAppointmentsActivity extends AppCompatActivity {
                         appointmentsRef.orderByChild("date")
                 ) {
             @Override
-            protected void populateViewHolder(AppointmentViewHolder appointmentViewHolder, Appointment appointment, int i) {
+            protected void populateViewHolder(AppointmentViewHolder appointmentViewHolder, final Appointment appointment, int i) {
                 String dateString = appointment.getDate();
-                String newDateString = dateString.substring(4,6) + "/" + dateString.substring(6,8) + "/" + dateString.substring(0,4);
+                final String newDateString = dateString.substring(4,6) + "/" + dateString.substring(6,8) + "/" + dateString.substring(0,4);
                 appointmentViewHolder.dateTextView.setText(newDateString);
                 appointmentViewHolder.typeTextView.setText(appointment.getType());
                 appointmentViewHolder.noteTextView.setText(appointment.getNote());
+                appointmentViewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Firebase appointments = fbRef.child("users").child(fbRef.getAuth().getUid()).child("Appointments").child(appointment.getKey());
+                        appointments.removeValue();
+                        Intent alarmIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
+                        alarmIntent.setData(Uri.parse("custom://" + appointment.getKey()));
+                        alarmIntent.setAction(appointment.getKey());
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                        alarmManager.cancel(pendingIntent);
+                    }
+                });
             }
         };
 
@@ -120,5 +140,11 @@ public class EditAppointmentsActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        adapter.cleanup();
     }
 }
