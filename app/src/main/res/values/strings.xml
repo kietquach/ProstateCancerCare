@@ -30,6 +30,10 @@
     <string name="editAppointment">Edit Appointments</string>
     <string name="add_appointment">Add Appointments</string>
 
+    <string name="hello">Hello World, DatumDroidOCRActivity!</string>
+    <string name="button_text">OCR!</string>
+    <string name="text_hint">OCRed Text will appear here</string>
+
 
     <string-array name="appointment_types">
         <item>PSA</item>

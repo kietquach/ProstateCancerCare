@@ -25,7 +25,7 @@ public class HomePageActivity extends AppCompatActivity {
     private Firebase childRef;
     private String user;
     private TextView daysLeft;
-    private Button viewDataButton;
+    private Button logoutButton;
     private Intent intent;
 
     @Override
@@ -100,11 +100,11 @@ public class HomePageActivity extends AppCompatActivity {
             // no user authenticated
         }
 
-        viewDataButton = (Button) findViewById(R.id.viewDataButton);
-        viewDataButton.setOnClickListener(new View.OnClickListener() {
+        logoutButton = (Button) findViewById(R.id.viewDataButton);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomePageActivity.this, LogOutActivity.class);
+                Intent intent = new Intent(HomePageActivity.this, SimpleAndroidOCRActivity.class);
                 startActivity(intent);
             }
         });
