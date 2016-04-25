@@ -29,6 +29,8 @@
     <string name="ethnicity">Ethnicity</string>
     <string name="editAppointment">Edit Appointments</string>
     <string name="add_appointment">Add Appointments</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 
 
     <string-array name="appointment_types">

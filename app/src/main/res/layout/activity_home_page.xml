@@ -63,7 +63,8 @@
         android:id="@+id/sideList"
         android:layout_width="200dp"
         android:layout_height="match_parent"
-        android:layout_gravity="left|start">
+        android:layout_gravity="left|start"
+        android:background="#ffeeeeee">
 
     </ListView>
 </android.support.v4.widget.DrawerLayout>
