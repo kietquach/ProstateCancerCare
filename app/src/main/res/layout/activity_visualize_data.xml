@@ -7,23 +7,14 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="app.com.example.ecs193.prostatecancercare.VisualizeData">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Visualize Data"
-        android:id="@+id/visualizeDataView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+    tools:context="app.com.example.ecs193.prostatecancercare.VisualizeData"
+    android:background="@drawable/visualization">
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PSA"
         android:id="@+id/psaButton"
-        android:layout_below="@+id/visualizeDataView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="81dp" />
 </RelativeLayout>
