@@ -18,6 +18,7 @@ import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
 public class HomePageActivity extends AppCompatActivity {
@@ -26,6 +27,7 @@ public class HomePageActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private TextView welcomeText;
     private Firebase fbRef;
+    private Firebase appointmentsRef;
     private Firebase childRef;
     private String user;
     private TextView daysLeft;
@@ -120,6 +122,9 @@ public class HomePageActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
 
     }
 
