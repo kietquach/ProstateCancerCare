@@ -4,26 +4,9 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/email"
-        android:id="@+id/emailText"
-        android:layout_marginTop="53dp"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/password"
-        android:id="@+id/passwordText"
-        android:layout_below="@+id/emailEdit"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp" />
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:background="@drawable/mainpage"
+>
 
     <EditText
         android:layout_width="wrap_content"
@@ -31,8 +14,9 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/emailEdit"
-        android:layout_below="@+id/emailText"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/passwordEdit"
+        android:hint="email" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -40,17 +24,17 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/passwordEdit"
-        android:layout_below="@+id/passwordText"
+        android:layout_above="@+id/loginButton"
         android:layout_alignLeft="@+id/emailEdit"
-        android:layout_alignStart="@+id/emailEdit" />
+        android:layout_alignStart="@+id/emailEdit"
+        android:hint="password" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login"
         android:id="@+id/loginButton"
-        android:layout_marginBottom="58dp"
-        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/signupButton"
         android:layout_alignRight="@+id/passwordEdit"
         android:layout_alignEnd="@+id/passwordEdit" />
 
@@ -59,7 +43,7 @@
         android:layout_height="wrap_content"
         android:text="@string/signup"
         android:id="@+id/signupButton"
-        android:layout_alignTop="@+id/loginButton"
+        android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/passwordEdit"
         android:layout_alignStart="@+id/passwordEdit" />
 

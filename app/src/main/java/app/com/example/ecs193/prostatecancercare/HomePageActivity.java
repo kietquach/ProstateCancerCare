@@ -1,8 +1,12 @@
 package app.com.example.ecs193.prostatecancercare;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +18,7 @@ import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
 public class HomePageActivity extends AppCompatActivity {
@@ -22,11 +27,14 @@ public class HomePageActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private TextView welcomeText;
     private Firebase fbRef;
+    private Firebase appointmentsRef;
     private Firebase childRef;
     private String user;
     private TextView daysLeft;
-    private Button viewDataButton;
+    private Button logoutButton;
     private Intent intent;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +44,8 @@ public class HomePageActivity extends AppCompatActivity {
         fbRef = new Firebase("https://boiling-heat-3817.firebaseio.com/");
 
         sideList = (ListView) findViewById(R.id.sideList);
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+
         String[] menuList = {"Profile", "Input Data", "Visualization", "Appointments", "Settings"};
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, menuList);
         sideList.setAdapter(adapter);
@@ -72,6 +82,10 @@ public class HomePageActivity extends AppCompatActivity {
                 }
         );
 
+        setupDrawer();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         welcomeText = (TextView) findViewById(R.id.welcomeText);
 
         AuthData authData = fbRef.getAuth();
@@ -100,8 +114,8 @@ public class HomePageActivity extends AppCompatActivity {
             // no user authenticated
         }
 
-        viewDataButton = (Button) findViewById(R.id.viewDataButton);
-        viewDataButton.setOnClickListener(new View.OnClickListener() {
+        logoutButton = (Button) findViewById(R.id.viewDataButton);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomePageActivity.this, LogOutActivity.class);
@@ -109,5 +123,44 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setupDrawer() {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 }

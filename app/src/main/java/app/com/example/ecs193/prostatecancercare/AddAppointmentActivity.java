@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -30,11 +29,12 @@ import java.util.GregorianCalendar;
 
 public class AddAppointmentActivity extends FragmentActivity implements View.OnClickListener {
     private Firebase fbRef;
-    private Button mSubmitButton, mDateButton;
+    private Button mSubmitButton, mDateButton, mReminderButton;
     private EditText mReminderEditText, mNoteEditText;
     private Spinner mSpinner;
     private String appointmentType = "PSA";
-    private int year, month, day;
+    private int year, month, day, reminderDay, reminderMonth, reminderYear;
+    private boolean isInterval = false;
 
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
@@ -43,46 +43,65 @@ public class AddAppointmentActivity extends FragmentActivity implements View.OnC
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the current date as the default date in the picker
             final Calendar c = Calendar.getInstance();
-            AddAppointmentActivity activity = (AddAppointmentActivity)getActivity();
-            activity.year = c.get(Calendar.YEAR);
-            activity.month = c.get(Calendar.MONTH);
-            activity.day = c.get(Calendar.DAY_OF_MONTH);
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
 
             // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, activity.year, activity.month, activity.day);
+            return new DatePickerDialog(getActivity(), this, year, month, day);
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            AddAppointmentActivity activity = (AddAppointmentActivity)getActivity();
+            AddAppointmentActivity activity = (AddAppointmentActivity) getActivity();
             activity.year = year;
             activity.month = month;
             activity.day = day;
-            System.out.println("year=" + year + " month="+ month + " day=" + day);
+            System.out.println("year=" + year + " month=" + month + " day=" + day);
             activity.mDateButton.setText((month + 1) + "/" + day + "/" + year);
         }
     }
 
-    public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+    public static class DatePickerFragment2 extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            AddAppointmentActivity activity = (AddAppointmentActivity) getActivity();
+            activity.reminderYear = year;
+            activity.reminderMonth = month;
+            activity.reminderDay = day;
+            System.out.println("year=" + year + " month=" + month + " day=" + day);
+            activity.mReminderButton.setText((month + 1) + "/" + day + "/" + year);
+        }
     }
 
     @Override
     public void onClick(View v) {
         AuthData authData = fbRef.getAuth();
-        if(authData != null) {
+        if (authData != null) {
             System.out.println(year + "/" + month + "/" + day);
 
             String yearStr = year + "", monthStr = month + "", dayStr = day + "";
-            if(month < 9) {
+            if (month < 9) {
                 monthStr = "0" + (month + 1);
             }
-            if(day < 10) {
+            if (day < 10) {
                 dayStr = "0" + day;
             }
 
-            if (mReminderEditText.getText() == null || mReminderEditText.getText().length() == 0) {
-                Toast.makeText(this, "Please enter a number for reminder", Toast.LENGTH_SHORT).show();
+            if (isInterval && (mReminderEditText.getText() == null || mReminderEditText.getText().length() == 0)) {
+                Toast.makeText(this, "Please enter a number for interval", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -99,13 +118,19 @@ public class AddAppointmentActivity extends FragmentActivity implements View.OnC
             alarmIntent.putExtra("month", month);
             alarmIntent.putExtra("day", day);
             alarmIntent.putExtra("type", appointmentType);
+            alarmIntent.putExtra("isInterval", isInterval);
             alarmIntent.setData(Uri.parse("custom://" + appointments.getKey()));
             alarmIntent.setAction(appointments.getKey());
             PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            GregorianCalendar appointmentDate = new GregorianCalendar(year, month, day, 16, 13, 0);
-            appointmentDate.add(Calendar.DAY_OF_MONTH, -1 * Integer.parseInt(mReminderEditText.getText().toString()));
-            alarmManager.set(AlarmManager.RTC_WAKEUP, appointmentDate.getTimeInMillis(), pendingIntent);
+
+            GregorianCalendar appointmentDate = new GregorianCalendar(reminderYear, reminderMonth, reminderDay, 12, 0, 0);
+            if (!isInterval) {
+                alarmManager.set(AlarmManager.RTC_WAKEUP, appointmentDate.getTimeInMillis(), pendingIntent);
+            } else {
+                long intervalInMillis = Integer.parseInt(mReminderEditText.getText().toString()) * 1000 * 60 * 60 * 24;
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, appointmentDate.getTimeInMillis(), intervalInMillis, pendingIntent);
+            }
 
             //go back to EditAppointment activity.
             finish();
@@ -121,11 +146,12 @@ public class AddAppointmentActivity extends FragmentActivity implements View.OnC
         Firebase.setAndroidContext(this);
         fbRef = new Firebase("https://boiling-heat-3817.firebaseio.com/");
 
-        mSubmitButton = (Button)findViewById(R.id.submit_appointment_button);
-        mDateButton = (Button)findViewById(R.id.aptDateButton);
-        mReminderEditText = (EditText)findViewById(R.id.reminderEditText);
-        mNoteEditText = (EditText)findViewById(R.id.noteEditText);
-        mSpinner = (Spinner)findViewById(R.id.spinner);
+        mSubmitButton = (Button) findViewById(R.id.submit_appointment_button);
+        mDateButton = (Button) findViewById(R.id.aptDateButton);
+        mReminderButton = (Button) findViewById(R.id.reminderDateButton);
+        mReminderEditText = (EditText) findViewById(R.id.reminderEditText);
+        mNoteEditText = (EditText) findViewById(R.id.noteEditText);
+        mSpinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.appointment_types, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -142,11 +168,43 @@ public class AddAppointmentActivity extends FragmentActivity implements View.OnC
         });
 
         final Calendar c = Calendar.getInstance();
-        year = c.get(Calendar.YEAR);
-        month = c.get(Calendar.MONTH);
-        day = c.get(Calendar.DAY_OF_MONTH);
+        reminderYear = year = c.get(Calendar.YEAR);
+        reminderMonth = month = c.get(Calendar.MONTH);
+        reminderDay = day = c.get(Calendar.DAY_OF_MONTH);
         mDateButton.setText((month + 1) + "/" + day + "/" + year);
+        mReminderButton.setText((month + 1) + "/" + day + "/" + year);
+
+        mDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerFragment().show(getSupportFragmentManager(), "datePicker");
+            }
+        });
+
+        mReminderButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                new DatePickerFragment2().show(getSupportFragmentManager(), "datePicker2");
+            }
+        });
 
         mSubmitButton.setOnClickListener(this);
+    }
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radio_once:
+                if (checked)
+                    isInterval = false;
+                    break;
+            case R.id.radio_interval:
+                if (checked)
+                    isInterval = true;
+                    break;
+        }
     }
 }
