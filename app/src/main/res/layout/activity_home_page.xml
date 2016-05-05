@@ -8,7 +8,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        >
 
 
         <TextView
@@ -27,7 +29,8 @@
                 android:background="@drawable/circle"
                 android:layout_below="@id/welcomeText"
                 android:layout_marginTop="45dp"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:id="@+id/relativeLayout">
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="40dp"
@@ -57,13 +60,15 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="40dp" />
+
     </RelativeLayout>
 
     <ListView
         android:id="@+id/sideList"
         android:layout_width="200dp"
         android:layout_height="match_parent"
-        android:layout_gravity="left|start">
+        android:layout_gravity="left|start"
+        android:clickable="false">
 
     </ListView>
 </android.support.v4.widget.DrawerLayout>
