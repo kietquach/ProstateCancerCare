@@ -13,13 +13,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class HomePageActivity extends AppCompatActivity {
 
@@ -30,7 +35,7 @@ public class HomePageActivity extends AppCompatActivity {
     private Firebase appointmentsRef;
     private Firebase childRef;
     private String user;
-    private TextView daysLeft;
+    private TextView daysLeftTextView;
     private Button logoutButton;
     private Intent intent;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -42,6 +47,7 @@ public class HomePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
 
         fbRef = new Firebase("https://boiling-heat-3817.firebaseio.com/");
+        daysLeftTextView = (TextView) findViewById(R.id.daysLeftTextView);
 
         sideList = (ListView) findViewById(R.id.sideList);
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
@@ -87,7 +93,6 @@ public class HomePageActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         welcomeText = (TextView) findViewById(R.id.welcomeText);
-
         AuthData authData = fbRef.getAuth();
         if (authData != null) {
             // user authenticated
@@ -110,6 +115,43 @@ public class HomePageActivity extends AppCompatActivity {
                 }
             });
 
+            appointmentsRef = childRef.child("Appointments");
+            Query queryRef = appointmentsRef.orderByChild("date").limitToFirst(1);
+
+            queryRef.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    Appointment appointment = dataSnapshot.getValue(Appointment.class);
+                    int year = Integer.parseInt(appointment.getDate().substring(0, 4));
+                    int month = Integer.parseInt(appointment.getDate().substring(4, 6)) - 1;
+                    int day = Integer.parseInt(appointment.getDate().substring(6, 8));
+                    System.out.println("year month day " + year + " " + month + " " + day);
+                    Calendar appointmentDate = new GregorianCalendar(year, month, day, 23, 0, 0);
+                    Calendar now = Calendar.getInstance();
+                    long difference = appointmentDate.getTimeInMillis() - now.getTimeInMillis();
+                    long days = difference / (1000 * 60 * 60 * 24);
+                    daysLeftTextView.setText(String.valueOf(days));
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                }
+            });
         } else {
             // no user authenticated
         }
@@ -122,7 +164,6 @@ public class HomePageActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     @Override
