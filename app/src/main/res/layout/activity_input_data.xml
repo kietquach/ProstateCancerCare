@@ -21,11 +21,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/qql"
+        android:text="@string/qol"
         android:id="@+id/qqlButton"
-        android:layout_marginTop="25dp"
         android:layout_below="@+id/psaButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/psaButton"
+        android:layout_alignStart="@+id/psaButton" />
 
     <Button
         android:layout_width="wrap_content"
@@ -58,11 +58,18 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/genomics"
-        android:id="@+id/genomicsButton"
-        android:layout_below="@+id/mriButton"
-        android:layout_alignLeft="@+id/mriButton"
-        android:layout_alignStart="@+id/mriButton"
-        android:layout_marginTop="28dp" />
+        android:text="remove"
+        android:id="@+id/removeButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View"
+        android:id="@+id/viewButton"
+        android:layout_above="@+id/removeButton"
+        android:layout_alignLeft="@+id/removeButton"
+        android:layout_alignStart="@+id/removeButton" />
 
 </RelativeLayout>

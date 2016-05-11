@@ -28,12 +28,17 @@
         <activity android:name=".TempPassword" />
         <activity android:name=".VisualizeData" />
         <activity android:name=".PsaGraph" />
-        <activity android:name=".LogOutActivity"></activity>
+        <activity android:name=".LogOutActivity" />
         <activity android:name=".InputMri" />
-        <activity android:name=".InputBiopsy"></activity>
+        <activity android:name=".InputBiopsy" />
         <activity android:name=".EditAppointmentsActivity" />
         <activity android:name=".AddAppointmentActivity" />
+
         <receiver android:name=".AlarmReceiver" />
+
+        <activity android:name=".RemoveData" />
+        <activity android:name=".DataView" />
+        <activity android:name=".DataEditView"></activity>
     </application>
 
 </manifest>

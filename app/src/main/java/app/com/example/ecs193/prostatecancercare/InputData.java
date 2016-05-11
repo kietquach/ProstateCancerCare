@@ -53,5 +53,30 @@ public class InputData extends Activity {
                     }
                 }
         );
+
+        Button removeButton = (Button)findViewById(R.id.removeButton);
+        removeButton.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        Intent intent = new Intent(InputData.this, RemoveData.class);
+                        startActivity(intent);
+
+                    }
+                }
+        );
+
+        Button viewButton = (Button)findViewById(R.id.viewButton);
+        viewButton.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        Intent intent = new Intent(InputData.this, DataView.class);
+                        startActivity(intent);
+
+                    }
+                }
+        );
+
     }
 }

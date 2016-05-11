@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item
+        type="id"
+        name="edit_psa" />
+    <item
+        type="id"
+        name="edit_density" />
+    <item
+        type="id"
+        name="edit_volume" />
+</resources>

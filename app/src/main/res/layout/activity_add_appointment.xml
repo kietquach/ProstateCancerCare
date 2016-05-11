@@ -33,7 +33,7 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/qql"
+            android:text="@string/qol"
             android:id="@+id/QQLRadioButton"
             android:checked="false"
             android:onClick="onRadioButtonClicked"/>
