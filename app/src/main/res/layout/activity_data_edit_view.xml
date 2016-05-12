@@ -1,20 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_data_edit_view"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:id="@+id/dataLinear"
-    tools:context="app.com.example.ecs193.prostatecancercare.DataEditView">
+    android:padding="2dp"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/dataLinear">
 
 
-    <TableLayout
-        android:id="@+id/mriTable"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_column="6"
-        android:stretchColumns="*">
-    </TableLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/mriLinear">
+        </LinearLayout>
 
 
-</LinearLayout>
+        <TableLayout
+            android:id="@+id/mriTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_column="6"
+            android:stretchColumns="*">
+        </TableLayout>
+
+
+    </LinearLayout>
+</ScrollView>

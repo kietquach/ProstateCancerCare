@@ -50,7 +50,7 @@ public class DataView extends AppCompatActivity {
         q.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                addTable("MRI", dataSnapshot);
+                addTable("Mri", dataSnapshot);
             }
             @Override
             public void onCancelled(FirebaseError firebaseError) {

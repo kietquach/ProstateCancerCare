@@ -30,7 +30,7 @@
     <EditText
         android:layout_width="352dp"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:ems="10"
         android:id="@+id/psaEdit" />
 
@@ -45,7 +45,7 @@
     <EditText
         android:layout_width="352dp"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:ems="10"
         android:id="@+id/densityEdit" />
 
@@ -60,8 +60,7 @@
     <EditText
         android:layout_width="352dp"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
+        android:inputType="number"
         android:id="@+id/volumeEdit" />
 
     <Button

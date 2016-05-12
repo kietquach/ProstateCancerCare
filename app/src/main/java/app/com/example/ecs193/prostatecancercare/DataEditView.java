@@ -53,6 +53,7 @@ public class DataEditView extends AppCompatActivity {
         }else{
             q = user.child("biopsy");
         }
+        Log.i("TYPE", type);
 
         q.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -60,6 +61,7 @@ public class DataEditView extends AppCompatActivity {
                 if(type.equals("Psa")){
                     editPsaData(dataSnapshot, date);
                 }else if(type.equals("Mri")){
+                    Log.i("MRI", "this");
                     editMriData(dataSnapshot, date);
                 }else{
                     editBiopsyData(dataSnapshot, date);
@@ -75,35 +77,30 @@ public class DataEditView extends AppCompatActivity {
 
 
     private void editMriData(DataSnapshot dataSnapshot, String date){
-        LinearLayout ll = (LinearLayout)findViewById(R.id.dataLinear);
-
+        LinearLayout ll = (LinearLayout)findViewById(R.id.mriLinear);
         TableRow row = new TableRow(this);
         TextView text = new TextView(this);
         text.setText(date);
         ll.addView(text);
-
+        TableLayout tableLayout = (TableLayout)findViewById(R.id.mriTable);
         for (final DataSnapshot dates: dataSnapshot.getChildren()) {
-            TableLayout tableLayout = (TableLayout)findViewById(R.id.mriTable);
-
             if(dates.getKey().toString().equals(date)){
-                String rows = null;
-                System.out.println("date's childrennum " + dates.getChildrenCount());
                 for(final DataSnapshot data : dates.getChildren()) {
                     if(data.getKey().equals("lesioncount")){
                         text = new TextView(this);
                         text.setText("Lesion Count");
                         ll.addView(text);
                         EditText editText = new EditText(this);
-                        editText.setText(data.getValue().toString());
-                        rows = data.getValue().toString();
+                        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
                         ll.addView(editText);
+                        editText.setText(data.getValue().toString());
                         addMriLabel(tableLayout);
                     }else{
-                        System.out.println("data's childrennum " + data.getChildrenCount());
+                        System.out.println("LESION's number of children " + data.getChildrenCount());
                         for(final DataSnapshot lesions : data.getChildren()){
                             String key = lesions.getKey();
                             String pirads = null, cores = null, gleason1 = null, gleason2 = null, positive = null;
-                            System.out.println("lesions's childrennum " + lesions.getChildrenCount());
+                            System.out.println("This LESION has  " + lesions.getChildrenCount() + " entries.");
                             for(final DataSnapshot values : lesions.getChildren()){
                                 if(values.getKey().equals("PIRADS")){
                                     pirads = values.getValue().toString();
@@ -113,18 +110,15 @@ public class DataEditView extends AppCompatActivity {
                                     String gleason = values.getValue().toString();
                                     String delims = "[+]+";
                                     String[] tokens = gleason.split(delims);
-                                    gleason1 = tokens[1];
-                                    gleason2 = tokens[2];
+                                    gleason1 = tokens[0];
+                                    gleason2 = tokens[1];
                                 }else{
                                     positive = values.getValue().toString();
                                 }
                             }
-                            //System.out.println(rows+ " " +pirads+" "+cores+ " "+gleason1+" "+gleason2+ " "+positive);
-                            tableLayout.addView(createMriRow(rows, pirads, cores, gleason1, gleason2, positive));
+                            tableLayout.addView(createMriRow(key, pirads, cores, gleason1, gleason2, positive));
                         }
                     }
-
-
                 }
 
             }
@@ -193,6 +187,7 @@ public class DataEditView extends AppCompatActivity {
             editText.setText(Integer.toString(Integer.parseInt(index) / 6 + 1), TextView.BufferType.EDITABLE);
         }
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        editText.setText(value);
         editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(1)});
         editTextMriList.add(editText);
         return editText;
@@ -258,6 +253,7 @@ public class DataEditView extends AppCompatActivity {
                         ll.addView(text);
                         EditText editText = new EditText(this);
                         editText.setText(d.getValue().toString());
+                        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
                         editText.setId(R.id.edit_psa);
                         ll.addView(editText);
                     }else if(d.getKey().equals("density")){
@@ -266,6 +262,7 @@ public class DataEditView extends AppCompatActivity {
                         ll.addView(text);
                         EditText editText = new EditText(this);
                         editText.setText(d.getValue().toString());
+                        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
                         editText.setId(R.id.edit_density);
                         ll.addView(editText);
                     }else{
@@ -274,6 +271,7 @@ public class DataEditView extends AppCompatActivity {
                         ll.addView(text);
                         EditText editText = new EditText(this);
                         editText.setText(d.getValue().toString());
+                        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
                         editText.setId(R.id.edit_volume);
                         ll.addView(editText);
                     }
