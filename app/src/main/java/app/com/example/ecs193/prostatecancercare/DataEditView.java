@@ -298,7 +298,7 @@ public class DataEditView extends AppCompatActivity {
                                     psaEntry.child("density").setValue(((EditText) findViewById(R.id.edit_density)).getText().toString());
                                 }
                                 if (((EditText) findViewById(R.id.edit_volume)).getText().toString() != "") {
-                                    psaEntry.child("prostatevolume").setValue(((EditText) findViewById(R.id.edit_volume)).getText().toString());
+                                    psaEntry.child("volume").setValue(((EditText) findViewById(R.id.edit_volume)).getText().toString());
                                 }
 
                             }
