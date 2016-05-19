@@ -39,4 +39,105 @@
         <item>Genomics</item>
         <item>MRI</item>
     </string-array>
+
+
+    <string-array name="qol_questions">
+        <item>1. How do you describe yourself?</item>
+        <item>2. Which of the following best describes your current relationship?</item>
+        <item>3. What is your current marital status?</item>
+        <item>4. Are you now working at a paying job?</item>
+        <item>5. Do you currently smoke cigarettes?</item>
+        <item>6. Which therapy, if any, do you currently use to improve your erections?</item>
+        <item>7. How much school did you complete?</item>
+        <item>8.What is your approximate annual combined household income?</item>
+        <item>9. Have you EVER had any of the following medical conditions? </item>
+        <item>10. Have you EVER had any of the following treatments for prostate cancer? (Please choose no/yes for every item and enter the month and year during which the therapy was started)</item>
+    </string-array>
+
+    <string-array name="qol0_choices">
+        <item>White/Caucasian (not Latino/Hispanic)</item>
+        <item>Black/African-American (not Latino/Hispanic)</item>
+        <item>Latino/Hispanic/Mexican-American</item>
+        <item>Asian/Oriental/Pacific Islander</item>
+        <item>American Indian/Native Alaskan</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="qol1_choices">
+        <item>Living with spouse or partner</item>
+        <item>In a significant relationship, but not living together</item>
+        <item>Not in a significant relationship</item>
+    </string-array>
+
+    <string-array name="qol2_choices">
+        <item>Never married</item>
+        <item>Married</item>
+        <item>Separated</item>
+        <item>Divorced</item>
+        <item>Widowed</item>
+    </string-array>
+
+    <string-array name="qol3_choices">
+        <item>Yes, full-time</item>
+        <item>Yes, part-time</item>
+        <item>No, but looking for a job</item>
+        <item>No, retired</item>
+    </string-array>
+
+    <string-array name="qol4_choices">
+        <item>No</item>
+        <item>Yes</item>
+    </string-array>
+
+    <string-array name="qol5_choices">
+        <item>None at all</item>
+        <item>Vacuum erection device (Erect-aid)</item>
+        <item>Penile injection therapy</item>
+        <item>Penile prosthesis</item>
+        <item>Muse (intra-urethral alprostadil)</item>
+        <item>Viagra (Sildenafil)</item>
+        <item>Other </item>
+    </string-array>
+
+    <string-array name="qol6_choices">
+        <item>Grade school or less</item>
+        <item>Some high school or technical school</item>
+        <item>High school or technical school graduate</item>
+        <item>Some college</item>
+        <item>College graduate</item>
+        <item>Graduate or professional school after college</item>
+    </string-array>
+
+    <string-array name="qol7_choices">
+        <item>Less than $10,000</item>
+        <item>$10,000 - 30,000</item>
+        <item>$30,001 - 100,000</item>
+        <item>More than $100,000</item>
+    </string-array>
+
+    <string-array name="qol8_choices">
+        <item>Diabetes</item>
+        <item>Heart attack, chest pain</item>
+        <item>Stroke</item>
+        <item>Amputation</item>
+        <item>Circulation problems in your legs or feet</item>
+        <item>Asthma, emphysema, or breathing problems</item>
+        <item>Stomach ulcer, irritable bowel</item>
+        <item>Kidney disease</item>
+        <item>Major depression</item>
+        <item>Seizures</item>
+        <item>Alcoholism or alcohol problem</item>
+        <item>Drug problems</item>
+    </string-array>
+
+    <string-array name="qol9_choices">
+        <item>Radical prostatectomy (surgery to remove theprostate through the abdomen or perineum or by using a laparoscope)</item>
+        <item>External Beam Radiation</item>
+        <item>Radioactive Seed implantation (Brachytherapy)</item>
+        <item>Expectant management (Watchful Waiting) </item>
+        <item>Orchiectomy (surgical removal of the testes)</item>
+        <item>Hormone deprivation therapy shots</item>
+        <item>Hormone pills (Flutamide_ Nilandron_ or Casodex)</item>
+        <item>Other</item>
+    </string-array>
 </resources>

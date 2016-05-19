@@ -33,6 +33,8 @@
         <activity android:name=".InputBiopsy"></activity>
         <activity android:name=".EditAppointmentsActivity" />
         <activity android:name=".AddAppointmentActivity" />
+        <activity android:name=".QolActivity"/>
+        <activity android:name=".QolMedicalConditionActivity"/>
         <receiver android:name=".AlarmReceiver" />
     </application>
 
