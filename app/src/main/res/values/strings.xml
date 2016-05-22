@@ -131,13 +131,13 @@
     </string-array>
 
     <string-array name="qol9_choices">
-        <item>Radical prostatectomy (surgery to remove theprostate through the abdomen or perineum or by using a laparoscope)</item>
+        <item>Radical prostatectomy (surgery to remove the prostate through the abdomen or perineum or by using a laparoscope)</item>
         <item>External Beam Radiation</item>
         <item>Radioactive Seed implantation (Brachytherapy)</item>
         <item>Expectant management (Watchful Waiting) </item>
         <item>Orchiectomy (surgical removal of the testes)</item>
         <item>Hormone deprivation therapy shots</item>
-        <item>Hormone pills (Flutamide_ Nilandron_ or Casodex)</item>
-        <item>Other</item>
+        <item>Hormone pills (Flutamide, Nilandron, or Casodex)</item>
+        <item>Other, please specify</item>
     </string-array>
 </resources>

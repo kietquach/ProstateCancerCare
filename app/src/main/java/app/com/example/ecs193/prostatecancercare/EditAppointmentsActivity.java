@@ -138,6 +138,10 @@ public class EditAppointmentsActivity extends AppCompatActivity {
             Intent intent = new Intent(EditAppointmentsActivity.this, AddAppointmentActivity.class);
             startActivity(intent);
             return true;
+        } else if (id == R.id.homeMenuButton) {
+            Intent intent = new Intent(this, HomePageActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

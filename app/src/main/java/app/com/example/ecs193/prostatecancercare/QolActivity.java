@@ -3,6 +3,8 @@ package app.com.example.ecs193.prostatecancercare;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -31,6 +33,7 @@ public class QolActivity extends AppCompatActivity {
 
     public class ButtonListener implements View.OnClickListener {
         private int change;
+
         public ButtonListener(int change) {
             this.change = change;
         }
@@ -83,7 +86,7 @@ public class QolActivity extends AppCompatActivity {
 
         questionNumber = 0;
         questions = getResources().getStringArray(R.array.qol_questions);
-        choices  = new String[8][];
+        choices = new String[8][];
         choices[0] = getResources().getStringArray(R.array.qol0_choices);
         choices[1] = getResources().getStringArray(R.array.qol1_choices);
         choices[2] = getResources().getStringArray(R.array.qol2_choices);
@@ -106,6 +109,7 @@ public class QolActivity extends AppCompatActivity {
     private class RadioButtonClickListener implements View.OnClickListener {
         private int questionNumber;
         private int answerNum;
+
         public RadioButtonClickListener(int questionNumber, int answerNum) {
             this.questionNumber = questionNumber;
             this.answerNum = answerNum;
@@ -126,7 +130,7 @@ public class QolActivity extends AppCompatActivity {
         mRadioGroup.removeAllViews();
         mRadioGroup.clearCheck();
         RadioGroup.LayoutParams params_rb = new RadioGroup.LayoutParams(getBaseContext(), null);
-        params_rb.setMargins(10,0,0,0);
+        params_rb.setMargins(10, 0, 0, 0);
         for (int i = 0; i < choices[questionNumber].length; i++) {
             RadioButton button = new RadioButton(this);
             button.setText(choices[questionNumber][i]);
@@ -134,6 +138,24 @@ public class QolActivity extends AppCompatActivity {
             button.setLayoutParams(params_rb);
             button.setOnClickListener(new RadioButtonClickListener(questionNumber, i));
             mRadioGroup.addView(button);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.homeMenuButton:
+                Intent intent = new Intent(this, HomePageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

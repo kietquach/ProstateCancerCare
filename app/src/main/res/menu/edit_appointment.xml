@@ -6,4 +6,10 @@
         android:icon="@drawable/ic_add_white_48dp"
         android:title="@string/add_appointment"
         app:showAsAction="always|withText"/>
+
+    <item
+        android:id="@+id/homeMenuButton"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Home"
+        app:showAsAction="always"/>
 </menu>

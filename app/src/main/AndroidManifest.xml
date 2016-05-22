@@ -18,9 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ClientFirstTime" />
         <activity android:name=".ProfileSetup" />
-        <activity android:name=".Menu" />
         <activity android:name=".InputData" />
         <activity android:name=".InputPsa" />
         <activity android:name=".RegisterActivity" />

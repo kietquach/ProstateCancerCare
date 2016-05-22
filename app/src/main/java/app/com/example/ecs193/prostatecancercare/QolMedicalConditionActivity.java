@@ -5,7 +5,10 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -27,7 +30,7 @@ import java.util.GregorianCalendar;
 /**
  * Created by liray on 5/12/2016.
  */
-public class QolMedicalConditionActivity extends FragmentActivity {
+public class QolMedicalConditionActivity extends AppCompatActivity {
     private TextView mQuestion;
     private Button mBackButton;
     private Button mNextButton;
@@ -63,7 +66,7 @@ public class QolMedicalConditionActivity extends FragmentActivity {
         startDates = new String[treatments.length];
         Calendar c = GregorianCalendar.getInstance();
         for (int i = 0; i < startDates.length; i++) {
-            startDates[i] = "" + c.get(Calendar.YEAR) + "/" + (c.get(Calendar.MONTH) + 1);
+            startDates[i] = "" + (c.get(Calendar.MONTH) + 1) + "/" + (c.get(Calendar.YEAR) + 1);
         }
 
         for (int i = 0; i < medicalConditions.length; i++) {
@@ -127,5 +130,24 @@ public class QolMedicalConditionActivity extends FragmentActivity {
                 finish(); // call this to finish the current activity
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.homeMenuButton:
+                Intent intent = new Intent(this, HomePageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

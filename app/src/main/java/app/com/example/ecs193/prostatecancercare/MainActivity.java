@@ -60,10 +60,6 @@ public class MainActivity extends Activity{
                         new View.OnClickListener(){
                             @Override
                             public void onClick(View v) {
-                                //Go into next activity depending on Patient account or Physician Account
-                                //Intent intent = new Intent(MainActivity.this, ClientFirstTime.class);
-                                //startActivity(intent);
-
                                 //NOTE: Put uncomment below fo email authentication
                                 fbRef.authWithPassword(emailEdit.getText().toString(), passwordEdit.getText().toString(), new Firebase.AuthResultHandler() {
                                     public void onAuthenticated(AuthData authData) {

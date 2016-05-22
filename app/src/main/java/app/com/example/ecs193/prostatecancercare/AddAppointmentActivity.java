@@ -11,6 +11,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,7 +30,7 @@ import com.firebase.client.Firebase;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class AddAppointmentActivity extends FragmentActivity implements View.OnClickListener {
+public class AddAppointmentActivity extends AppCompatActivity implements View.OnClickListener {
     private Firebase fbRef;
     private Button mSubmitButton, mDateButton, mReminderButton;
     private EditText mReminderEditText, mNoteEditText;
@@ -205,6 +208,25 @@ public class AddAppointmentActivity extends FragmentActivity implements View.OnC
                 if (checked)
                     isInterval = true;
                     break;
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.homeMenuButton:
+                Intent intent = new Intent(this, HomePageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }
