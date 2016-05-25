@@ -38,7 +38,8 @@
                 android:layout_alignParentStart="true"
                 android:gravity="right"
                 android:layout_column="0"
-                android:contextClickable="false" />
+                android:contextClickable="false"
+                android:textColor="#FFFFFFFF" />
 
             <EditText
                 android:id="@+id/dateEdit"
@@ -47,7 +48,7 @@
                 android:inputType="number"
                 android:ems="10"
                 android:layout_column="4"
-                />
+                android:backgroundTint="#FFFFFFFF" />
 
         </TableRow>
 
@@ -58,7 +59,8 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Lesions"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:textColor="#FFFFFFFF" />
 
             <EditText
                 android:id="@+id/lesionsEdit"
@@ -66,7 +68,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:layout_column="4" />
+                android:layout_column="4"
+                android:backgroundTint="#FFFFFFFF" />
         </TableRow>
 
         <TableRow>
