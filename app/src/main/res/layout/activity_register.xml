@@ -15,7 +15,8 @@
         android:id="@+id/newEmailText"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="92dp" />
+        android:layout_marginTop="92dp"
+        android:textColor="#FFFFFFFF" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -25,7 +26,8 @@
         android:id="@+id/newEmailInput"
         android:layout_below="@+id/newEmailText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp" />
+        android:layout_marginTop="34dp"
+        android:backgroundTint="#FFFFFFFF" />
 
     <Button
         android:layout_width="wrap_content"

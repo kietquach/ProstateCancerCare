@@ -5,8 +5,9 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
-    android:background="@drawable/mainpage"
+    android:background="@drawable/bg2"
 >
+
 
     <EditText
         android:layout_width="wrap_content"
@@ -14,9 +15,12 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/emailEdit"
-        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
         android:layout_above="@+id/passwordEdit"
-        android:hint="email" />
+        android:hint="email"
+        android:textColor="#000000"
+        android:background="#ffffff"
+        android:layout_marginLeft="100dp"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -25,9 +29,12 @@
         android:ems="10"
         android:id="@+id/passwordEdit"
         android:layout_above="@+id/loginButton"
-        android:layout_alignLeft="@+id/emailEdit"
         android:layout_alignStart="@+id/emailEdit"
-        android:hint="password" />
+        android:layout_alignLeft="@+id/emailEdit"
+        android:layout_marginBottom="35dp"
+        android:hint="password"
+        android:textColor="#000000"
+        android:background="#ffffff" />
 
     <Button
         android:layout_width="wrap_content"
@@ -46,5 +53,18 @@
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/passwordEdit"
         android:layout_alignStart="@+id/passwordEdit" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Prostate Cancer Care"
+        android:id="@+id/textView3"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/emailEdit"
+        android:layout_alignStart="@+id/emailEdit"
+        android:textColor="@android:color/white"
+        android:textSize="35dp"
+        android:textAlignment="center" />
 
 </RelativeLayout>

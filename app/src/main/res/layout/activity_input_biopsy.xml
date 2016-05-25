@@ -34,7 +34,8 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:gravity="right"
                     android:layout_column="0"
-                    android:contextClickable="false" />
+                    android:contextClickable="false"
+                    android:textColor="#FFFFFFFF" />
 
                 <EditText
                     android:id="@+id/dateEdit"
@@ -43,7 +44,7 @@
                     android:inputType="number"
                     android:ems="10"
                     android:layout_column="4"
-                    />
+                    android:backgroundTint="#FFFFFFFF" />
 
             </TableRow>
 
@@ -55,7 +56,8 @@
                     android:text="Cores Taken"
                     android:id="@+id/coresTakenText"
                     android:gravity="right"
-                    android:layout_column="0"/>
+                    android:layout_column="0"
+                    android:textColor="#FFFFFFFF" />
 
                 <EditText
                     android:layout_width="wrap_content"
@@ -63,7 +65,9 @@
                     android:inputType="number"
                     android:ems="10"
                     android:id="@+id/coresTakenEdit"
-                    android:layout_column="4" />
+                    android:layout_column="4"
+                    android:backgroundTint="#FFFFFFFF"
+                    android:autoText="false" />
 
             </TableRow>
 
@@ -76,7 +80,8 @@
                     android:text="Cores Positive"
                     android:id="@+id/coresPositiveText"
                     android:gravity="right"
-                    android:layout_column="0"/>
+                    android:layout_column="0"
+                    android:textColor="#FFFFFFFF" />
 
                 <EditText
                     android:layout_width="wrap_content"
@@ -84,7 +89,8 @@
                     android:inputType="number"
                     android:ems="10"
                     android:id="@+id/coresPositiveEdit"
-                    android:layout_column="4" />
+                    android:layout_column="4"
+                    android:backgroundTint="#FFFFFFFF" />
             </TableRow>
 
             <TableRow>

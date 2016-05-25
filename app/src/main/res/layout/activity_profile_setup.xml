@@ -18,7 +18,8 @@
         android:id="@+id/lastnameText"
         android:layout_below="@+id/firstnameEdit"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#FFFFFFFF" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -28,7 +29,8 @@
         android:id="@+id/firstnameEdit"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:backgroundTint="#FFFFFFFF" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -38,7 +40,8 @@
         android:id="@+id/lastnameEdit"
         android:layout_below="@+id/firstnameEdit"
         android:layout_alignLeft="@+id/firstnameEdit"
-        android:layout_alignStart="@+id/firstnameEdit" />
+        android:layout_alignStart="@+id/firstnameEdit"
+        android:backgroundTint="#FFFFFFFF" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -58,7 +61,8 @@
         android:id="@+id/dobText"
         android:layout_above="@+id/ethnicityEdit"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#FFFFFFFF" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -68,7 +72,8 @@
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#FFFFFFFF" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -79,7 +84,8 @@
         android:layout_below="@+id/lastnameEdit"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="60dp" />
+        android:layout_marginTop="60dp"
+        android:textColor="#FFFFFFFF" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -89,7 +95,8 @@
         android:id="@+id/ethnicityEdit"
         android:layout_alignBottom="@+id/ethnicityText"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:backgroundTint="#FFFFFFFF" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -99,6 +106,7 @@
         android:id="@+id/dobEdit"
         android:layout_above="@+id/ethnicityEdit"
         android:layout_alignLeft="@+id/lastnameEdit"
-        android:layout_alignStart="@+id/lastnameEdit" />
+        android:layout_alignStart="@+id/lastnameEdit"
+        android:backgroundTint="#FFFFFFFF" />
 
 </RelativeLayout>
