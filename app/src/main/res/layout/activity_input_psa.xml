@@ -19,7 +19,8 @@
         android:layout_marginTop="38dp"
         android:layout_below="@+id/dateText"
         android:layout_alignRight="@+id/dateText"
-        android:layout_alignEnd="@+id/dateText" />
+        android:layout_alignEnd="@+id/dateText"
+        android:textColor="#FFFFFFFF" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -30,7 +31,8 @@
         android:layout_marginTop="62dp"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/psadesnityText"
-        android:layout_alignEnd="@+id/psadesnityText" />
+        android:layout_alignEnd="@+id/psadesnityText"
+        android:textColor="#FFFFFFFF" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -41,7 +43,8 @@
         android:layout_below="@+id/psalevelText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="42dp" />
+        android:layout_marginTop="42dp"
+        android:textColor="#FFFFFFFF" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -51,7 +54,8 @@
         android:layout_above="@+id/psalevelText"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:inputType="number" />
+        android:inputType="number"
+        android:backgroundTint="#FFFFFFFF" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -61,7 +65,8 @@
         android:id="@+id/psaEdit"
         android:layout_above="@+id/psadesnityText"
         android:layout_toRightOf="@+id/prostatevolumeText"
-        android:layout_toEndOf="@+id/prostatevolumeText" />
+        android:layout_toEndOf="@+id/prostatevolumeText"
+        android:backgroundTint="#FFFFFFFF" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -71,7 +76,8 @@
         android:id="@+id/densityEdit"
         android:layout_above="@+id/prostatevolumeText"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:backgroundTint="#FFFFFFFF" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -92,7 +98,8 @@
         android:layout_marginTop="38dp"
         android:layout_below="@+id/psadesnityText"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#FFFFFFFF" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -102,5 +109,6 @@
         android:id="@+id/prostatevolumeEdit"
         android:layout_alignBottom="@+id/prostatevolumeText"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:backgroundTint="#FFFFFFFF" />
 </RelativeLayout>

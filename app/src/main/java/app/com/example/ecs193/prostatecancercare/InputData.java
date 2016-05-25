@@ -6,8 +6,8 @@ import android.renderscript.ScriptGroup;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Button;
-
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 
@@ -20,7 +20,7 @@ public class InputData extends Activity {
         setContentView(R.layout.activity_input_data);
         Firebase.setAndroidContext(this);
 
-        Button psaButton = (Button) findViewById(R.id.psaButton);
+        ImageButton psaButton = (ImageButton) findViewById(R.id.psaButton);
         psaButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -31,7 +31,7 @@ public class InputData extends Activity {
                 }
         );
 
-        Button mriButton = (Button) findViewById(R.id.mriButton);
+        ImageButton mriButton = (ImageButton) findViewById(R.id.mriButton);
         mriButton.setOnClickListener(
                 new View.OnClickListener(){
                     @Override
@@ -42,7 +42,7 @@ public class InputData extends Activity {
                 }
         );
 
-        Button biopsyButton = (Button)findViewById(R.id.biopsyButton);
+        ImageButton biopsyButton = (ImageButton)findViewById(R.id.biopsyButton);
         biopsyButton.setOnClickListener(
                 new View.OnClickListener(){
                     @Override
