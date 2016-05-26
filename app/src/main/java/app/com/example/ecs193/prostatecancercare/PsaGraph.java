@@ -62,6 +62,12 @@ public class PsaGraph extends AppCompatActivity {
                 //set data into our chart field in xml
                 lineChart.setData(data);
                 lineChart.animateY(5000);
+                lineChart.getLegend().setTextColor(ColorTemplate.rgb("FFFFFFFF"));
+                lineChart.getAxisLeft().setTextColor(ColorTemplate.rgb("FFFFFFFF"));
+                lineChart.getAxisRight().setTextColor(ColorTemplate.rgb("FFFFFFFF"));
+                lineChart.getXAxis().setTextColor(ColorTemplate.rgb("FFFFFFFF"));
+                lineChart.getLineData().setValueTextColor(ColorTemplate.rgb("FFFFFFFF"));
+                lineChart.getLineData().setValueTextSize(10);
 //                data = snapshot.getValue(PsaData.class);
 //                System.out.println(snapshot.getValue());
             }

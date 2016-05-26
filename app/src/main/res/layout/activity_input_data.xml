@@ -8,67 +8,115 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="app.com.example.ecs193.prostatecancercare.InputData"
-    android:background="@drawable/datainput"
+    android:background="@drawable/background"
     >
 
-    <Button
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/psa"
         android:id="@+id/psaButton"
-        android:layout_marginTop="70dp"
-        android:layout_marginLeft="100dp"
+        android:background="@null"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="70dp"
         android:layout_alignParentTop="true"
-         />
+        android:src="@drawable/button" />
 
-    <Button
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/qql"
-        android:id="@+id/qqlButton"
-        android:layout_marginTop="25dp"
-        android:layout_below="@+id/psaButton"
-        android:layout_marginLeft="100dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/biopsy"
         android:id="@+id/biopsyButton"
-        android:layout_below="@+id/qqlButton"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="25dp" />
+        android:background="@null"
+        android:layout_alignStart="@id/psaButton"
+        android:layout_alignLeft="@id/psaButton"
+        android:layout_below="@+id/psaButton"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/button2"/>
 
-    <Button
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/gene"
-        android:id="@+id/geneButton"
-        android:layout_marginTop="24dp"
-        android:layout_below="@+id/biopsyButton"
-        android:layout_alignLeft="@+id/biopsyButton"
-        android:layout_alignStart="@+id/biopsyButton"
-        />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/mri"
         android:id="@+id/mriButton"
-        android:layout_marginTop="24dp"
-        android:layout_below="@+id/geneButton"
-        android:layout_marginLeft="100dp"
-        />
-
-    <Button
+        android:background="@null"
+        android:layout_alignStart="@id/psaButton"
+        android:layout_alignLeft="@id/psaButton"
+        android:layout_below="@+id/biopsyButton"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/button3"/>
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/genomics"
         android:id="@+id/genomicsButton"
+        android:background="@null"
+        android:layout_alignStart="@id/psaButton"
+        android:layout_alignLeft="@id/psaButton"
         android:layout_below="@+id/mriButton"
-        android:layout_alignLeft="@+id/mriButton"
-        android:layout_alignStart="@+id/mriButton"
-        android:layout_marginTop="28dp"
-        />
+        android:layout_marginTop="20dp"
+        android:src="@drawable/button4"/>
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="PSA"
+        android:id="@+id/psaText"
+        android:layout_alignTop="@id/psaButton"
+        android:layout_alignStart="@id/psaButton"
+        android:layout_alignLeft="@id/psaButton"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="27dp"
+        android:textColor="#FFFFFFFF" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="BIOPSY"
+        android:id="@+id/biopsyText"
+        android:layout_alignTop="@id/biopsyButton"
+        android:layout_alignStart="@id/biopsyButton"
+        android:layout_alignLeft="@id/biopsyButton"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="27dp"
+        android:textColor="#FFFFFFFF" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="MRI"
+        android:id="@+id/mriText"
+        android:layout_alignTop="@id/mriButton"
+        android:layout_alignStart="@id/mriButton"
+        android:layout_alignLeft="@id/mriButton"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="27dp"
+        android:textColor="#FFFFFFFF" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="GENOMICS"
+        android:id="@+id/genomicsText"
+        android:layout_alignTop="@id/genomicsButton"
+        android:layout_alignStart="@id/genomicsButton"
+        android:layout_alignLeft="@id/genomicsButton"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="27dp"
+        android:textColor="#FFFFFFFF" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Input Data"
+        android:id="@+id/textView6"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/psaButton"
+        android:layout_alignStart="@+id/psaButton"
+        android:layout_marginLeft="35dp"
+        android:textColor="#FFFFFFFF"
+        android:textSize="35dp" />
 
 </RelativeLayout>

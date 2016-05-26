@@ -13,8 +13,46 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PSA"
+        android:text="VISUALIZE SCORES"
         android:id="@+id/psaButton"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="81dp" />
+        android:layout_marginBottom="176dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="PSA Information"
+        android:id="@+id/psaInfo"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/psaButton"
+        android:layout_alignEnd="@+id/psaButton"
+        android:textColor="#FFFFFFFF" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="PSA Density:"
+        android:id="@+id/textView8"
+        android:layout_alignLeft="@id/psaInfo"
+        android:layout_alignStart="@id/psaInfo"
+        android:layout_below="@+id/psaInfo"
+        android:layout_alignRight="@+id/psaButton"
+        android:layout_alignEnd="@+id/psaButton"
+        android:layout_marginTop="44dp"
+        android:textColor="#FFFFFFFF" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="PSA Volume:"
+        android:id="@+id/textView9"
+        android:layout_below="@+id/textView8"
+        android:layout_alignLeft="@+id/textView8"
+        android:layout_alignStart="@+id/textView8"
+        android:layout_marginTop="45dp"
+        android:textColor="#FFFFFFFF" />
 </RelativeLayout>
