@@ -50,7 +50,7 @@ public class HomePageActivity extends AppCompatActivity {
         daysLeftTextView = (TextView) findViewById(R.id.daysLeftTextView);
 
         sideList = (ListView) findViewById(R.id.sideList);
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         String[] menuList = {"Profile", "Input Data", "Visualization", "Appointments", "Settings", "QOL survey"};
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, menuList);
@@ -119,12 +119,54 @@ public class HomePageActivity extends AppCompatActivity {
                 }
             });
 
+            logoutButton = (Button) findViewById(R.id.viewDataButton);
+            logoutButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(HomePageActivity.this, LogOutActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        AuthData authData = fbRef.getAuth();
+        if (authData != null) {
             appointmentsRef = childRef.child("Appointments");
-            Query queryRef = appointmentsRef.orderByChild("date").limitToFirst(1);
+            Calendar c = GregorianCalendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            String yearStr = year + "", monthStr = month + "", dayStr = day + "";
+            if (month < 9) {
+                monthStr = "0" + (month + 1);
+            }
+            if (day < 10) {
+                dayStr = "0" + day;
+            }
+            Query queryRef = appointmentsRef.orderByChild("date").startAt(yearStr + monthStr + dayStr).limitToFirst(1);
+            queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    if (snapshot.getValue() == null) {
+                        daysLeftTextView.setText("None");
+                    }
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                }
+            });
 
             queryRef.addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    if (dataSnapshot == null) {
+
+                    }
                     Appointment appointment = dataSnapshot.getValue(Appointment.class);
                     int year = Integer.parseInt(appointment.getDate().substring(0, 4));
                     int month = Integer.parseInt(appointment.getDate().substring(4, 6)) - 1;
@@ -139,12 +181,20 @@ public class HomePageActivity extends AppCompatActivity {
 
                 @Override
                 public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
                 }
 
                 @Override
                 public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                    Appointment appointment = dataSnapshot.getValue(Appointment.class);
+                    int year = Integer.parseInt(appointment.getDate().substring(0, 4));
+                    int month = Integer.parseInt(appointment.getDate().substring(4, 6)) - 1;
+                    int day = Integer.parseInt(appointment.getDate().substring(6, 8));
+                    System.out.println("year month day " + year + " " + month + " " + day);
+                    Calendar appointmentDate = new GregorianCalendar(year, month, day, 23, 0, 0);
+                    Calendar now = Calendar.getInstance();
+                    long difference = appointmentDate.getTimeInMillis() - now.getTimeInMillis();
+                    long days = difference / (1000 * 60 * 60 * 24);
+                    daysLeftTextView.setText(String.valueOf(days));
                 }
 
                 @Override
@@ -156,18 +206,7 @@ public class HomePageActivity extends AppCompatActivity {
                 public void onCancelled(FirebaseError firebaseError) {
                 }
             });
-        } else {
-            // no user authenticated
         }
-
-        logoutButton = (Button) findViewById(R.id.viewDataButton);
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomePageActivity.this, LogOutActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
