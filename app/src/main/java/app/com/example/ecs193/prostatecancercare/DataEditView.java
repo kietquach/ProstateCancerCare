@@ -30,6 +30,45 @@ import java.util.List;
 public class DataEditView extends AppCompatActivity {
     Firebase fbRef = new Firebase("https://boiling-heat-3817.firebaseio.com/");
     private List<EditText> editTextMriList = new ArrayList<EditText>();
+    private String date;
+
+    public String getDateStr(int month, int day, int year){
+        String str = "";
+        switch (month) {
+            case 0:  str = "January";
+                break;
+            case 1:  str = "February";
+                break;
+            case 2:  str = "March";
+                break;
+            case 3:  str = "April";
+                break;
+            case 4:  str = "May";
+                break;
+            case 5:  str = "June";
+                break;
+            case 6:  str = "July";
+                break;
+            case 7:  str = "August";
+                break;
+            case 8:  str = "September";
+                break;
+            case 9: str = "October";
+                break;
+            case 10: str = "November";
+                break;
+            case 11: str = "December";
+                break;
+        }
+        str+=" "+day+", "+year;
+        return str;
+    }
+
+    public String convertDate(String date){
+        return getDateStr(Integer.parseInt(date.substring(4, 6)),
+        Integer.parseInt(date.substring(6, 8)),
+        Integer.parseInt(date.substring(0, 4)));
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +78,7 @@ public class DataEditView extends AppCompatActivity {
         Intent i = getIntent();
 
         final String type = i.getStringExtra("type");
-        final String date = i.getStringExtra("date");
+        date = i.getStringExtra("date");
 
         AuthData authData = fbRef.getAuth();
         Firebase user = fbRef.child("users").child(authData.getUid());
@@ -53,7 +92,6 @@ public class DataEditView extends AppCompatActivity {
         }else{
             q = user.child("biopsy");
         }
-        Log.i("TYPE", type);
 
         q.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -78,9 +116,8 @@ public class DataEditView extends AppCompatActivity {
 
     private void editMriData(DataSnapshot dataSnapshot, String date){
         LinearLayout ll = (LinearLayout)findViewById(R.id.mriLinear);
-        TableRow row = new TableRow(this);
         TextView text = new TextView(this);
-        text.setText(date);
+        text.setText(convertDate(date));
         ll.addView(text);
         TableLayout tableLayout = (TableLayout)findViewById(R.id.mriTable);
         for (final DataSnapshot dates: dataSnapshot.getChildren()) {
@@ -199,7 +236,7 @@ public class DataEditView extends AppCompatActivity {
 
         TableRow row = new TableRow(this);
         TextView text = new TextView(this);
-        text.setText(date);
+        text.setText(convertDate(date));
         ll.addView(text);
 
         for (final DataSnapshot data: dataSnapshot.getChildren()) {
@@ -239,7 +276,7 @@ public class DataEditView extends AppCompatActivity {
         LinearLayout ll = (LinearLayout)findViewById(R.id.dataLinear);
         TableRow row = new TableRow(this);
         TextView text = new TextView(this);
-        text.setText(date);
+        text.setText(convertDate(date));
         ll.addView(text);
 
         for (final DataSnapshot data: dataSnapshot.getChildren()) {

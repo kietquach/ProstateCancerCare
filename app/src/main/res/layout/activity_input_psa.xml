@@ -64,10 +64,11 @@
         android:id="@+id/volumeEdit" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        style="?android:attr/buttonStyle"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:text="@string/done"
+        android:paddingTop="15dp"
         android:id="@+id/doneButton"
         android:layout_gravity="right" />
 

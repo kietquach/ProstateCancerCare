@@ -24,6 +24,44 @@ public class DataView extends AppCompatActivity {
 
     Firebase fbRef = new Firebase("https://boiling-heat-3817.firebaseio.com/");
 
+    public String getDateStr(int month, int day, int year){
+        String str = "";
+        switch (month) {
+            case 0:  str = "January";
+                break;
+            case 1:  str = "February";
+                break;
+            case 2:  str = "March";
+                break;
+            case 3:  str = "April";
+                break;
+            case 4:  str = "May";
+                break;
+            case 5:  str = "June";
+                break;
+            case 6:  str = "July";
+                break;
+            case 7:  str = "August";
+                break;
+            case 8:  str = "September";
+                break;
+            case 9: str = "October";
+                break;
+            case 10: str = "November";
+                break;
+            case 11: str = "December";
+                break;
+        }
+        str+=" "+day+", "+year;
+        return str;
+    }
+
+    public String convertDate(String date){
+        return getDateStr(Integer.parseInt(date.substring(4, 6)),
+                Integer.parseInt(date.substring(6, 8)),
+                Integer.parseInt(date.substring(0, 4)));
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,8 +132,7 @@ public class DataView extends AppCompatActivity {
         for (final DataSnapshot data: dataSnapshot.getChildren()) {
             tableRow = new TableRow(this);
             TextView button = new Button(this);
-            button.setText(data.getKey());
-            //button.setBackgroundResource(R.layout);
+            button.setText(convertDate(data.getKey()));
             button.setOnClickListener(
                     new View.OnClickListener(){
                         @Override
