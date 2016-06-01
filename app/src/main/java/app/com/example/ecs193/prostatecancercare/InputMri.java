@@ -38,7 +38,6 @@ import java.util.List;
 public class InputMri extends AppCompatActivity {
     private Firebase fbRef;
     private int rows = 0;
-    private List<EditText> editTextList = new ArrayList<EditText>();
     private Firebase mriEntry;
 
     private Calendar calendar;
@@ -48,6 +47,10 @@ public class InputMri extends AppCompatActivity {
     private boolean dateFlag;
     private boolean fieldsFlag;
     private Firebase mri;
+    private String previous = "";
+    private List<EditText> editTextList = new ArrayList<EditText>();
+    private List<TextView> textViewList = new ArrayList<TextView>();
+    private boolean label;
 
     public String getDateStr(int month, int day, int year){
         String str = "";
@@ -124,6 +127,7 @@ public class InputMri extends AppCompatActivity {
         doneButton = (Button) findViewById(R.id.doneButton);
         final List<String> dateEntryList = new ArrayList<>();
         fieldsFlag = false;
+        label = false;
         //Get all current date entries for this user store in dateEntryList, to check if the date they are entering for already exists
         Query q = fbRef.child("users").child(fbRef.getAuth().getUid()).child("mri");
         q.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -168,11 +172,20 @@ public class InputMri extends AppCompatActivity {
                             }
 
                             String lesioncount = ((EditText) findViewById(R.id.lesionsEdit)).getText().toString();
+                            if(!previous.isEmpty()){
+                                deleteRows();
+                            }
+                            if(label == false){
+                                addLabel();
+                                label = true;
+                            }
+                            previous = lesioncount;
+
                             if (!lesioncount.isEmpty() && !dateFlag) {
                                 rows = Integer.parseInt(lesioncount);
                                 addTable(rows);
-                                createfieldsButton.setOnClickListener(null);
                                 fieldsFlag = true;
+                                Toast.makeText(InputMri.this, "Please scroll down and fill out all the fields below.", Toast.LENGTH_SHORT).show();
                             }else if(dateFlag){
                                 Toast.makeText(InputMri.this, "This date already has an entry. Pick another date, or edit the entry.", Toast.LENGTH_LONG).show();
                                 dateFlag = false;
@@ -245,12 +258,10 @@ public class InputMri extends AppCompatActivity {
 
     }
 
-    private void addTable(int rows){
+    private void addLabel(){
         TableLayout tableLayout = (TableLayout)findViewById(R.id.mritl2);
         tableLayout.setStretchAllColumns(true);
         TableRow tableRow = new TableRow(this);
-        tableRow.setPadding(0, 10, 0, 0);
-
         for(int col = 0; col < 5; col++){
             TextView textView = new TextView(this);
             switch (col){
@@ -273,6 +284,12 @@ public class InputMri extends AppCompatActivity {
             tableRow.addView(textView);
         }
         tableLayout.addView(tableRow);
+    }
+    private void addTable(int rows){
+        TableLayout tableLayout = (TableLayout)findViewById(R.id.mritl2);
+        tableLayout.setStretchAllColumns(true);
+        TableRow tableRow = new TableRow(this);
+        tableRow.setPadding(0, 10, 0, 0);
 
         for (int i = 0; i < rows; i++) {
             tableLayout.addView(createRow(i));
@@ -287,6 +304,7 @@ public class InputMri extends AppCompatActivity {
             if(col == 4){
                 TextView textView = new TextView(this);
                 textView.setText("+", TextView.BufferType.NORMAL);
+                textViewList.add(textView);
                 textView.setGravity(Gravity.CENTER);
                 tableRow.addView(textView);
             }
@@ -306,6 +324,19 @@ public class InputMri extends AppCompatActivity {
 
         editTextList.add(editText);
         return editText;
+    }
+
+    private void deleteRows(){
+        for(EditText editText : editTextList){
+            editText.setVisibility(editText.GONE);
+        }
+        for(TextView textView : textViewList){
+            textView.setVisibility(textView.GONE);
+        }
+        editTextList = null;
+        textViewList = null;
+        editTextList = new ArrayList<EditText>();
+        textViewList = new ArrayList<TextView>();
     }
 
     @Override

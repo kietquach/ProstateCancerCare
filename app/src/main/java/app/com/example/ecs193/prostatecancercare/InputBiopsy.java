@@ -37,7 +37,6 @@ import java.util.List;
 public class InputBiopsy extends AppCompatActivity  {
     private Firebase fbRef;
     private int rows = 0;
-    private List<EditText> editTextList = new ArrayList<EditText>();
     private Firebase biopsyEntry;
 
     private Calendar calendar;
@@ -47,6 +46,10 @@ public class InputBiopsy extends AppCompatActivity  {
     private boolean dateFlag;
     private boolean fieldsFlag;
     private Firebase biopsy;
+    private String previous;
+    private boolean label;
+    private List<EditText> editTextList = new ArrayList<EditText>();
+    private List<TextView> textViewList = new ArrayList<TextView>();
 
     public String getDateStr(int month, int day, int year){
         String str = "";
@@ -115,7 +118,8 @@ public class InputBiopsy extends AppCompatActivity  {
         setContentView(R.layout.activity_input_biopsy);
         Firebase.setAndroidContext(this);
         fbRef = new Firebase("https://boiling-heat-3817.firebaseio.com/");
-
+        label = false;
+        previous = "";
 
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -167,12 +171,21 @@ public class InputBiopsy extends AppCompatActivity  {
                             String coresPositive = ((EditText) findViewById(R.id.coresPositiveEdit)).getText().toString();
                             String coresTaken = ((EditText) findViewById(R.id.coresTakenEdit)).getText().toString();
 
+                            if(!previous.isEmpty()){
+                                deleteRows();
+                            }
+                            if(label == false){
+                                addLabel();
+                                label = true;
+                            }
+                            previous = coresPositive;
+
                             if(!coresPositive.isEmpty() && !coresTaken.isEmpty() &&
                                     Integer.parseInt(coresPositive) <= Integer.parseInt(coresTaken)){
                                 rows = Integer.parseInt(coresPositive);
                                 addTable(rows);
-                                createfieldsButton.setOnClickListener(null);
                                 fieldsFlag = true;
+                                Toast.makeText(InputBiopsy.this, "Please scroll down and fill out all the fields below.", Toast.LENGTH_SHORT).show();
                             }else{
                                 if(date.isEmpty() || coresPositive.isEmpty() || coresTaken.isEmpty()) {
                                     Toast.makeText(InputBiopsy.this, "Please fill out all the fields", Toast.LENGTH_SHORT).show();
@@ -244,7 +257,7 @@ public class InputBiopsy extends AppCompatActivity  {
 
     }
 
-    private void addTable(int rows){
+    private void addLabel(){
         TableLayout tableLayout = (TableLayout)findViewById(R.id.biopsytl2);
         tableLayout.setStretchAllColumns(true);
         TableRow tableRow = new TableRow(this);
@@ -266,11 +279,18 @@ public class InputBiopsy extends AppCompatActivity  {
             tableRow.addView(textView);
         }
         tableLayout.addView(tableRow);
+    }
+
+    private void addTable(int rows){
+        TableLayout tableLayout = (TableLayout)findViewById(R.id.biopsytl2);
+        tableLayout.setStretchAllColumns(true);
+        TableRow tableRow = new TableRow(this);
 
         for (int i = 0; i < rows; i++) {
             tableLayout.addView(createRow(i));
         }
     }
+
 
     private TableRow createRow(int row) {
         TableRow tableRow = new TableRow(this);
@@ -280,6 +300,7 @@ public class InputBiopsy extends AppCompatActivity  {
             if(col == 2){
                 TextView textView = new TextView(this);
                 textView.setText("+", TextView.BufferType.NORMAL);
+                textViewList.add(textView);
                 textView.setGravity(Gravity.CENTER);
                 tableRow.addView(textView);
             }
@@ -302,6 +323,19 @@ public class InputBiopsy extends AppCompatActivity  {
 
         editTextList.add(editText);
         return editText;
+    }
+
+    private void deleteRows(){
+        for(EditText editText : editTextList){
+            editText.setVisibility(editText.GONE);
+        }
+        for(TextView textView : textViewList){
+            textView.setVisibility(textView.GONE);
+        }
+        editTextList = null;
+        textViewList = null;
+        editTextList = new ArrayList<EditText>();
+        textViewList = new ArrayList<TextView>();
     }
 
 
