@@ -54,7 +54,7 @@ public class VisualizeData extends AppCompatActivity {
                 for (DataSnapshot child : snapshot.getChildren()) {
                     if (child.exists()) {
                         PsaData latestData = child.getValue(PsaData.class);
-                        volume = Float.parseFloat(latestData.getProstatevolume());
+                        volume = Float.parseFloat(latestData.getVolume());
                         psaRecent = latestData.getPsa();
                         recentTime = child.getKey();
                         if(first) {
