@@ -31,5 +31,21 @@
         </TableLayout>
 
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/biopsyLinear">
+        </LinearLayout>
+
+        <TableLayout
+            android:id="@+id/biopsyTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_column="4"
+            android:stretchColumns="*">
+        </TableLayout>
+
+
     </LinearLayout>
 </ScrollView>

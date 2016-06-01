@@ -289,7 +289,8 @@ public class InputBiopsy extends FragmentActivity {
         EditText editText = new EditText(this);
         editText.setId(Integer.valueOf(index));
         if(Integer.parseInt(index) % 4 == 0){
-            editText.setText(Integer.toString(Integer.parseInt(index) / 4 + 1), TextView.BufferType.EDITABLE);
+            editText.setText(Integer.toString(Integer.parseInt(index) / 4 + 1));
+            editText.setFocusable(false);
         }
         if(Integer.parseInt(index) % 4 == 3){
             editText.setGravity(Gravity.LEFT);

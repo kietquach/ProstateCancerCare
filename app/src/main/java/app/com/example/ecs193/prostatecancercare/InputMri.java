@@ -295,7 +295,8 @@ public class InputMri extends FragmentActivity {
         EditText editText = new EditText(this);
         editText.setId(Integer.valueOf(index));
         if(Integer.parseInt(index) % 6 == 0){
-            editText.setText(Integer.toString(Integer.parseInt(index) / 6 + 1), TextView.BufferType.EDITABLE);
+            editText.setText(Integer.toString(Integer.parseInt(index) / 6 + 1));
+            editText.setFocusable(false);
         }
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(1)});

@@ -57,7 +57,7 @@ public class DataView extends AppCompatActivity {
     }
 
     public String convertDate(String date){
-        return getDateStr(Integer.parseInt(date.substring(4, 6)),
+        return getDateStr(Integer.parseInt(date.substring(4, 6)) - 1,
                 Integer.parseInt(date.substring(6, 8)),
                 Integer.parseInt(date.substring(0, 4)));
     };

@@ -9,4 +9,15 @@
     <item
         type="id"
         name="edit_volume" />
+    <item
+        type="id"
+        name="edit_lesioncount"/>
+
+    <item
+        type="id"
+        name="edit_corestaken"/>
+
+    <item
+        type="id"
+        name="edit_corespositive"/>
 </resources>
