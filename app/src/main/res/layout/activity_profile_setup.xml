@@ -30,7 +30,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:backgroundTint="#FFFFFFFF" />
+        android:textColor="#FFFFFFFF" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
         android:layout_below="@+id/firstnameEdit"
         android:layout_alignLeft="@+id/firstnameEdit"
         android:layout_alignStart="@+id/firstnameEdit"
-        android:backgroundTint="#FFFFFFFF" />
+        android:textColor="#FFFFFFFF" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -96,7 +96,7 @@
         android:layout_alignBottom="@+id/ethnicityText"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:backgroundTint="#FFFFFFFF" />
+        android:textColor="#FFFFFF" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -107,6 +107,6 @@
         android:layout_above="@+id/ethnicityEdit"
         android:layout_alignLeft="@+id/lastnameEdit"
         android:layout_alignStart="@+id/lastnameEdit"
-        android:backgroundTint="#FFFFFFFF" />
+        android:textColor="#FFFFFF" />
 
 </RelativeLayout>
