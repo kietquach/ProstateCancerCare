@@ -30,7 +30,7 @@
     <EditText
         android:layout_width="352dp"
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/psaEdit" />
 
@@ -45,7 +45,7 @@
     <EditText
         android:layout_width="352dp"
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/densityEdit" />
 
@@ -60,7 +60,7 @@
     <EditText
         android:layout_width="352dp"
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:id="@+id/volumeEdit" />
 
     <Button

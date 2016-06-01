@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -208,7 +209,7 @@ public class DataEditView extends AppCompatActivity {
                                         //Set the number of lesions
                                         mriEntry.child("lesioncount").setValue(lesioncount);
                                         //Delete Entry
-                                        deleteMriLesions(mri, date);
+                                        deleteMriChild(mri, date);
                                         //Set the data for each lesion
                                         for(int i = 0; i < Integer.parseInt(lesioncount); i++) {
                                             Firebase mriLesion = mriEntry.child("lesions").child((editTextList.get(i * 6).getText().toString()));
@@ -266,8 +267,12 @@ public class DataEditView extends AppCompatActivity {
         ll.addView(backButton);
     }
 
-    private void deleteMriLesions(Firebase mri, String date){
+    private void deleteMriChild(Firebase mri, String date){
         mri.child(date).child("lesions").setValue(null);
+    }
+
+    private void deleteBiopsyChild(Firebase biopsy, String date){
+        biopsy.child(date).child("lesions").setValue(null);
     }
 
     private void deleteDate(String type, String date){
@@ -363,15 +368,16 @@ public class DataEditView extends AppCompatActivity {
         LinearLayout ll = (LinearLayout)findViewById(R.id.biopsyLinear);
         TextView text = new TextView(this);
         text.setText(convertDate(date));
+        text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+        text.setGravity(Gravity.CENTER);
         ll.addView(text);
         tableLayout = (TableLayout)findViewById(R.id.biopsyTable);
         for (final DataSnapshot dates: dataSnapshot.getChildren()) {
             if(dates.getKey().toString().equals(date)){
                 //For the date, create EditText fields data entered previously
                 for(final DataSnapshot data : dates.getChildren()) {
-                    if(data.getKey().equals("corestaken")) {
 
-                        //Create label for Lesion Count and EditText field
+                    if(data.getKey().equals("corestaken")) {
                         text = new TextView(this);
                         text.setText("Cores Taken");
                         ll.addView(text);
@@ -379,12 +385,9 @@ public class DataEditView extends AppCompatActivity {
                         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
                         editText.setId(R.id.edit_corestaken);
                         ll.addView(editText);
-                        //Store previous value of lesioncount; so we know if it was changed later
-                        //previousRows = Integer.parseInt(data.getValue().toString());
                         editText.setText(data.getValue().toString());
-                        addBiopsyLabel(tableLayout);
-                    }else if(data.getChildren().equals("corespositive")){
-                        //Create label for Lesion Count and EditText field
+                    }else if(data.getKey().equals("corespositive")){
+                        Log.i("here", "positive");
                         text = new TextView(this);
                         text.setText("Cores Positive");
                         ll.addView(text);
@@ -392,16 +395,16 @@ public class DataEditView extends AppCompatActivity {
                         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
                         editText.setId(R.id.edit_corespositive);
                         ll.addView(editText);
-                        //Store previous value of lesioncount; so we know if it was changed later
-                        //previousRows = Integer.parseInt(data.getValue().toString());
+                        //Store previous value so we know if it was changed later
+                        previousRows = Integer.parseInt(data.getValue().toString());
                         editText.setText(data.getValue().toString());
-                        addBiopsyLabel(tableLayout);
                     }else{
+                        addBiopsyLabel(tableLayout);
                         for(final DataSnapshot positivecore : data.getChildren()){
                             String key = positivecore.getKey();
                             String cancer = null, gleason1 = null, gleason2 = null;
                             for(final DataSnapshot values : positivecore.getChildren()){
-                                if(values.getKey().equals("PIRADS")){
+                                if(values.getKey().equals("cancer")){
                                     cancer = values.getValue().toString();
                                 }else if(values.getKey().equals("cores")){
                                     cancer = values.getValue().toString();
@@ -436,11 +439,9 @@ public class DataEditView extends AppCompatActivity {
 
                             if(!date.isEmpty()) {
                                 Firebase biopsyEntry = biopsy.child(date);
-
-                                //TODO:
                                 String positive = ((EditText) findViewById(R.id.edit_corespositive)).getText().toString();
                                 if(Integer.parseInt(positive) != previousRows){
-                                    //deletBiopsyRows();
+                                    deleteRows();
                                     for(int i = 0; i < Integer.parseInt(positive); i++) {
                                         tableLayout.addView(createMriRow(Integer.toString(i+1), "", "", "", "", ""));
                                     }
@@ -460,7 +461,7 @@ public class DataEditView extends AppCompatActivity {
                                         //Set the number of lesions
                                         biopsyEntry.child("corespostive").setValue(positive);
                                         //Delete Entry
-                                        deleteMriLesions(biopsy, date);
+                                        deleteBiopsyChild(biopsy, date);
                                         //Set the data for each lesion
                                         for(int i = 0; i < Integer.parseInt(positive); i++) {
                                             Firebase biopsyCore = biopsyEntry.child("positivecore").child((editTextList.get(i * 4).getText().toString()));
@@ -597,7 +598,6 @@ public class DataEditView extends AppCompatActivity {
 
     private void editPsaData(DataSnapshot dataSnapshot){
         LinearLayout ll = (LinearLayout)findViewById(R.id.dataLinear);
-        TableRow row = new TableRow(this);
         TextView text = new TextView(this);
         text.setText(convertDate(date));
         ll.addView(text);
@@ -613,7 +613,7 @@ public class DataEditView extends AppCompatActivity {
                         ll.addView(text);
                         EditText editText = new EditText(this);
                         editText.setText(d.getValue().toString());
-                        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        editText.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
                         editText.setId(R.id.edit_psa);
                         ll.addView(editText);
                     }else if(d.getKey().equals("density")){
@@ -622,7 +622,7 @@ public class DataEditView extends AppCompatActivity {
                         ll.addView(text);
                         EditText editText = new EditText(this);
                         editText.setText(d.getValue().toString());
-                        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        editText.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
                         editText.setId(R.id.edit_density);
                         ll.addView(editText);
                     }else{
@@ -631,7 +631,7 @@ public class DataEditView extends AppCompatActivity {
                         ll.addView(text);
                         EditText editText = new EditText(this);
                         editText.setText(d.getValue().toString());
-                        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        editText.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
                         editText.setId(R.id.edit_volume);
                         ll.addView(editText);
                     }
