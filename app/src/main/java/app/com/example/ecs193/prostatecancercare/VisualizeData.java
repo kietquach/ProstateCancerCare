@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
@@ -18,6 +19,7 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import java.text.DecimalFormat;
 
 import java.util.ArrayList;
 
@@ -26,41 +28,125 @@ public class VisualizeData extends AppCompatActivity {
 //    @Override
     Firebase fbRef = new Firebase("https://boiling-heat-3817.firebaseio.com/");
     boolean noData = false;
+    private TextView densityText;
+    private TextView doubleText;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualize_data);
 
         Button psaButton = (Button) findViewById(R.id.psaButton);
+        AuthData authData = fbRef.getAuth();
+        Firebase psa = fbRef.child("users").child(authData.getUid()).child("psa");
+
+        psa.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            //Flip this around, add the graphing stuff inside this onDataChange, because thats when we have the data to graph. Cant
+            //save here and then do it cuz async
+            public void onDataChange(DataSnapshot snapshot) {
+                float volume = 0;
+                float psaRecent = 0;
+                float psaInitial = 0;
+                String initialTime = "000000";
+                String recentTime = "000000";
+                boolean first = true;
+                boolean snapDoesNotExist = true;
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    if (child.exists()) {
+                        PsaData latestData = child.getValue(PsaData.class);
+                        volume = Float.parseFloat(latestData.getProstatevolume());
+                        psaRecent = latestData.getPsa();
+                        recentTime = child.getKey();
+                        if(first) {
+                            psaInitial = psaRecent;
+                            initialTime = recentTime;
+                            first = false;
+                        }
+                        snapDoesNotExist= false;
+                    }
+                    else{
+                        snapDoesNotExist = true;
+                    }
+                }
+                if(snapDoesNotExist){
+                    noData = true;
+                }
+                String initialYear = "";
+                String initialMonth = "";
+                String recentYear = "";
+                String recentMonth = "";
+                for(int i = 0; i < 4; i ++){
+                    initialYear += initialTime.charAt(i);
+                    recentYear += recentTime.charAt(i);
+                }
+                for(int i = 4; i < 6; i++){
+                    initialMonth += initialTime.charAt(i);
+                    recentMonth += recentTime.charAt(i);
+                }
+                float duration = Float.parseFloat(recentYear) - Float.parseFloat(initialYear);
+                duration *= 12;
+                duration += (Float.parseFloat(recentMonth) - Float.parseFloat(initialMonth));
+//                System.out.println(duration);
+
+                densityText = (TextView) findViewById(R.id.psaDensityText);
+                if(Double.isNaN(psaRecent / volume)){
+                    densityText.setText("PSA Density: " + "\nNo Data");
+                }
+                else {
+                    densityText.setText("PSA Density: " + (psaRecent / volume));
+                }
+                doubleText = (TextView) findViewById(R.id.psaDoubleTime);
+                String dbt = new DecimalFormat("@@@").format((Math.log(duration)/(Math.log(psaRecent) - Math.log(psaInitial))));
+                if(initialTime == "000000" && recentTime =="000000") {
+                    doubleText.setText("PSA Doubling Time: " + "\nNo Data");
+                }
+                else{
+                    doubleText.setText("PSA Doubling Time: " + dbt);
+                }
+                //
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+            }
+        });
 
         psaButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        AuthData authData = fbRef.getAuth();
-                        Firebase psa = fbRef.child("users").child(authData.getUid()).child("psa");
+//                        AuthData authData = fbRef.getAuth();
+//                        Firebase psa = fbRef.child("users").child(authData.getUid()).child("psa");
 
-                        psa.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                            @Override
-                            //Flip this around, add the graphing stuff inside this onDataChange, because thats when we have the data to graph. Cant
-                            //save here and then do it cuz async
-                            public void onDataChange(DataSnapshot snapshot) {
-                                for (DataSnapshot child : snapshot.getChildren()) {
-                                    if (!child.exists()) {
-                                        noData = true;
-                                    }
-
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(FirebaseError firebaseError) {
-                            }
-                        });
+//                        psa.addListenerForSingleValueEvent(new ValueEventListener() {
+//
+//                            @Override
+//                            //Flip this around, add the graphing stuff inside this onDataChange, because thats when we have the data to graph. Cant
+//                            //save here and then do it cuz async
+//                            public void onDataChange(DataSnapshot snapshot) {
+//                                for (DataSnapshot child : snapshot.getChildren()) {
+//                                    if (!child.exists()) {
+//                                        noData = true;
+//                                        System.out.println("no child");
+//                                    }
+//                                    else{
+//                                        noData = false;
+//                                        System.out.println("child exist");
+//                                    }
+//
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(FirebaseError firebaseError) {
+//                            }
+//                        });
                         if(noData){
                             Toast.makeText(VisualizeData.this, "No Data To Visualize", Toast.LENGTH_SHORT).show();
                         }
                         else {
+                            System.out.println("WENT TO NEW PAGE");
+                            System.out.println(noData);
                             Intent intent = new Intent(VisualizeData.this, PsaGraph.class);
                             startActivity(intent);
                         }

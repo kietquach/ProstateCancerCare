@@ -15,5 +15,10 @@ public class PsaData {
     public float getPsa(){
         return psa;
     }
+//    public PsaData(String dens, String vol, float psaLevel){
+//        this.density = dens;
+//        this.prostatevolume = vol;
+//        this.psa = psaLevel;
+//    }
 
 }
