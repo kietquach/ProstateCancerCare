@@ -53,7 +53,7 @@ public class HomePageActivity extends AppCompatActivity {
         sideList = (ListView) findViewById(R.id.sideList);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        String[] menuList = {"Profile", "Input Data", "Visualization", "Appointments", "Settings", "QOL survey"};
+        String[] menuList = {"View Data", "Input Data", "Visualization", "Appointments", "Settings", "QOL survey", "Profile"};
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, menuList);
         sideList.setAdapter(adapter);
 
@@ -64,7 +64,7 @@ public class HomePageActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         switch (position) {
                             case 0:
-                                intent = new Intent(HomePageActivity.this, ProfileSetup.class);
+                                intent = new Intent(HomePageActivity.this, DataView.class);
                                 startActivity(intent);
                                 break;
                             case 1:
@@ -85,6 +85,10 @@ public class HomePageActivity extends AppCompatActivity {
                                 break;
                             case 5:
                                 intent = new Intent(HomePageActivity.this, QolActivity.class);
+                                startActivity(intent);
+                                break;
+                            case 6:
+                                intent = new Intent(HomePageActivity.this, ProfileSetup.class);
                                 startActivity(intent);
                                 break;
                         }
