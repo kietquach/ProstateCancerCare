@@ -8,6 +8,8 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
@@ -657,7 +659,7 @@ public class DataEditView extends AppCompatActivity {
                                     psaEntry.child("density").setValue(((EditText) findViewById(R.id.edit_density)).getText().toString());
                                 }
                                 if (((EditText) findViewById(R.id.edit_volume)).getText().toString() != "") {
-                                    psaEntry.child("prostatevolume").setValue(((EditText) findViewById(R.id.edit_volume)).getText().toString());
+                                    psaEntry.child("volume").setValue(((EditText) findViewById(R.id.edit_volume)).getText().toString());
                                 }
 
                             }
@@ -701,6 +703,25 @@ public class DataEditView extends AppCompatActivity {
                 }
         );
         ll.addView(backButton);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.homeMenuButton:
+                Intent intent = new Intent(this, HomePageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }
