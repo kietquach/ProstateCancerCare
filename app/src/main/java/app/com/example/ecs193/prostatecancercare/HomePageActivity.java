@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.RelativeLayout;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.ChildEventListener;
@@ -176,6 +177,13 @@ public class HomePageActivity extends AppCompatActivity {
                     Calendar now = Calendar.getInstance();
                     long difference = appointmentDate.getTimeInMillis() - now.getTimeInMillis();
                     long days = difference / (1000 * 60 * 60 * 24);
+                    RelativeLayout rl = (RelativeLayout)findViewById(R.id.relativeLayout);
+                    if(days <= 7) {
+                        rl.setBackground(getResources().getDrawable(R.drawable.circleorange));
+                    }
+                    else if(days <= 3){
+                        rl.setBackground(getResources().getDrawable(R.drawable.circlered));
+                    }
                     daysLeftTextView.setText(String.valueOf(days));
                 }
 
