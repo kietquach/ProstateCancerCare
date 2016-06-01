@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
@@ -23,9 +24,12 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import android.text.TextWatcher;
+import android.text.Editable;
 
 public class InputPsa extends AppCompatActivity {
     Firebase fbRef;
@@ -34,6 +38,14 @@ public class InputPsa extends AppCompatActivity {
     private Button dateButton, doneButton;
     private boolean invalidFlag;
     private boolean dateFlag;
+
+    public void calcDensity(){
+        float psaLvl = Float.parseFloat(((EditText) findViewById(R.id.psaEdit)).getText().toString());
+        float vol = Float.parseFloat(((EditText) findViewById(R.id.volumeEdit)).getText().toString());
+        String d = new DecimalFormat("@@@").format((psaLvl / vol));
+        TextView densityText = (TextView) findViewById(R.id.densityEdit);
+        densityText.setText(d);
+    }
 
     public String getDateStr(int month, int day, int year){
         String str = "";
@@ -135,6 +147,52 @@ public class InputPsa extends AppCompatActivity {
                 }
         );
 
+        ((EditText) findViewById(R.id.psaEdit)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if(((EditText) findViewById(R.id.volumeEdit)).getText().toString().length() != 0){
+                    calcDensity();
+                }
+            }
+        });
+
+
+
+        ((EditText) findViewById(R.id.volumeEdit)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if(((EditText) findViewById(R.id.psaEdit)).getText().toString().length() != 0){
+                    calcDensity();
+                }
+            }
+        });
+
         doneButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -155,16 +213,13 @@ public class InputPsa extends AppCompatActivity {
                             Firebase psaEntry = psa.child(date);
                             if (((EditText) findViewById(R.id.psaEdit)).getText().toString().length() != 0) {
                                 psaEntry.child("psa").setValue(((EditText) findViewById(R.id.psaEdit)).getText().toString());
-                            } else {
-                                invalidFlag = true;
-                            }
-                            if (((EditText) findViewById(R.id.densityEdit)).getText().toString().length() != 0) {
-                                psaEntry.child("density").setValue(((EditText) findViewById(R.id.densityEdit)).getText().toString());
+
                             } else {
                                 invalidFlag = true;
                             }
                             if (((EditText) findViewById(R.id.volumeEdit)).getText().toString().length() != 0) {
                                 psaEntry.child("volume").setValue(((EditText) findViewById(R.id.volumeEdit)).getText().toString());
+
                             } else {
                                 invalidFlag = true;
                             }
@@ -179,6 +234,7 @@ public class InputPsa extends AppCompatActivity {
                                 Intent intent = new Intent(InputPsa.this, InputData.class);
                                 startActivity(intent);
                             }
+                            psaEntry.child("density").setValue(((TextView) findViewById(R.id.densityEdit)).getText().toString());
 
 
                         } else {
@@ -187,6 +243,7 @@ public class InputPsa extends AppCompatActivity {
                     }
                 }
         );
+
     }
 
     @Override

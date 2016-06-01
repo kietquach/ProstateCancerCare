@@ -30,24 +30,9 @@
     <EditText
         android:layout_width="352dp"
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:inputType="number|numberDecimal"
         android:ems="10"
         android:id="@+id/psaEdit" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/psadensity"
-        android:id="@+id/psadesnityText"
-        android:layout_marginTop="42dp" />
-
-    <EditText
-        android:layout_width="352dp"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/densityEdit" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -60,8 +45,25 @@
     <EditText
         android:layout_width="352dp"
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:inputType="number|numberDecimal"
         android:id="@+id/volumeEdit" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/psadensity"
+        android:id="@+id/psadesnityText"
+        android:layout_marginTop="42dp" />
+
+    <TextView
+        android:layout_width="352dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/densityEdit"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="0.0"
+        android:layout_marginTop="15dp"/>
 
     <Button
         style="?android:attr/buttonStyle"
@@ -70,6 +72,7 @@
         android:text="@string/done"
         android:paddingTop="15dp"
         android:id="@+id/doneButton"
-        android:layout_gravity="right" />
+        android:layout_gravity="right"
+        android:layout_marginTop="30dp"/>
 
 </LinearLayout>
