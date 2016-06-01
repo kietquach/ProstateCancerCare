@@ -1,6 +1,8 @@
 package app.com.example.ecs193.prostatecancercare;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -123,156 +125,13 @@ public class DataEditView extends AppCompatActivity {
     }
 
 
-    private void editMriData(DataSnapshot dataSnapshot){
-        LinearLayout ll = (LinearLayout)findViewById(R.id.mriLinear);
-        TextView text = new TextView(this);
-        text.setText(convertDate(date));
-        ll.addView(text);
-        tableLayout = (TableLayout)findViewById(R.id.mriTable);
-
-        for (final DataSnapshot dates: dataSnapshot.getChildren()) {
-            if(dates.getKey().toString().equals(date)){
-                //For the date, create EditText fields data entered previously
-                for(final DataSnapshot data : dates.getChildren()) {
-                    if(data.getKey().equals("lesioncount")){
-
-                        //Create label for Lesion Count and EditText field
-                        text = new TextView(this);
-                        text.setText("Lesion Count");
-                        ll.addView(text);
-                        EditText editText = new EditText(this);
-                        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                        editText.setId(R.id.edit_lesioncount);
-                        ll.addView(editText);
-                        //Store previous value of lesioncount; so we know if it was changed later
-                        previousRows = Integer.parseInt(data.getValue().toString());
-                        editText.setText(data.getValue().toString());
-                        addMriLabel(tableLayout);
-                    }else{
-                        for(final DataSnapshot lesions : data.getChildren()){
-                            String key = lesions.getKey();
-                            String pirads = null, cores = null, gleason1 = null, gleason2 = null, positive = null;
-                            for(final DataSnapshot values : lesions.getChildren()){
-                                if(values.getKey().equals("PIRADS")){
-                                    pirads = values.getValue().toString();
-                                }else if(values.getKey().equals("cores")){
-                                    cores = values.getValue().toString();
-                                }else if(values.getKey().equals("gleason")){
-                                    String gleason = values.getValue().toString();
-                                    String delims = "[+]+";
-                                    String[] tokens = gleason.split(delims);
-                                    gleason1 = tokens[0];
-                                    gleason2 = tokens[1];
-                                }else{
-                                    positive = values.getValue().toString();
-                                }
-                            }
-                            tableLayout.addView(createMriRow(key, pirads, cores, gleason1, gleason2, positive));
-                        }
-                    }
-                }
-
-            }
-        }
-
-        Button updateButton = new Button(this);
-        updateButton.setText("Update");
-        updateButton.setOnClickListener(
-                new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v){
-                        AuthData authData = fbRef.getAuth();
-                        if (authData != null) {
-                            Firebase mri = fbRef.child("users").child(authData.getUid()).child("mri");
-
-                            if(!date.isEmpty()) {
-                                Firebase mriEntry = mri.child(date);
-                                String lesioncount = ((EditText) findViewById(R.id.edit_lesioncount)).getText().toString();
-                                if(Integer.parseInt(lesioncount) != previousRows){
-                                    deleteRows();
-                                    for(int i = 0; i < Integer.parseInt(lesioncount); i++) {
-                                        tableLayout.addView(createMriRow(Integer.toString(i+1), "", "", "", "", ""));
-                                    }
-                                    previousRows = Integer.parseInt(lesioncount);
-                                    Toast.makeText(DataEditView.this, "Please fill out all the fields, then press Update again.", Toast.LENGTH_LONG).show();
-                                }else{
-                                    //Check if all entries are filled;
-                                    boolean complete = true;
-                                    for(EditText editText : editTextList){
-                                        if(editText.getText().toString().compareTo("") == 0){
-                                            complete = false;
-                                        }
-                                    }
-
-                                    //If all fields are filled update database and exit
-                                    if(complete &&  ((EditText) findViewById(R.id.edit_lesioncount)).getText().toString() != ""){
-                                        //Set the number of lesions
-                                        mriEntry.child("lesioncount").setValue(lesioncount);
-                                        //Delete Entry
-                                        deleteMriChild(mri, date);
-                                        //Set the data for each lesion
-                                        for(int i = 0; i < Integer.parseInt(lesioncount); i++) {
-                                            Firebase mriLesion = mriEntry.child("lesions").child((editTextList.get(i * 6).getText().toString()));
-                                            mriLesion.child("PIRADS").setValue(editTextList.get(i * 6 + 1).getText().toString());
-                                            mriLesion.child("cores").setValue(editTextList.get(i * 6 + 2).getText().toString());
-                                            mriLesion.child("positive").setValue(editTextList.get(i * 6 + 3).getText().toString());
-                                            mriLesion.child("gleason").setValue(editTextList.get(i * 6 + 4).getText().toString() + "+" + editTextList.get(i * 6 + 5).getText().toString());
-                                        }
-                                        Toast.makeText(DataEditView.this, "Entry has been updated.", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(DataEditView.this, DataView.class);
-                                        startActivity(intent);
-                                    }else{
-                                        Toast.makeText(DataEditView.this, "Please fill out all the fields.", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-
-                            }
-
-                        } else {
-                            // no user authenticated
-                        }
-
-                    }
-                }
-        );
-
-        ll.addView(updateButton);
-        Button deleteButton = new Button(this);
-        deleteButton.setText("Delete Entry");
-        deleteButton.setOnClickListener(
-                new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v){
-                        deleteDate("mri", date);
-                        Toast.makeText(DataEditView.this, "Entry has been deleted.", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(DataEditView.this, DataView.class);
-                        startActivity(intent);
-                    }
-                }
-
-        );
-        ll.addView(deleteButton);
-
-        Button backButton = new Button(this);
-        backButton.setText("Back");
-        backButton.setOnClickListener(
-                new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v){
-                        Intent intent = new Intent(DataEditView.this, DataView.class);
-                        startActivity(intent);
-                    }
-                }
-        );
-        ll.addView(backButton);
-    }
 
     private void deleteMriChild(Firebase mri, String date){
         mri.child(date).child("lesions").setValue(null);
     }
 
     private void deleteBiopsyChild(Firebase biopsy, String date){
-        biopsy.child(date).child("lesions").setValue(null);
+        biopsy.child(date).child("positivecore").setValue(null);
     }
 
     private void deleteDate(String type, String date){
@@ -296,18 +155,28 @@ public class DataEditView extends AppCompatActivity {
             TextView textView = new TextView(this);
             switch (col){
                 case 0:
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                    textView.setTextColor(Color.BLACK);
                     textView.setText("Lesion", TextView.BufferType.NORMAL );
                     break;
                 case 1:
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                    textView.setTextColor(Color.BLACK);
                     textView.setText("PIRADS", TextView.BufferType.NORMAL);
                     break;
                 case 2:
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                    textView.setTextColor(Color.BLACK);
                     textView.setText("Cores", TextView.BufferType.NORMAL);
                     break;
                 case 3:
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                    textView.setTextColor(Color.BLACK);
                     textView.setText("Positive", TextView.BufferType.NORMAL);
                     break;
                 case 4:
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                    textView.setTextColor(Color.BLACK);
                     textView.setText("Gleason", TextView.BufferType.NORMAL);
                     break;
             }
@@ -364,50 +233,46 @@ public class DataEditView extends AppCompatActivity {
     }
 
 
-    private void editBiopsyData(DataSnapshot dataSnapshot){
-        LinearLayout ll = (LinearLayout)findViewById(R.id.biopsyLinear);
+    private void editMriData(DataSnapshot dataSnapshot){
+        LinearLayout ll = (LinearLayout)findViewById(R.id.mriLinear);
         TextView text = new TextView(this);
         text.setText(convertDate(date));
         text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
         text.setGravity(Gravity.CENTER);
+        text.setTextColor(Color.BLUE);
+        text.setTypeface(Typeface.DEFAULT_BOLD);
         ll.addView(text);
-        tableLayout = (TableLayout)findViewById(R.id.biopsyTable);
+        tableLayout = (TableLayout)findViewById(R.id.mriTable);
+
         for (final DataSnapshot dates: dataSnapshot.getChildren()) {
             if(dates.getKey().toString().equals(date)){
                 //For the date, create EditText fields data entered previously
                 for(final DataSnapshot data : dates.getChildren()) {
+                    if(data.getKey().equals("lesioncount")){
 
-                    if(data.getKey().equals("corestaken")) {
+                        //Create label for Lesion Count and EditText field
                         text = new TextView(this);
-                        text.setText("Cores Taken");
+                        text.setText("Lesion Count");
+                        text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                        text.setTextColor(Color.BLACK);
                         ll.addView(text);
                         EditText editText = new EditText(this);
                         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                        editText.setId(R.id.edit_corestaken);
+                        editText.setId(R.id.edit_lesioncount);
                         ll.addView(editText);
-                        editText.setText(data.getValue().toString());
-                    }else if(data.getKey().equals("corespositive")){
-                        Log.i("here", "positive");
-                        text = new TextView(this);
-                        text.setText("Cores Positive");
-                        ll.addView(text);
-                        EditText editText = new EditText(this);
-                        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                        editText.setId(R.id.edit_corespositive);
-                        ll.addView(editText);
-                        //Store previous value so we know if it was changed later
+                        //Store previous value of lesioncount; so we know if it was changed later
                         previousRows = Integer.parseInt(data.getValue().toString());
                         editText.setText(data.getValue().toString());
+                        addMriLabel(tableLayout);
                     }else{
-                        addBiopsyLabel(tableLayout);
-                        for(final DataSnapshot positivecore : data.getChildren()){
-                            String key = positivecore.getKey();
-                            String cancer = null, gleason1 = null, gleason2 = null;
-                            for(final DataSnapshot values : positivecore.getChildren()){
-                                if(values.getKey().equals("cancer")){
-                                    cancer = values.getValue().toString();
+                        for(final DataSnapshot lesions : data.getChildren()){
+                            String key = lesions.getKey();
+                            String pirads = null, cores = null, gleason1 = null, gleason2 = null, positive = null;
+                            for(final DataSnapshot values : lesions.getChildren()){
+                                if(values.getKey().equals("PIRADS")){
+                                    pirads = values.getValue().toString();
                                 }else if(values.getKey().equals("cores")){
-                                    cancer = values.getValue().toString();
+                                    cores = values.getValue().toString();
                                 }else if(values.getKey().equals("gleason")){
                                     String gleason = values.getValue().toString();
                                     String delims = "[+]+";
@@ -415,7 +280,171 @@ public class DataEditView extends AppCompatActivity {
                                     gleason1 = tokens[0];
                                     gleason2 = tokens[1];
                                 }else{
+                                    positive = values.getValue().toString();
+                                }
+                            }
+                            tableLayout.addView(createMriRow(key, pirads, cores, gleason1, gleason2, positive));
+                        }
+                    }
+                }
+
+            }
+        }
+
+        Button updateButton = new Button(this);
+        updateButton.setText("Update");
+        updateButton.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        AuthData authData = fbRef.getAuth();
+                        if (authData != null) {
+                            Firebase mri = fbRef.child("users").child(authData.getUid()).child("mri");
+
+                            if(!date.isEmpty()) {
+                                Firebase mriEntry = mri.child(date);
+                                String lesioncount = ((EditText) findViewById(R.id.edit_lesioncount)).getText().toString();
+                                if(lesioncount.isEmpty()){
+                                    Toast.makeText(DataEditView.this, "Press fil out all the fields.", Toast.LENGTH_SHORT).show();
+                                }else {
+                                    if (Integer.parseInt(lesioncount) != previousRows) {
+                                        deleteRows();
+                                        for (int i = 0; i < Integer.parseInt(lesioncount); i++) {
+                                            tableLayout.addView(createMriRow(Integer.toString(i + 1), "", "", "", "", ""));
+                                        }
+                                        previousRows = Integer.parseInt(lesioncount);
+                                        if (Integer.parseInt(lesioncount) == 0) {
+                                            Toast.makeText(DataEditView.this, "Press Update again.", Toast.LENGTH_LONG).show();
+
+                                        } else {
+                                            Toast.makeText(DataEditView.this, "Please scroll down and fill out all the fields, then press Update again.", Toast.LENGTH_LONG).show();
+                                        }
+                                    } else {
+                                        //Check if all entries are filled;
+                                        boolean complete = true;
+                                        for (EditText editText : editTextList) {
+                                            if (editText.getText().toString().compareTo("") == 0) {
+                                                complete = false;
+                                            }
+                                        }
+
+                                        //If all fields are filled update database and exit
+                                        if (complete && ((EditText) findViewById(R.id.edit_lesioncount)).getText().toString() != "") {
+                                            //Set the number of lesions
+                                            mriEntry.child("lesioncount").setValue(lesioncount);
+                                            //Delete Entry
+                                            deleteMriChild(mri, date);
+                                            //Set the data for each lesion
+                                            for (int i = 0; i < Integer.parseInt(lesioncount); i++) {
+                                                Firebase mriLesion = mriEntry.child("lesions").child((editTextList.get(i * 6).getText().toString()));
+                                                mriLesion.child("PIRADS").setValue(editTextList.get(i * 6 + 1).getText().toString());
+                                                mriLesion.child("cores").setValue(editTextList.get(i * 6 + 2).getText().toString());
+                                                mriLesion.child("positive").setValue(editTextList.get(i * 6 + 3).getText().toString());
+                                                mriLesion.child("gleason").setValue(editTextList.get(i * 6 + 4).getText().toString() + "+" + editTextList.get(i * 6 + 5).getText().toString());
+                                            }
+                                            Toast.makeText(DataEditView.this, "Entry has been updated.", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(DataEditView.this, DataView.class);
+                                            startActivity(intent);
+                                        } else {
+                                            Toast.makeText(DataEditView.this, "Please fill out all the fields.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+
+                            }
+
+                        } else {
+                            // no user authenticated
+                        }
+
+                    }
+                }
+        );
+
+        ll.addView(updateButton);
+        Button deleteButton = new Button(this);
+        deleteButton.setText("Delete Entry");
+        deleteButton.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        deleteDate("mri", date);
+                        Toast.makeText(DataEditView.this, "Entry has been deleted.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(DataEditView.this, DataView.class);
+                        startActivity(intent);
+                    }
+                }
+
+        );
+        ll.addView(deleteButton);
+
+        Button backButton = new Button(this);
+        backButton.setText("Back");
+        backButton.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        Intent intent = new Intent(DataEditView.this, DataView.class);
+                        startActivity(intent);
+                    }
+                }
+        );
+        ll.addView(backButton);
+    }
+
+
+
+    private void editBiopsyData(DataSnapshot dataSnapshot){
+        LinearLayout ll = (LinearLayout)findViewById(R.id.biopsyLinear);
+        TextView text = new TextView(this);
+        text.setText(convertDate(date));
+        text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+        text.setGravity(Gravity.CENTER);
+        text.setTextColor(Color.BLUE);
+        text.setTypeface(Typeface.DEFAULT_BOLD);
+        ll.addView(text);
+        tableLayout = (TableLayout)findViewById(R.id.biopsyTable);
+        for (final DataSnapshot dates: dataSnapshot.getChildren()) {
+            if(dates.getKey().toString().equals(date)){
+                //For the date, create EditText fields data entered previously
+                for(final DataSnapshot data : dates.getChildren()) {
+                    if(data.getKey().equals("corestaken")) {
+                        text = new TextView(this);
+                        text.setText("Cores Taken");
+                        text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                        text.setTextColor(Color.BLACK);
+                        ll.addView(text);
+                        EditText editText = new EditText(this);
+                        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        editText.setId(R.id.edit_corestaken);
+                        ll.addView(editText);
+                        editText.setText(data.getValue().toString());
+                    }else if(data.getKey().equals("corespositive")){
+                        text = new TextView(this);
+                        text.setText("Cores Positive");
+                        text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                        text.setTextColor(Color.BLACK);
+                        ll.addView(text);
+                        EditText editText = new EditText(this);
+                        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        editText.setId(R.id.edit_corespositive);
+                        ll.addView(editText);
+                        previousRows = Integer.parseInt(data.getValue().toString());
+                        editText.setText(data.getValue().toString());
+                        addBiopsyLabel(tableLayout);
+                    }else{
+                        for(final DataSnapshot positivecore : data.getChildren()){
+                            String key = positivecore.getKey();
+                            String cancer = null, gleason1 = null, gleason2 = null;
+                            for(final DataSnapshot values : positivecore.getChildren()){
+                                if(values.getKey().equals("cancer")){
                                     cancer = values.getValue().toString();
+                                }else if(values.getKey().equals("gleason")){
+                                    String gleason = values.getValue().toString();
+                                    String delims = "[+]+";
+                                    String[] tokens = gleason.split(delims);
+                                    gleason1 = tokens[0];
+                                    gleason2 = tokens[1];
                                 }
                             }
                             tableLayout.addView(createBiopsyRow(key, cancer, gleason1, gleason2));
@@ -440,39 +469,55 @@ public class DataEditView extends AppCompatActivity {
                             if(!date.isEmpty()) {
                                 Firebase biopsyEntry = biopsy.child(date);
                                 String positive = ((EditText) findViewById(R.id.edit_corespositive)).getText().toString();
-                                if(Integer.parseInt(positive) != previousRows){
-                                    deleteRows();
-                                    for(int i = 0; i < Integer.parseInt(positive); i++) {
-                                        tableLayout.addView(createMriRow(Integer.toString(i+1), "", "", "", "", ""));
-                                    }
-                                    previousRows = Integer.parseInt(positive);
-                                    Toast.makeText(DataEditView.this, "Please fill out all the fields, then press Update again.", Toast.LENGTH_LONG).show();
-                                }else{
-                                    //Check if all entries are filled;
-                                    boolean complete = true;
-                                    for(EditText editText : editTextList){
-                                        if(editText.getText().toString().compareTo("") == 0){
-                                            complete = false;
-                                        }
-                                    }
 
-                                    //If all fields are filled update database and exit
-                                    if(complete &&  ((EditText) findViewById(R.id.edit_corespositive)).getText().toString() != ""){
-                                        //Set the number of lesions
-                                        biopsyEntry.child("corespostive").setValue(positive);
-                                        //Delete Entry
-                                        deleteBiopsyChild(biopsy, date);
-                                        //Set the data for each lesion
-                                        for(int i = 0; i < Integer.parseInt(positive); i++) {
-                                            Firebase biopsyCore = biopsyEntry.child("positivecore").child((editTextList.get(i * 4).getText().toString()));
-                                            biopsyCore.child("cancer").setValue(editTextList.get(i * 4 + 1).getText().toString());
-                                            biopsyCore.child("gleason").setValue(editTextList.get(i * 4 + 2).getText().toString() + "+" + editTextList.get(i * 6 + 3).getText().toString());
+                                if(((EditText) findViewById(R.id.edit_corestaken)).getText().toString().isEmpty() ||
+                                        ((EditText) findViewById(R.id.edit_corespositive)).getText().toString().isEmpty()){
+                                    Toast.makeText(DataEditView.this, "Please fill out all fields.", Toast.LENGTH_LONG).show();
+                                }else{
+
+                                    if (Integer.parseInt(positive) > Integer.parseInt(((EditText) findViewById(R.id.edit_corestaken)).getText().toString())) {
+                                        Toast.makeText(DataEditView.this, "Cores Positive must be less than or equal to Cores Taken.", Toast.LENGTH_SHORT).show();
+                                    } else if (Integer.parseInt(positive) != previousRows) {
+                                        deleteRows();
+                                        for (int i = 0; i < Integer.parseInt(positive); i++) {
+                                            tableLayout.addView(createBiopsyRow(Integer.toString(i + 1), "", "", ""));
                                         }
-                                        Toast.makeText(DataEditView.this, "Entry has been updated.", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(DataEditView.this, DataView.class);
-                                        startActivity(intent);
-                                    }else{
-                                        Toast.makeText(DataEditView.this, "Please fill out all the fields.", Toast.LENGTH_SHORT).show();
+                                        previousRows = Integer.parseInt(positive);
+                                        if (Integer.parseInt(positive) == 0) {
+                                            Toast.makeText(DataEditView.this, "Press Update again.", Toast.LENGTH_LONG).show();
+
+                                        } else {
+                                            Toast.makeText(DataEditView.this, "Please scroll down and fill out all the fields, then press Update again.", Toast.LENGTH_LONG).show();
+                                        }
+                                    } else {
+                                        //Check if all entries are filled;
+                                        boolean complete = true;
+                                        for (EditText editText : editTextList) {
+                                            if (editText.getText().toString().compareTo("") == 0) {
+                                                complete = false;
+                                            }
+                                        }
+
+                                        //If all fields are filled update database and exit
+                                        if (complete && ((EditText) findViewById(R.id.edit_corespositive)).getText().toString() != ""
+                                                && ((EditText) findViewById(R.id.edit_corestaken)).getText().toString() != "") {
+                                            biopsyEntry.child("corespositive").setValue(((EditText) findViewById(R.id.edit_corespositive)).getText().toString());
+                                            biopsyEntry.child("corestaken").setValue(((EditText) findViewById(R.id.edit_corestaken)).getText().toString());
+                                            //Delete Entry
+                                            deleteBiopsyChild(biopsy, date);
+                                            //Set the data for each lesion
+                                            for (int i = 0; i < Integer.parseInt(positive); i++) {
+                                                Firebase biopsyCore = biopsyEntry.child("positivecore").child((editTextList.get(i * 4).getText().toString()));
+                                                biopsyCore.child("cancer").setValue(editTextList.get(i * 4 + 1).getText().toString());
+                                                biopsyCore.child("gleason").setValue(editTextList.get(i * 4 + 2).getText().toString() + "+"
+                                                        + editTextList.get(i * 4 + 3).getText().toString());
+                                            }
+                                            Toast.makeText(DataEditView.this, "Entry has been updated.", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(DataEditView.this, DataView.class);
+                                            startActivity(intent);
+                                        } else {
+                                            Toast.makeText(DataEditView.this, "Please fill out all the fields.", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
                                 }
 
@@ -541,12 +586,18 @@ public class DataEditView extends AppCompatActivity {
             TextView textView = new TextView(this);
             switch (col){
                 case 0:
-                    textView.setText("Postive Core", TextView.BufferType.NORMAL );
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                    textView.setTextColor(Color.BLACK);
+                    textView.setText("Positive Core", TextView.BufferType.NORMAL );
                     break;
                 case 1:
-                    textView.setText("% Cancer", TextView.BufferType.NORMAL);
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                    textView.setTextColor(Color.BLACK);
+                    textView.setText("Percent Cancer", TextView.BufferType.NORMAL);
                     break;
                 case 2:
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                    textView.setTextColor(Color.BLACK);
                     textView.setText("Gleason", TextView.BufferType.NORMAL);
                     break;
             }
@@ -560,13 +611,13 @@ public class DataEditView extends AppCompatActivity {
         for (int col = 0; col < 4; col++) {
             switch (col){
                 case 0:
-                    tableRow.addView(editTextBiopsy(String.valueOf(Integer.parseInt(row) * 6 + col), row));
+                    tableRow.addView(editTextBiopsy(String.valueOf(Integer.parseInt(row) * 4 + col), row));
                     break;
                 case 1:
-                    tableRow.addView(editTextBiopsy(String.valueOf(Integer.parseInt(row) * 6 + col), cancer));
+                    tableRow.addView(editTextBiopsy(String.valueOf(Integer.parseInt(row) * 4 + col), cancer));
                     break;
                 case 2:
-                    tableRow.addView(editTextBiopsy(String.valueOf(Integer.parseInt(row) * 6 + col), gleason1));
+                    tableRow.addView(editTextBiopsy(String.valueOf(Integer.parseInt(row) * 4 + col), gleason1));
                     TextView textView = new TextView(this);
                     textView.setText("+", TextView.BufferType.NORMAL);
                     textView.setGravity(Gravity.CENTER);
@@ -574,7 +625,7 @@ public class DataEditView extends AppCompatActivity {
                     tableRow.addView(textView);
                     break;
                 case 3:
-                    tableRow.addView(editTextBiopsy(String.valueOf(Integer.parseInt(row) * 6 + col), gleason2));
+                    tableRow.addView(editTextBiopsy(String.valueOf(Integer.parseInt(row) * 4 + col), gleason2));
                     break;
 
             }
@@ -600,6 +651,10 @@ public class DataEditView extends AppCompatActivity {
         LinearLayout ll = (LinearLayout)findViewById(R.id.dataLinear);
         TextView text = new TextView(this);
         text.setText(convertDate(date));
+        text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+        text.setGravity(Gravity.CENTER);
+        text.setTextColor(Color.BLUE);
+        text.setTypeface(Typeface.DEFAULT_BOLD);
         ll.addView(text);
 
         for (final DataSnapshot data: dataSnapshot.getChildren()) {
@@ -610,28 +665,34 @@ public class DataEditView extends AppCompatActivity {
                     if(d.getKey().equals("psa")){
                         text = new TextView(this);
                         text.setText("Psa Level");
+                        text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                        text.setTextColor(Color.BLACK);
                         ll.addView(text);
                         EditText editText = new EditText(this);
                         editText.setText(d.getValue().toString());
-                        editText.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                        editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                         editText.setId(R.id.edit_psa);
                         ll.addView(editText);
                     }else if(d.getKey().equals("density")){
                         text = new TextView(this);
                         text.setText("Psa Density");
+                        text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                        text.setTextColor(Color.BLACK);
                         ll.addView(text);
                         EditText editText = new EditText(this);
                         editText.setText(d.getValue().toString());
-                        editText.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                        editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                         editText.setId(R.id.edit_density);
                         ll.addView(editText);
                     }else{
                         text = new TextView(this);
                         text.setText("Psa Volume");
+                        text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                        text.setTextColor(Color.BLACK);
                         ll.addView(text);
                         EditText editText = new EditText(this);
                         editText.setText(d.getValue().toString());
-                        editText.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                        editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                         editText.setId(R.id.edit_volume);
                         ll.addView(editText);
                     }
@@ -652,20 +713,20 @@ public class DataEditView extends AppCompatActivity {
                             if(!date.isEmpty()) {
                                 Firebase psaEntry = psa.child(date);
                                 //does not save empty data
-                                if (((EditText) findViewById(R.id.edit_psa)).getText().toString() != "") {
+                                if (((EditText) findViewById(R.id.edit_psa)).getText().toString().isEmpty() ||
+                                        ((EditText) findViewById(R.id.edit_density)).getText().toString().isEmpty()
+                                    || ((EditText) findViewById(R.id.edit_volume)).getText().toString().isEmpty()) {
+                                    Toast.makeText(DataEditView.this, "Please fill out all fields.", Toast.LENGTH_SHORT).show();
+                                }else {
                                     psaEntry.child("psa").setValue(((EditText) findViewById(R.id.edit_psa)).getText().toString());
-                                }
-                                if (((EditText) findViewById(R.id.edit_density)).getText().toString() != "") {
                                     psaEntry.child("density").setValue(((EditText) findViewById(R.id.edit_density)).getText().toString());
-                                }
-                                if (((EditText) findViewById(R.id.edit_volume)).getText().toString() != "") {
                                     psaEntry.child("volume").setValue(((EditText) findViewById(R.id.edit_volume)).getText().toString());
+                                    Toast.makeText(DataEditView.this, "Entry has been updated.", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(DataEditView.this, DataView.class);
+                                    startActivity(intent);
                                 }
-
                             }
-                            Toast.makeText(DataEditView.this, "Entry has been updated.", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(DataEditView.this, DataView.class);
-                            startActivity(intent);
+
                         } else {
                             // no user authenticated
                         }

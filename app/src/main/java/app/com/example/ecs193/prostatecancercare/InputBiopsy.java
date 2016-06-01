@@ -230,7 +230,7 @@ public class InputBiopsy extends AppCompatActivity  {
                             biopsyEntry.child("corespositive").setValue(coresPositive);
                             biopsyEntry.child("corestaken").setValue(coresTaken);
                             for (int i = 0; i < rows; i++) {
-                                Firebase mriLesion = biopsyEntry.child("postivecore").child((editTextList.get(i * 4).getText().toString()));
+                                Firebase mriLesion = biopsyEntry.child("positivecore").child((editTextList.get(i * 4).getText().toString()));
                                 mriLesion.child("cancer").setValue(editTextList.get(i * 4 + 1).getText().toString());
                                 mriLesion.child("gleason").setValue(editTextList.get(i * 4 + 2).getText().toString() + "+" + editTextList.get(i * 4 + 3).getText().toString());
                             }

@@ -1,6 +1,8 @@
 package app.com.example.ecs193.prostatecancercare;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -120,7 +122,11 @@ public class DataView extends AppCompatActivity {
         tableLayout.setStretchAllColumns(true);
         TableRow tableRow = new TableRow(this);
         TextView typeText = new TextView(this);
-        typeText.setText(type);
+        typeText.setText(type.toUpperCase());
+        typeText.setTextColor(Color.BLUE);
+        typeText.setTypeface(null, Typeface.BOLD);
+        typeText.setPadding(2,2,2,2);
+        typeText.setGravity(Gravity.CENTER);
         typeText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
         tableRow.addView(typeText);
         tableLayout.addView(tableRow);
