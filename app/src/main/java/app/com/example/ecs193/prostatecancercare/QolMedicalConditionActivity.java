@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ext.CoreXMLDeserializers;
 import com.firebase.client.Firebase;
@@ -126,6 +127,7 @@ public class QolMedicalConditionActivity extends AppCompatActivity {
                 }
                 Intent intent = new Intent(QolMedicalConditionActivity.this, HomePageActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                Toast.makeText(QolMedicalConditionActivity.this, "Qol Survey submitted", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
                 finish(); // call this to finish the current activity
             }

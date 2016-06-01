@@ -247,8 +247,9 @@ public class InputMri extends AppCompatActivity {
                                 mriLesion.child("positive").setValue(editTextList.get(i * 6 + 3).getText().toString());
                                 mriLesion.child("gleason").setValue(editTextList.get(i * 6 + 4).getText().toString() + "+" + editTextList.get(i * 6 + 5).getText().toString());
                             }
-                            Intent intent = new Intent(InputMri.this, InputData.class);
-                            startActivity(intent);
+                            finish();
+                            //Intent intent = new Intent(InputMri.this, InputData.class);
+                            //startActivity(intent);
                         }
                     }
 

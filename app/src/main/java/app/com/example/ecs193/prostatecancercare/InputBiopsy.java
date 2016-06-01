@@ -247,8 +247,9 @@ public class InputBiopsy extends AppCompatActivity  {
                                 mriLesion.child("cancer").setValue(editTextList.get(i * 4 + 1).getText().toString());
                                 mriLesion.child("gleason").setValue(editTextList.get(i * 4 + 2).getText().toString() + "+" + editTextList.get(i * 4 + 3).getText().toString());
                             }
-                            Intent intent = new Intent(InputBiopsy.this, InputData.class);
-                            startActivity(intent);
+                            finish();
+                            //Intent intent = new Intent(InputBiopsy.this, InputData.class);
+                            //startActivity(intent);
                         }
                     }
                 }
