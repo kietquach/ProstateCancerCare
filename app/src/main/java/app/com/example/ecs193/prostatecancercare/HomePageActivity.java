@@ -178,7 +178,7 @@ public class HomePageActivity extends AppCompatActivity {
                     long difference = appointmentDate.getTimeInMillis() - now.getTimeInMillis();
                     long days = difference / (1000 * 60 * 60 * 24);
                     RelativeLayout rl = (RelativeLayout)findViewById(R.id.relativeLayout);
-                    if(days <= 7) {
+                    if(days <= 7 && days > 3) {
                         rl.setBackground(getResources().getDrawable(R.drawable.circleorange));
                     }
                     else if(days <= 3){
