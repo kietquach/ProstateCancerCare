@@ -231,8 +231,9 @@ public class InputPsa extends AppCompatActivity {
                                 Toast.makeText(InputPsa.this, "This date already has an entry. Pick another date, or edit the entry.", Toast.LENGTH_LONG).show();
                             }
                             if(!invalidFlag && !dateFlag) {
-                                Intent intent = new Intent(InputPsa.this, InputData.class);
-                                startActivity(intent);
+                                finish();
+                                //Intent intent = new Intent(InputPsa.this, InputData.class);
+                                //startActivity(intent);
                             }
                             psaEntry.child("density").setValue(((TextView) findViewById(R.id.densityEdit)).getText().toString());
 

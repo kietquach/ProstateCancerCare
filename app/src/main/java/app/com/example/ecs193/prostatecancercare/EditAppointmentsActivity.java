@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.ChildEventListener;
@@ -113,6 +114,8 @@ public class EditAppointmentsActivity extends AppCompatActivity {
                         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                         alarmManager.cancel(pendingIntent);
+                        Toast.makeText(EditAppointmentsActivity.this, "Appointment deleted", Toast.LENGTH_SHORT).show();
+
                     }
                 });
             }

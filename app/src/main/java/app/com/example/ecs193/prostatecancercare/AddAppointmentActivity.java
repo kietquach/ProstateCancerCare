@@ -134,6 +134,7 @@ public class AddAppointmentActivity extends AppCompatActivity implements View.On
                 long intervalInMillis = Integer.parseInt(mReminderEditText.getText().toString()) * 1000 * 60 * 60 * 24;
                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, appointmentDate.getTimeInMillis(), intervalInMillis, pendingIntent);
             }
+            Toast.makeText(AddAppointmentActivity.this, "Appointment added", Toast.LENGTH_SHORT).show();
 
             //go back to EditAppointment activity.
             finish();
