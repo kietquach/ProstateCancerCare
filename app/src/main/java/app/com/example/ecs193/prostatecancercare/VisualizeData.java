@@ -49,9 +49,13 @@ public class VisualizeData extends AppCompatActivity {
                 float psaInitial = 0;
                 String initialTime = "000000";
                 String recentTime = "000000";
+                boolean inLoop = false;
                 boolean first = true;
                 boolean snapDoesNotExist = true;
+                //queue, when q length 3 pop then push
                 for (DataSnapshot child : snapshot.getChildren()) {
+                    inLoop = true;
+                    System.out.println("In Here");
                     if (child.exists()) {
                         PsaData latestData = child.getValue(PsaData.class);
                         volume = Float.parseFloat(latestData.getVolume());
@@ -80,7 +84,7 @@ public class VisualizeData extends AppCompatActivity {
 //                System.out.println(duration);
 
                         densityText = (TextView) findViewById(R.id.psaDensityText);
-                        if(Double.isNaN(psaRecent / volume)){
+                        if(Double.isNaN(psaRecent / volume) || inLoop == false){
                             densityText.setText("PSA Density: " + "\nNo Data");
                         }
                         else {
@@ -92,7 +96,7 @@ public class VisualizeData extends AppCompatActivity {
                         doubleText = (TextView) findViewById(R.id.psaDoubleTime);
                         String dbt = new DecimalFormat("@@@").format(Math.log(duration)/(Math.log(psaRecent) - Math.log(psaInitial)));
                         double dbtF = Math.log(duration)/(Math.log(psaRecent) - Math.log(psaInitial));
-                        if(initialTime == "000000" && recentTime =="000000" ) {
+                        if(initialTime == "000000" && recentTime =="000000" || inLoop == false ) {
                             doubleText.setText("PSA Doubling Time: " + "\nNo Data");
                         }
                         else if( Double.isNaN(dbtF) || Double.isInfinite(dbtF)){
@@ -109,6 +113,14 @@ public class VisualizeData extends AppCompatActivity {
                 }
                 if(snapDoesNotExist){
                     noData = true;
+                    doubleText = (TextView) findViewById(R.id.psaDoubleTime);
+                    if(initialTime == "000000" && recentTime =="000000" || inLoop == false ) {
+                        doubleText.setText("PSA Doubling Time: " + "\nNo Data");
+                    }
+                    densityText = (TextView) findViewById(R.id.psaDensityText);
+                    if(Double.isNaN(psaRecent / volume) || inLoop == false){
+                        densityText.setText("PSA Density: " + "\nNo Data");
+                    }
                 }
 //                String initialYear = "";
 //                String initialMonth = "";
