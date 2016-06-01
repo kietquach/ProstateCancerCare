@@ -35,7 +35,6 @@
         <activity android:name=".QolMedicalConditionActivity"/>
         <receiver android:name=".AlarmReceiver" />
 
-        <activity android:name=".RemoveData" />
         <activity android:name=".DataView" />
         <activity android:name=".DataEditView"/>
     </application>

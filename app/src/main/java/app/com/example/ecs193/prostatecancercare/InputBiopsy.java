@@ -38,7 +38,7 @@ public class InputBiopsy extends AppCompatActivity  {
     private Firebase fbRef;
     private int rows = 0;
     private List<EditText> editTextList = new ArrayList<EditText>();
-    Firebase biopsyEntry;
+    private Firebase biopsyEntry;
 
     private Calendar calendar;
     private int year, month, day;

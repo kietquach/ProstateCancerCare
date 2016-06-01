@@ -44,7 +44,6 @@
         android:textColor="#FFFFFFFF" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/create"
@@ -59,10 +58,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/dob"
         android:id="@+id/dobText"
-        android:layout_above="@+id/ethnicityEdit"
+        android:textColor="#FFFFFFFF"
+        android:layout_marginTop="22dp"
+        android:layout_below="@+id/ethnicityEdit"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textColor="#FFFFFFFF" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -81,11 +81,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/ethnicity"
         android:id="@+id/ethnicityText"
-        android:layout_below="@+id/lastnameEdit"
+        android:textColor="#FFFFFFFF"
+        android:layout_alignBaseline="@+id/ethnicityEdit"
+        android:layout_alignBottom="@+id/ethnicityEdit"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="60dp"
-        android:textColor="#FFFFFFFF" />
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -93,20 +93,22 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/ethnicityEdit"
-        android:layout_alignBottom="@+id/ethnicityText"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/lastnameEdit"
+        android:layout_alignLeft="@+id/lastnameEdit"
+        android:layout_alignStart="@+id/lastnameEdit" />
 
-    <EditText
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
+        android:gravity="center_horizontal"
         android:ems="10"
-        android:id="@+id/dobEdit"
-        android:layout_above="@+id/ethnicityEdit"
-        android:layout_alignLeft="@+id/lastnameEdit"
-        android:layout_alignStart="@+id/lastnameEdit"
-        android:textColor="#FFFFFF" />
+        android:id="@+id/dateButton"
+        android:layout_alignBaseline="@+id/dobText"
+        android:layout_alignBottom="@+id/dobText"
+        android:layout_alignLeft="@+id/ethnicityEdit"
+        android:layout_alignStart="@+id/ethnicityEdit"
+        android:layout_alignRight="@+id/createButton"
+        android:layout_alignEnd="@+id/createButton" />
 
 </RelativeLayout>
