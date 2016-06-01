@@ -31,12 +31,14 @@
         <activity android:name=".InputBiopsy" />
         <activity android:name=".EditAppointmentsActivity" />
         <activity android:name=".AddAppointmentActivity" />
-        <activity android:name=".QolActivity"/>
-        <activity android:name=".QolMedicalConditionActivity"/>
+        <activity android:name=".QolActivity" />
+        <activity android:name=".QolMedicalConditionActivity" />
+
         <receiver android:name=".AlarmReceiver" />
 
         <activity android:name=".DataView" />
-        <activity android:name=".DataEditView"/>
+        <activity android:name=".DataEditView" />
+        <activity android:name=".InputGenomics"></activity>
     </application>
 
 </manifest>

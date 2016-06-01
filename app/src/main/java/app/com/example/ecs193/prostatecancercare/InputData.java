@@ -55,6 +55,18 @@ public class InputData extends AppCompatActivity {
                     }
                 }
         );
+
+        ImageButton genomicsButton = (ImageButton)findViewById(R.id.genomicsButton);
+        genomicsButton.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        Intent intent = new Intent(InputData.this, InputGenomics.class);
+                        startActivity(intent);
+
+                    }
+                }
+        );
     }
 
     @Override
