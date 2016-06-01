@@ -36,7 +36,7 @@ public class VisualizeData extends AppCompatActivity {
 
         Button psaButton = (Button) findViewById(R.id.psaButton);
         AuthData authData = fbRef.getAuth();
-        Firebase psa = fbRef.child("users").child(authData.getUid()).child("psa");
+        final Firebase psa = fbRef.child("users").child(authData.getUid()).child("psa");
 
         psa.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -62,6 +62,41 @@ public class VisualizeData extends AppCompatActivity {
                             initialTime = recentTime;
                             first = false;
                         }
+                        String initialYear = "";
+                        String initialMonth = "";
+                        String recentYear = "";
+                        String recentMonth = "";
+                        for(int i = 0; i < 4; i ++){
+                            initialYear += initialTime.charAt(i);
+                            recentYear += recentTime.charAt(i);
+                        }
+                        for(int i = 4; i < 6; i++){
+                            initialMonth += initialTime.charAt(i);
+                            recentMonth += recentTime.charAt(i);
+                        }
+                        float duration = Float.parseFloat(recentYear) - Float.parseFloat(initialYear);
+                        duration *= 12;
+                        duration += (Float.parseFloat(recentMonth) - Float.parseFloat(initialMonth));
+//                System.out.println(duration);
+
+                        densityText = (TextView) findViewById(R.id.psaDensityText);
+                        if(Double.isNaN(psaRecent / volume)){
+                            densityText.setText("PSA Density: " + "\nNo Data");
+                        }
+                        else {
+                            //store back density
+                            String d = new DecimalFormat("@@@").format((psaRecent / volume));
+                            psa.child(child.getKey()).child("density").setValue(d);
+                            densityText.setText("PSA Density: " + d );
+                        }
+                        doubleText = (TextView) findViewById(R.id.psaDoubleTime);
+                        String dbt = new DecimalFormat("@@@").format((Math.log(duration)/(Math.log(psaRecent) - Math.log(psaInitial))));
+                        if(initialTime == "000000" && recentTime =="000000") {
+                            doubleText.setText("PSA Doubling Time: " + "\nNo Data");
+                        }
+                        else{
+                            doubleText.setText("PSA Doubling Time: " + dbt);
+                        }
                         snapDoesNotExist= false;
                     }
                     else{
@@ -71,38 +106,38 @@ public class VisualizeData extends AppCompatActivity {
                 if(snapDoesNotExist){
                     noData = true;
                 }
-                String initialYear = "";
-                String initialMonth = "";
-                String recentYear = "";
-                String recentMonth = "";
-                for(int i = 0; i < 4; i ++){
-                    initialYear += initialTime.charAt(i);
-                    recentYear += recentTime.charAt(i);
-                }
-                for(int i = 4; i < 6; i++){
-                    initialMonth += initialTime.charAt(i);
-                    recentMonth += recentTime.charAt(i);
-                }
-                float duration = Float.parseFloat(recentYear) - Float.parseFloat(initialYear);
-                duration *= 12;
-                duration += (Float.parseFloat(recentMonth) - Float.parseFloat(initialMonth));
-//                System.out.println(duration);
-
-                densityText = (TextView) findViewById(R.id.psaDensityText);
-                if(Double.isNaN(psaRecent / volume)){
-                    densityText.setText("PSA Density: " + "\nNo Data");
-                }
-                else {
-                    densityText.setText("PSA Density: " + (psaRecent / volume));
-                }
-                doubleText = (TextView) findViewById(R.id.psaDoubleTime);
-                String dbt = new DecimalFormat("@@@").format((Math.log(duration)/(Math.log(psaRecent) - Math.log(psaInitial))));
-                if(initialTime == "000000" && recentTime =="000000") {
-                    doubleText.setText("PSA Doubling Time: " + "\nNo Data");
-                }
-                else{
-                    doubleText.setText("PSA Doubling Time: " + dbt);
-                }
+//                String initialYear = "";
+//                String initialMonth = "";
+//                String recentYear = "";
+//                String recentMonth = "";
+//                for(int i = 0; i < 4; i ++){
+//                    initialYear += initialTime.charAt(i);
+//                    recentYear += recentTime.charAt(i);
+//                }
+//                for(int i = 4; i < 6; i++){
+//                    initialMonth += initialTime.charAt(i);
+//                    recentMonth += recentTime.charAt(i);
+//                }
+//                float duration = Float.parseFloat(recentYear) - Float.parseFloat(initialYear);
+//                duration *= 12;
+//                duration += (Float.parseFloat(recentMonth) - Float.parseFloat(initialMonth));
+////                System.out.println(duration);
+//
+//                densityText = (TextView) findViewById(R.id.psaDensityText);
+//                if(Double.isNaN(psaRecent / volume)){
+//                    densityText.setText("PSA Density: " + "\nNo Data");
+//                }
+//                else {
+//                    densityText.setText("PSA Density: " + (psaRecent / volume));
+//                }
+//                doubleText = (TextView) findViewById(R.id.psaDoubleTime);
+//                String dbt = new DecimalFormat("@@@").format((Math.log(duration)/(Math.log(psaRecent) - Math.log(psaInitial))));
+//                if(initialTime == "000000" && recentTime =="000000") {
+//                    doubleText.setText("PSA Doubling Time: " + "\nNo Data");
+//                }
+//                else{
+//                    doubleText.setText("PSA Doubling Time: " + dbt);
+//                }
                 //
             }
 

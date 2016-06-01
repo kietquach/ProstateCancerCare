@@ -17,6 +17,7 @@ public class RegisterActivity extends Activity {
     private EditText newEmailInput;
     private EditText newPasswordInput;
     private Button registerButton;
+    private Button resetButton;
     protected static String validCharacters;
 
     @Override
@@ -29,6 +30,32 @@ public class RegisterActivity extends Activity {
         validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-0123456789";
         newEmailInput = (EditText) findViewById(R.id.newEmailInput);
         registerButton = (Button) findViewById(R.id.registerButton);
+        resetButton = (Button) findViewById(R.id.resetButton);
+
+        resetButton.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        if(newEmailInput.getText().toString().equals("")){
+                            Toast.makeText(RegisterActivity.this, "Please fill in your email address", Toast.LENGTH_SHORT).show();
+                        }
+
+                        else{
+                            final Firebase fbRef = new Firebase("https://boiling-heat-3817.firebaseio.com/");
+                            fbRef.resetPassword(newEmailInput.getText().toString(), new Firebase.ResultHandler() {
+                                @Override
+                                public void onSuccess() {
+                                    // password reset email sent
+                                }
+                                @Override
+                                public void onError(FirebaseError firebaseError) {
+                                    // error encountered
+                                }
+                            });
+                        }
+                    }
+                }
+        );
 
         registerButton.setOnClickListener(
                 new View.OnClickListener(){

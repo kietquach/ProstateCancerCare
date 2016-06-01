@@ -31,6 +31,7 @@
     <string name="add_appointment">Add Appointments</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="reset">Register!</string>
 
 
     <string-array name="appointment_types">
