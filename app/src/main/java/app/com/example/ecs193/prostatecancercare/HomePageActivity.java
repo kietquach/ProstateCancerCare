@@ -184,6 +184,9 @@ public class HomePageActivity extends AppCompatActivity {
                     else if(days <= 3){
                         rl.setBackground(getResources().getDrawable(R.drawable.circlered));
                     }
+                    else if(days > 7){
+                        rl.setBackground(getResources().getDrawable(R.drawable.circlegreen));
+                    }
                     daysLeftTextView.setText(String.valueOf(days));
                 }
 
