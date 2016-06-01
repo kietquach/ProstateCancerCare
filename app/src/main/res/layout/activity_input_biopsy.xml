@@ -1,120 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/mri"
+    android:id="@+id/biopsy"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="2dp" >
+    android:orientation="vertical" >
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@drawable/background"
-        >
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        android:weightSum="1">
 
-        <TableLayout
-            android:id="@+id/biopsytl1"
+        <Button
+            android:layout_width="324dp"
+            android:layout_height="60dp"
+            android:id="@+id/dateButton"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.32" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="30dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Cores Taken"
+            android:id="@+id/coresTakenText"
+            android:gravity="right" />
+
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:layout_column="4"
-            android:stretchColumns="*">
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/coresTakenEdit" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Cores Positive"
+            android:id="@+id/coresPositiveText"
+            android:gravity="right" />
 
-            <TableRow android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/dateText"
-                    android:text="Date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:gravity="right"
-                    android:layout_column="0"
-                    android:contextClickable="false"
-                    android:textColor="#FFFFFFFF" />
-
-                <EditText
-                    android:id="@+id/dateEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:ems="10"
-                    android:layout_column="4"
-                    android:backgroundTint="#FFFFFFFF" />
-
-            </TableRow>
-
-            <TableRow>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Cores Taken"
-                    android:id="@+id/coresTakenText"
-                    android:gravity="right"
-                    android:layout_column="0"
-                    android:textColor="#FFFFFFFF" />
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:ems="10"
-                    android:id="@+id/coresTakenEdit"
-                    android:layout_column="4"
-                    android:backgroundTint="#FFFFFFFF"
-                    android:autoText="false" />
-
-            </TableRow>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/coresPositiveEdit" />
 
 
-            <TableRow>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Cores Positive"
-                    android:id="@+id/coresPositiveText"
-                    android:gravity="right"
-                    android:layout_column="0"
-                    android:textColor="#FFFFFFFF" />
+        <TableRow android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp">
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:text="Create Fields"
+                android:layout_gravity="center"
+                android:id="@+id/createfieldsButton" />
 
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:ems="10"
-                    android:id="@+id/coresPositiveEdit"
-                    android:layout_column="4"
-                    android:backgroundTint="#FFFFFFFF" />
-            </TableRow>
-
-            <TableRow>
-
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Add"
-                    android:id="@+id/addButton"
-                    android:layout_gravity="left"
-                    android:layout_column="3" />
-
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Done"
-                    android:id="@+id/doneButton"
-                    android:layout_gravity="center"
-                    android:layout_column="4" />
-
-            </TableRow>
-        </TableLayout>
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:text="Done"
+                android:id="@+id/doneButton"
+                android:layout_gravity="center" />
+        </TableRow>
 
         <TableLayout
             android:id="@+id/biopsytl2"
@@ -123,6 +80,5 @@
             android:layout_column="4"
             android:stretchColumns="*">
         </TableLayout>
-
     </LinearLayout>
 </ScrollView>
