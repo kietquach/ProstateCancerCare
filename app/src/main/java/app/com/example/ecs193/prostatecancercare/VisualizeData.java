@@ -90,9 +90,13 @@ public class VisualizeData extends AppCompatActivity {
                             densityText.setText("PSA Density: " + d );
                         }
                         doubleText = (TextView) findViewById(R.id.psaDoubleTime);
-                        String dbt = new DecimalFormat("@@@").format((Math.log(duration)/(Math.log(psaRecent) - Math.log(psaInitial))));
-                        if(initialTime == "000000" && recentTime =="000000") {
+                        String dbt = new DecimalFormat("@@@").format(Math.log(duration)/(Math.log(psaRecent) - Math.log(psaInitial)));
+                        double dbtF = Math.log(duration)/(Math.log(psaRecent) - Math.log(psaInitial));
+                        if(initialTime == "000000" && recentTime =="000000" ) {
                             doubleText.setText("PSA Doubling Time: " + "\nNo Data");
+                        }
+                        else if( Double.isNaN(dbtF) || Double.isInfinite(dbtF)){
+                            doubleText.setText("PSA Doubling Time: \nNo Change");
                         }
                         else{
                             doubleText.setText("PSA Doubling Time: " + dbt);
