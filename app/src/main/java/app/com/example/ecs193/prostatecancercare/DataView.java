@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -71,7 +72,7 @@ public class DataView extends AppCompatActivity {
         Firebase.setAndroidContext(this);
 
         AuthData authData = fbRef.getAuth();
-        Firebase user = fbRef.child("users").child(authData.getUid()); //.child("psa");
+        Firebase user = fbRef.child("users").child(authData.getUid());
         //Firebase psa = user.child("psa");
         Query q = user.child("psa");
 
@@ -115,20 +116,12 @@ public class DataView extends AppCompatActivity {
     private void addTable(String test, DataSnapshot dataSnapshot){
         final String type = test;
         TableLayout tableLayout =(TableLayout)findViewById(R.id.dateTable);
-        /*
-        if(type.equals("PSA")){
-            tableLayout = (TableLayout)findViewById(R.id.psaTable);
-        }else if(type.equals("MRI")){
-            tableLayout = (TableLayout)findViewById(R.id.mriTable);
-        }else{
-            tableLayout = (TableLayout)findViewById(R.id.biopsyTable);
-        }*/
-
 
         tableLayout.setStretchAllColumns(true);
         TableRow tableRow = new TableRow(this);
         TextView typeText = new TextView(this);
         typeText.setText(type);
+        typeText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
         tableRow.addView(typeText);
         tableLayout.addView(tableRow);
         for (final DataSnapshot data: dataSnapshot.getChildren()) {
