@@ -6,7 +6,7 @@
 
     <item
         android:id="@+id/homeMenuButton"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_home_kiet_24dp"
         android:title="Home"
         app:showAsAction="always"/>
 </menu>
