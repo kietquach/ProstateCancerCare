@@ -20,6 +20,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import java.text.DecimalFormat;
+import java.lang.Math;
 
 import java.util.ArrayList;
 
@@ -53,10 +54,12 @@ public class VisualizeData extends AppCompatActivity {
                 boolean first = true;
                 boolean snapDoesNotExist = true;
                 //queue, when q length 3 pop then push
+                ArrayList al = new ArrayList();
                 for (DataSnapshot child : snapshot.getChildren()) {
                     inLoop = true;
-                    System.out.println("In Here");
+//                    System.out.println("In Here");
                     if (child.exists()) {
+                        al.add(child);
                         PsaData latestData = child.getValue(PsaData.class);
                         volume = Float.parseFloat(latestData.getVolume());
                         psaRecent = latestData.getPsa();
@@ -109,6 +112,56 @@ public class VisualizeData extends AppCompatActivity {
                     }
                     else{
                         snapDoesNotExist = true;
+                    }
+                }
+                if(al.size() >= 3){
+//                    System.out.println("INSIDE INSIDE INSIDE");
+                    int last = al.size() - 1;
+                    DataSnapshot c3 = (DataSnapshot) al.get(last);
+                    DataSnapshot c2 = (DataSnapshot) al.get(last - 1);
+                    DataSnapshot c = (DataSnapshot) al.get(last - 2);
+                    String t3 = c3.getKey();
+                    String t2 = c2.getKey();
+                    String t1 = c.getKey();
+                    PsaData p3 = c3.getValue(PsaData.class);
+                    PsaData p2 = c2.getValue(PsaData.class);
+                    PsaData p1 = c.getValue(PsaData.class);
+                    String t3Year = "";
+                    String t3Month = "";
+                    String t2Year = "";
+                    String t2Month = "";
+                    String t1Year = "";
+                    String t1Month = "";
+                    for(int i = 0; i < 4; i ++){
+                        t3Year += t3.charAt(i);
+                        t2Year += t2.charAt(i);
+                        t1Year += t1.charAt(i);
+                    }
+                    for(int i = 4; i < 6; i++){
+                        t3Month += t3.charAt(i);
+                        t2Month += t2.charAt(i);
+                        t1Month += t1.charAt(i);
+                    }
+                    float duration = Float.parseFloat(t3Year) - Float.parseFloat(t1Year);
+                    duration *= 12;
+                    duration += (Float.parseFloat(t3Month)  - Float.parseFloat(t1Month));
+                    doubleText = (TextView) findViewById(R.id.psaDoubleTime);
+                    String dbt = new DecimalFormat("@@@").format(Math.abs(Math.log(duration)/(Math.log(p3.getPsa()) - Math.log(p2.getPsa()) - Math.log(p1.getPsa()))));
+                    double dbtF = Math.log(duration)/(Math.log(p3.getPsa()) - Math.log(p2.getPsa()) - Math.log(p1.getPsa()));
+                    System.out.println(dbtF);
+                    System.out.println(dbt);
+                    System.out.println(duration);
+                    System.out.println(p3.getPsa());
+                    System.out.println(p2.getPsa());
+                    System.out.println(p1.getPsa());
+                    if(initialTime == "000000" && recentTime =="000000" || inLoop == false ) {
+                        doubleText.setText("PSA Doubling Time: " + "\nNo Data");
+                    }
+                    else if( Double.isNaN(dbtF) || Double.isInfinite(dbtF)){
+                        doubleText.setText("PSA Doubling Time: \nNo Change");
+                    }
+                    else{
+                        doubleText.setText("PSA Doubling Time: " + dbt);
                     }
                 }
                 if(snapDoesNotExist){
