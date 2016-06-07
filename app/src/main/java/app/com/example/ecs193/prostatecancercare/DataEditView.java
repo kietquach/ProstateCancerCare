@@ -100,8 +100,10 @@ public class DataEditView extends AppCompatActivity {
             q = user.child("psa");
         }else if(type.equals("Mri")){
             q = user.child("mri");
-        }else{
+        }else if(type.equals("Biopsy")){
             q = user.child("biopsy");
+        }else{
+            q = user.child("genomics");
         }
 
         q.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -111,8 +113,10 @@ public class DataEditView extends AppCompatActivity {
                     editPsaData(dataSnapshot);
                 }else if(type.equals("Mri")){
                     editMriData(dataSnapshot);
-                }else{
+                }else if(type.equals("Biopsy")){
                     editBiopsyData(dataSnapshot);
+                }else{
+                    editGenomicsData(dataSnapshot);
                 }
             }
             @Override
@@ -138,8 +142,10 @@ public class DataEditView extends AppCompatActivity {
             user.child("psa").child(date).setValue(null);
         }else if(type.compareTo("mri") == 0){
             user.child("mri").child(date).setValue(null);
-        }else{
+        }else if(type.compareTo("biopsy") == 0){
             user.child("biopsy").child(date).setValue(null);
+        }else{
+            user.child("genomics").child(date).setValue(null);
         }
     }
 
@@ -742,6 +748,102 @@ public class DataEditView extends AppCompatActivity {
                     @Override
                     public void onClick(View v){
                         deleteDate("psa", date);
+                        Toast.makeText(DataEditView.this, "Entry has been deleted.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(DataEditView.this, DataView.class);
+                        startActivity(intent);
+                    }
+                }
+
+        );
+        ll.addView(deleteButton);
+
+        Button backButton = new Button(this);
+        backButton.setText("Back");
+        backButton.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        Intent intent = new Intent(DataEditView.this, DataView.class);
+                        startActivity(intent);
+                    }
+                }
+        );
+        ll.addView(backButton);
+    }
+
+
+
+    private void editGenomicsData(DataSnapshot dataSnapshot){
+        LinearLayout ll = (LinearLayout)findViewById(R.id.dataLinear);
+        TextView text = new TextView(this);
+        text.setText(convertDate(date));
+        text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+        text.setGravity(Gravity.CENTER);
+        text.setTextColor(Color.BLUE);
+        text.setTypeface(Typeface.DEFAULT_BOLD);
+        ll.addView(text);
+
+        for (final DataSnapshot data: dataSnapshot.getChildren()) {
+
+            if(data.getKey().toString().equals(date)){
+                System.out.println(data.getChildrenCount());
+                for(final DataSnapshot d : data.getChildren()) {
+                    if(d.getKey().equals("gps")){
+                        text = new TextView(this);
+                        text.setText("GPS");
+                        text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                        text.setTextColor(Color.BLACK);
+                        ll.addView(text);
+                        EditText editText = new EditText(this);
+                        editText.setText(d.getValue().toString());
+                        editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                        editText.setId(R.id.edit_gps);
+                        ll.addView(editText);
+                    }
+                }
+
+            }
+        }
+
+        Button updateButton = new Button(this);
+        updateButton.setText("Update");
+        updateButton.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        AuthData authData = fbRef.getAuth();
+                        if (authData != null) {
+                            Firebase genomics = fbRef.child("users").child(authData.getUid()).child("genomics");
+                            if(!date.isEmpty()) {
+                                Firebase genomicsEntry = genomics.child(date);
+                                //does not save empty data
+                                if (((EditText) findViewById(R.id.edit_gps)).getText().toString().isEmpty() ) {
+                                    Toast.makeText(DataEditView.this, "Please fill out all fields.", Toast.LENGTH_SHORT).show();
+                                }else {
+                                    genomicsEntry.child("gps").setValue(((EditText) findViewById(R.id.edit_gps)).getText().toString());
+                                    Toast.makeText(DataEditView.this, "Entry has been updated.", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(DataEditView.this, DataView.class);
+                                    startActivity(intent);
+                                }
+                            }
+
+                        } else {
+                            // no user authenticated
+                        }
+
+                    }
+                }
+        );
+        ll.addView(updateButton);
+
+        Button deleteButton = new Button(this);
+        deleteButton.setText("Delete Entry");
+        deleteButton.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        Log.i("DATE", date);
+                        deleteDate("genomics", date);
                         Toast.makeText(DataEditView.this, "Entry has been deleted.", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(DataEditView.this, DataView.class);
                         startActivity(intent);

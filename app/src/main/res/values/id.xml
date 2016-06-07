@@ -20,4 +20,8 @@
     <item
         type="id"
         name="edit_corespositive"/>
+
+    <item
+        type="id"
+        name="edit_gps" />
 </resources>

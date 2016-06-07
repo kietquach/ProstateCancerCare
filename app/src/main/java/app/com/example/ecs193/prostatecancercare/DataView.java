@@ -75,7 +75,7 @@ public class DataView extends AppCompatActivity {
 
         AuthData authData = fbRef.getAuth();
         Firebase user = fbRef.child("users").child(authData.getUid());
-        //Firebase psa = user.child("psa");
+
         Query q = user.child("psa");
 
         q.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -113,6 +113,18 @@ public class DataView extends AppCompatActivity {
             }
         });
 
+        q = user.child("genomics");
+        q.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                addTable("Genomics", dataSnapshot);
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
+
     }
 
     private void addTable(String test, DataSnapshot dataSnapshot){
@@ -130,26 +142,39 @@ public class DataView extends AppCompatActivity {
         typeText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
         tableRow.addView(typeText);
         tableLayout.addView(tableRow);
-        for (final DataSnapshot data: dataSnapshot.getChildren()) {
+        if(dataSnapshot.getChildrenCount() == 0){
+            TextView textView = new TextView(this);
             tableRow = new TableRow(this);
-            TextView button = new Button(this);
-            button.setText(convertDate(data.getKey()));
-            button.setOnClickListener(
-                    new View.OnClickListener(){
-                        @Override
-                        public void onClick(View v){
-                            Intent intent = new Intent(DataView.this, DataEditView.class);
-                            intent.putExtra("type", type);
-                            intent.putExtra("date", data.getKey());
-                            startActivity(intent);
-
-                        }
-                    }
-            );
-
-            tableRow.setPadding(0, 10, 0, 0);
-            tableRow.addView(button);
+            textView.setTextColor(Color.BLACK);
+            //textView.setTypeface(null, Typeface.BOLD);
+            textView.setPadding(2,2,2,2);
+            textView.setGravity(Gravity.CENTER);
+            textView.setText("No Data Entries");
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+            tableRow.addView(textView);
             tableLayout.addView(tableRow);
+        }else {
+            for (final DataSnapshot data : dataSnapshot.getChildren()) {
+                tableRow = new TableRow(this);
+                TextView button = new Button(this);
+                button.setText(convertDate(data.getKey()));
+                button.setOnClickListener(
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(DataView.this, DataEditView.class);
+                                intent.putExtra("type", type);
+                                intent.putExtra("date", data.getKey());
+                                startActivity(intent);
+
+                            }
+                        }
+                );
+
+                tableRow.setPadding(0, 10, 0, 0);
+                tableRow.addView(button);
+                tableLayout.addView(tableRow);
+            }
         }
     }
 
