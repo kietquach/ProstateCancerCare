@@ -2,6 +2,7 @@ package app.com.example.ecs193.prostatecancercare;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.provider.ContactsContract;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -111,11 +112,11 @@ public class HomePageActivity extends AppCompatActivity {
             childRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
-                    // do some stuff once
-                    welcomeText.setText("Hi, " + snapshot.child("profile").child("firstname").getValue().toString());
-                    ////////////////////////////////////////////////////////
-                    //Do days left code here - use simple date format
-                    ////////////////////////////////////////////////////////
+                    if (snapshot.child("profile").exists()) {
+                        welcomeText.setText("Hi, " + snapshot.child("profile").child("firstname").getValue().toString());
+                    } else {
+                        welcomeText.setText("Hi, user! You haven't set your profile yet.");
+                    }
                 }
 
                 @Override

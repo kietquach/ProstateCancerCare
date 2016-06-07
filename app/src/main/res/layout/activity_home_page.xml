@@ -22,7 +22,8 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:textSize="36dp"
-            android:textColor="#FFFFFFFF" />
+            android:textColor="#FFFFFFFF"
+            android:textAlignment="center"/>
 
             <RelativeLayout
                 android:layout_width="200dp"
