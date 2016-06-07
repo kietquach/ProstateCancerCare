@@ -23,6 +23,8 @@ import com.firebase.client.ValueEventListener;
 import java.util.Calendar;
 import java.util.Map;
 
+
+
 public class ProfileSetup extends AppCompatActivity {
     Firebase fbRef;
     private Calendar calendar;
@@ -130,7 +132,9 @@ public class ProfileSetup extends AppCompatActivity {
                     ((EditText) findViewById(R.id.firstnameEdit)).setText(dataSnapshot.child("firstname").getValue().toString());
                     ((EditText) findViewById(R.id.lastnameEdit)).setText(dataSnapshot.child("lastname").getValue().toString());
                     ((EditText) findViewById(R.id.ethnicityEdit)).setText(dataSnapshot.child("ethnicity").getValue().toString());
-                    ((Button) findViewById(R.id.dateButton)).setText(convertDate(dataSnapshot.child("dob").getValue().toString()));
+                    if(!dataSnapshot.child("dob").getValue().toString().isEmpty()) {
+                        ((Button) findViewById(R.id.dateButton)).setText(convertDate(dataSnapshot.child("dob").getValue().toString()));
+                    }
                 }
             }
 

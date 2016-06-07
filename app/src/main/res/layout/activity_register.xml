@@ -27,7 +27,8 @@
         android:layout_below="@+id/newEmailText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="34dp"
-        android:backgroundTint="#FFFFFFFF" />
+        android:backgroundTint="#FFFFFFFF"
+        android:textColor="#FFFFFFFF"/>
 
     <Button
         android:layout_width="wrap_content"
