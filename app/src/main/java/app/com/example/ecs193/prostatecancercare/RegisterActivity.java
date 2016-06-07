@@ -75,6 +75,7 @@ public class RegisterActivity extends Activity {
                                         @Override
                                         public void onSuccess() {
                                             System.out.println("Successfully reset password for " + newEmailInput);
+                                            Toast.makeText(RegisterActivity.this, "Please check your email address for the password generated for your account.", Toast.LENGTH_LONG).show();
                                         }
 
                                         @Override
